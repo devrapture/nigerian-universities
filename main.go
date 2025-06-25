@@ -14,6 +14,13 @@ func main() {
 	r.GET("/state", controllers.GetAllStateUniversities)
 	r.GET("/private", controllers.GetAllPrivateUniversities)
 
+	// New endpoints
+	r.GET("/university/details/:name", controllers.GetUniversityDetailsByNameOrAbbreviation)
+	r.GET("/university/city/:city", controllers.GetUniversitiesByCity)
+	r.GET("/university/state/:state", controllers.GetUniversitiesByState)
+	r.GET("/university/private", controllers.GetAllPrivateUniversities) // alias with limit already applied
+	r.GET("/university/private/:state", controllers.GetPrivateUniversitiesByState)
+
 	r.Run(":8080")
 
 }
