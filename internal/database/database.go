@@ -23,10 +23,23 @@ func ConnectDB(cfg *config.Config) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	if err := validateSchema(db); err != nil {
-	sqlDB, _ := db.DB()
-	if sqlDB != nil {
-		sqlDB.Close()
+	if cfg.AppEnv == "production" {
+		if err := validateSchema(db); err != nil {
+			sqlDB, _ := db.DB()
+			if sqlDB != nil {
+				sqlDB.Close()
+			}
+			return nil, err
+		}
+	} else {
+		if err := db.AutoMigrate(&models.Universities{}); err != nil {
+			return nil, err
+		}
+	}
+
+	sqlDB, err := db.DB()
+	if err != nil {
+		return nil, err
 	}
 
 	sqlDB.SetMaxIdleConns(20)
@@ -37,8 +50,6 @@ func ConnectDB(cfg *config.Config) (*gorm.DB, error) {
 	// Verify connection works
 	if err := sqlDB.Ping(); err != nil {
 		return nil, fmt.Errorf("failed to ping database: %w", err)
-	}
-	return nil, err
 	}
 
 	return db, nil
