@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -12,14 +13,24 @@ type Config struct {
 	DatabaseURL string
 }
 
-func Load() *Config {
+func Load() (*Config, error) {
 	_ = godotenv.Load()
 
-	return &Config{
-		AppEnv:      getEnv("APP_ENV", "development"),
-		Port:        getEnv("PORT", "8080"),
-		DatabaseURL: getEnv("DATABASE_URL", "postgres://postgres:postgres@localhost:5432/todo?sslmode=disable"),
+	appEnv := getEnv("App_Env", "development")
+
+	dbURL := os.Getenv("DATABASE_URL")
+
+	if dbURL == "" {
+		if appEnv != "development" {
+			return nil, fmt.Errorf("DATABASE_URL is required in %s environment", appEnv)
+		}
+		dbURL = "postgres://localhost:5432/todo?sslmode=disable"
 	}
+	return &Config{
+		AppEnv:      appEnv,
+		Port:        getEnv("PORT", "8080"),
+		DatabaseURL: dbURL,
+	}, nil
 }
 
 func getEnv(key, fallback string) string {

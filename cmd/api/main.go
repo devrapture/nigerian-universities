@@ -9,9 +9,12 @@ import (
 )
 
 func main() {
-	cfg := config.Load()
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatalf("Failed to load configuration: %v", err)
+	}
 
-	_, err := database.ConnectDB(cfg)
+	db, err := database.ConnectDB(cfg)
 
 	if err != nil {
 		log.Fatalf("Failed to initialize database: %v", err)
