@@ -8,7 +8,7 @@ import (
 	"github.com/coolpythoncodes/nigerian-universities/models"
 )
 
-func WriteJSON(fileName string, data []models.Universities) {
+func WriteJSON(fileName string, data []models.Institution) {
 	jsonData, err := json.MarshalIndent(data, "", " ")
 	if err != nil {
 		log.Println("Unable to create JSON file")

@@ -32,7 +32,7 @@ func ConnectDB(cfg *config.Config) (*gorm.DB, error) {
 			return nil, err
 		}
 	} else {
-		if err := db.AutoMigrate(&models.Universities{}); err != nil {
+		if err := db.AutoMigrate(&models.Institution{}); err != nil {
 			return nil, err
 		}
 	}
@@ -57,7 +57,7 @@ func ConnectDB(cfg *config.Config) (*gorm.DB, error) {
 
 func validateSchema(db *gorm.DB) error {
 	// Check if required tables/columns exist without modifying
-	if !db.Migrator().HasTable(&models.Universities{}) {
+	if !db.Migrator().HasTable(&models.Institution{}) {
 		return errors.New("universities table doesn't exist in production")
 	}
 

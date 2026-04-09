@@ -7,8 +7,8 @@ import (
 	"github.com/coolpythoncodes/nigerian-universities/models"
 )
 
-func ReadUniversitiesFromJSONFile(fileName string) ([]models.Universities, *RestError) {
-	univeristies := []models.Universities{}
+func ReadUniversitiesFromJSONFile(fileName string) ([]models.Institution, *RestError) {
+	univeristies := []models.Institution{}
 	universitiesJson, err := os.ReadFile(fileName)
 
 	if err != nil {

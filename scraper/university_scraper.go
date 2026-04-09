@@ -8,7 +8,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
-var universities []models.Universities
+var universities []models.Institution
 
 func ScrapeUniversities() {
 	pagesToScrape := map[string]string{
@@ -28,7 +28,7 @@ func ScrapeUniversities() {
 		universityWebsite := e.ChildText(".column-4 a")
 		yearOfEstablishment := e.ChildText(".column-5")
 
-		university := models.Universities{
+		university := models.Institution{
 			Name:                nameOfUniversity,
 			ViceChancellor:      nameOfChancellor,
 			YearOfEstablishment: yearOfEstablishment,

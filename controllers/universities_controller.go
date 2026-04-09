@@ -99,7 +99,7 @@ func GetUniversityDetailsByNameOrAbbreviation(c *gin.Context) {
 
 	// normalise the param to lower for comparison
 	target := strings.ToLower(nameParam)
-	var result *models.Universities
+	var result *models.Institution
 
 	for _, uni := range universities {
 		if strings.ToLower(uni.Name) == target {
@@ -144,7 +144,7 @@ func GetUniversitiesByCity(c *gin.Context) {
 	}
 
 	target := strings.ToLower(cityParam)
-	filtered := make([]models.Universities, 0)
+	filtered := make([]models.Institution, 0)
 	for _, uni := range universities {
 		if strings.Contains(strings.ToLower(uni.Name), target) {
 			filtered = append(filtered, uni)
@@ -175,7 +175,7 @@ func GetUniversitiesByState(c *gin.Context) {
 	}
 
 	target := strings.ToLower(stateParam)
-	filtered := make([]models.Universities, 0)
+	filtered := make([]models.Institution, 0)
 	for _, uni := range universities {
 		if strings.Contains(strings.ToLower(uni.Name), target) {
 			filtered = append(filtered, uni)
@@ -206,7 +206,7 @@ func GetPrivateUniversitiesByState(c *gin.Context) {
 	}
 
 	target := strings.ToLower(stateParam)
-	filtered := make([]models.Universities, 0)
+	filtered := make([]models.Institution, 0)
 	for _, uni := range universities {
 		if strings.ToLower(uni.Type) == "private" && strings.Contains(strings.ToLower(uni.Name), target) {
 			filtered = append(filtered, uni)
