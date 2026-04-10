@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/config"
@@ -28,7 +27,7 @@ func main() {
 	s := scraper.NewInstitutionScrapper()
 	institutionService := service.NewInstitutionService(repo)
 	institutions, err := s.ScrapeAllInstitution()
-	fmt.Println("scraped institutions", institutions)
+	log.Printf("scraping completed successfully: %d institutions processed", len(institutions))
 	if err != nil {
 		log.Fatalf("Failed to scrape institutions: %v", err)
 	}

@@ -2,16 +2,14 @@ package scraper
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
+	"time"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/constants"
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
-	"github.com/coolpythoncodes/nigerian-universities/models"
-	"github.com/coolpythoncodes/nigerian-universities/utils"
 	"github.com/gocolly/colly"
 )
-
-var institutions []models.Institution
 
 type InstitutionSource struct {
 	URL  string
@@ -43,7 +41,7 @@ func NewInstitutionScrapper() *InstitutionScrapper {
 func (s *InstitutionScrapper) ScrapeAllInstitution() ([]model.Institution, error) {
 	var allInstitutions []model.Institution
 	for _, institution := range InstitutionRegistry {
-		institutions, err := s.scrapeInstitution(institution.URL, string(institution.Type))
+		institutions, err := s.scrapeInstitution(institution.URL, institution.Type)
 		fmt.Println("scraped institutions", institutions)
 		if err != nil {
 			return nil, err
@@ -54,14 +52,21 @@ func (s *InstitutionScrapper) ScrapeAllInstitution() ([]model.Institution, error
 	return allInstitutions, nil
 }
 
-func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]model.Institution, error) {
+func (s *InstitutionScrapper) scrapeInstitution(url string, instituteType constants.InstitutionType) ([]model.Institution, error) {
 	// fmt.Println("Scraping", instituteType)
+
+	// use a fresh slice per scrape to avoid cross-source accumulation
+	institutions := make([]model.Institution, 0, 64)
 
 	collector := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"),
 		colly.AllowedDomains("www.nuc.edu.ng", "nuc.edu.ng", "education.gov.ng", "www.education.gov.ng"),
 		colly.AllowURLRevisit(),
 	)
+
+	// education.gov.ng pages are slow; extend timeouts to reduce context deadline errors
+	collector.WithTransport(&http.Transport{ResponseHeaderTimeout: 20 * time.Second})
+	collector.SetRequestTimeout(60 * time.Second)
 
 	// for nuc
 	collector.OnHTML("tbody tr", func(e *colly.HTMLElement) {
@@ -83,15 +88,15 @@ func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]mo
 		}
 
 		// colleges of education don't have vice chancellors
-		if strings.Contains(instituteType, "college-education") {
+		if strings.Contains(string(instituteType), "college-education") {
 			institutionViceChancellor = ""
 		}
 
-		institution := models.Institution{
+		institution := model.Institution{
 			Name:                institutionName,
 			ViceChancellor:      institutionViceChancellor,
 			YearOfEstablishment: institutionYearOfEstablishment,
-			Url:                 institutionWebsite,
+			Website:             institutionWebsite,
 			Type:                instituteType,
 		}
 
@@ -112,11 +117,11 @@ func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]mo
 			return
 		}
 
-		institution := models.Institution{
+		institution := model.Institution{
 			Name:                institutionName,
 			ViceChancellor:      "",
 			YearOfEstablishment: institutionYearOfEstablishment,
-			Url:                 institutionWebsite,
+			Website:             institutionWebsite,
 			Type:                instituteType,
 		}
 
@@ -124,7 +129,6 @@ func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]mo
 	})
 
 	// fmt.Println("institutions", institutions)
-	utils.WriteJSON("nigerian-institutions.json", institutions)
 
 	collector.OnRequest(func(r *colly.Request) {
 		fmt.Println("Visiting", r.URL.String())
@@ -132,7 +136,7 @@ func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]mo
 	if err := collector.Visit(url); err != nil {
 		return nil, fmt.Errorf("error visiting %s:%w", url, err)
 	}
-	return nil, nil
+	return institutions, nil
 }
 
 // firstNonEmpty returns the first string that is not empty after trimming.
