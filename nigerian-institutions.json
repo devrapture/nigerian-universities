@@ -1,5 +1,537 @@
 [
  {
+  "name": "Akanu Ibiam Federal Polytechnic Unwana, P.M.B 1007, Afikpo, Ebonyi State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1981",
+  "type": "federal-polytechnic",
+  "url": "www.akanuibiampoly.edu.ng"
+ },
+ {
+  "name": "Auchi Polytechnic, Auchi, Edo State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1973",
+  "type": "federal-polytechnic",
+  "url": "www.auchipoly.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Ado Ekiti, Ekiti State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1977",
+  "type": "federal-polytechnic",
+  "url": "www.fedpolyado.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Bali, Taraba State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "2007",
+  "type": "federal-polytechnic",
+  "url": "www.fedpobali.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Bauchi, P.M. B 231, Bauchi State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1979",
+  "type": "federal-polytechnic",
+  "url": "www.fptb.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Bida, P.M.B 55, Niger State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1977",
+  "type": "federal-polytechnic",
+  "url": "www.fedpolybida.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Damaturu, P.M.B 1006, Yobe State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1993",
+  "type": "federal-polytechnic",
+  "url": "www.fedpodam.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Ede, Osun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1992",
+  "type": "federal-polytechnic",
+  "url": "www.federalpolyede.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Ekowe, Bayelsa State",
+  "vice_chancellor": "",
+  "year_of_establishment": "2007",
+  "type": "federal-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Federal Polytechnic Idah P.M.B 1035, Kogi State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1977",
+  "type": "federal-polytechnic",
+  "url": "www.fepoda.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Ilaro, P.M.B 50, Ogun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1979",
+  "type": "federal-polytechnic",
+  "url": "www.federalpolyilaro.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Ile-Oluji, Ondo State",
+  "vice_chancellor": "",
+  "year_of_establishment": "2016",
+  "type": "federal-polytechnic",
+  "url": "www.fedpolel.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Kaura Namoda, P.M.B, 1012, Zamfara State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1983",
+  "type": "federal-polytechnic",
+  "url": "www.fedpolykaura.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Mubi, PMB 35 Mubi, Adamawa State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1979",
+  "type": "federal-polytechnic",
+  "url": "www.federalpolytechnicmubi.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Nasarawa, P.M.B. 01 Nasarawa State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1983",
+  "type": "federal-polytechnic",
+  "url": "www.fedpolynasarawa.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Nekede, P.M.B 1036, Owerri, Imo State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1977",
+  "type": "federal-polytechnic",
+  "url": "www.fpno.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Offa, P.M.B 420, Kwara State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1992",
+  "type": "federal-polytechnic",
+  "url": "www.fpo.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Oko, Anambra State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1982",
+  "type": "federal-polytechnic",
+  "url": "www.federalpolyoko.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic of Oil and Gas Bonny, Rivers State",
+  "vice_chancellor": "",
+  "year_of_establishment": "2014",
+  "type": "federal-polytechnic",
+  "url": "www.fedpolybonny.edu.ng"
+ },
+ {
+  "name": "Federal Polytechnic Ukana, Akwa Ibom State",
+  "vice_chancellor": "",
+  "year_of_establishment": "2014",
+  "type": "federal-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Hussaini Adamu Federal Polytechnic, P.M.B 5004, Kazaure Jigawa State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1991",
+  "type": "federal-polytechnic",
+  "url": "www.hafedpoly.edu.ng"
+ },
+ {
+  "name": "Kaduna Polytechnic, Kaduna.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1956",
+  "type": "federal-polytechnic",
+  "url": "www.kadunapolytechnic.edu.ng"
+ },
+ {
+  "name": "National Institute of Construction Technology Uromi",
+  "vice_chancellor": "",
+  "year_of_establishment": "2014",
+  "type": "federal-polytechnic",
+  "url": "www.nict.edu.ng"
+ },
+ {
+  "name": "Waziri Umaru Federal Polytechnic, P.M.B. 1034, Birnin Kebbi.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1976",
+  "type": "federal-polytechnic",
+  "url": "www.wufpbk.edu.ng"
+ },
+ {
+  "name": "Yaba College of Technology, P.M.B. 2011, Yaba, Lagos State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "1947",
+  "type": "federal-polytechnic",
+  "url": "www.yabatech.edu.ng"
+ },
+ {
+  "name": "Airforce Institute of Technology (AFIT),NAF Base Kaduna",
+  "vice_chancellor": "",
+  "year_of_establishment": "1977",
+  "type": "federal-polytechnic",
+  "url": "www.afit.edu.ng"
+ },
+ {
+  "name": "Petroleum Training Institute Effurun",
+  "vice_chancellor": "",
+  "year_of_establishment": "1972",
+  "type": "federal-polytechnic",
+  "url": "www.pti.edu.ng"
+ },
+ {
+  "name": "P.M.B 20, Effurun. Delta State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "federal-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Nigerian Army Institute of Technology and Environmental Science (NAITES) Makurdi",
+  "vice_chancellor": "",
+  "year_of_establishment": "1960",
+  "type": "federal-polytechnic",
+  "url": "www.naitesmkd.edu.ng"
+ },
+ {
+  "name": "College of Education, Gindiri",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Adamawa State College of Education, Hong",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Tai Solarin College of Education, Ijebu-Ode",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": "www.tasce.edu.ng"
+ },
+ {
+  "name": "College of Education, Ikere-Ekiti",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": "www.coeikere.edu.ng"
+ },
+ {
+  "name": "Ebonyi State College of Education, Ikwo",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, Warri",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": "www.coewarri.edu.ng"
+ },
+ {
+  "name": "FCT College of Education, Zuba",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Osisatech College of Education, Enugu",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Nasarrawa State College of Education, Akwanga",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Isa Kaita College of Education, Dutsin-Ma",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, Ekiadolor-Benin",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, Gashua, Damaturu",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Kaduna State College of Education, Gidan-Waya, Kafanchan",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Osun State College of Education, Ilesa",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Kwara State College of Education, Ilorin",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Kwara State College of Education",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, katsina-Ala",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Sa'adatu Rimi College of Education, Kumbotso, Kano",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education (Technical), Lafiagi",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Nwafor Orizu College of Education, Nsugbe",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Adeniran Ogunsanya College of Education, Otto/Ijanikin",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": "www.aocoed.edu.ng"
+ },
+ {
+  "name": "Emmanuel Alayande College of Education (EACOED), Oyo",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": "www.eacoed.com,www.eacoed.edu.ng"
+ },
+ {
+  "name": "College of Education, Waka BIU",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "St. Augustine College of Education (Project Time), Lagos",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Delta State College of Education, Agbor",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Akwa Ibom State College of Education, Afahansit",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Kogi State College of Education, Ankpa",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Adamu Augie College of Education, Argungu",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, Azare",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Umar Ibn Ibrahim El-Kanemi College of Education, Science and Technology, Bama",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, Jalingo",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Zamfara State College of Education, Maru",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Jigawa State College of Education, Gumel",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Niger State College of Education, Minna",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Rivers College of Education, Rumuolumeni",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Shehu shagari College of Education, Sokoto",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Jama'Atu College of Education (JACE), Kaduna",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, Arochukwu, Abia",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "College of Education, Ila-Orangun, Osun State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Michael Otedola Coll. of Prim. Education, Lagos",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Kashim Ibrahim College of Educ., Maiduguri",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Delta State Coll. of Physical Education, Mosogar",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Enugu State Coll. of Education (T), Enugu",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Cross River State Coll. of Education, Akampa",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Edo State College of Education, Igueben",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Isaac Jasper Boro COE, Sagbama",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
+  "name": "Kogi State College of Education, Kabba",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-college-education",
+  "url": ""
+ },
+ {
   "name": "Institute of Ecumenical Education, (Thinkers Corner), Enugu",
   "vice_chancellor": "",
   "year_of_establishment": "",
@@ -656,1014 +1188,6 @@
   "year_of_establishment": "2025",
   "type": "federal-university",
   "url": ""
- },
- {
-  "name": "Abdu Gusau Polytechnic, Talata Mafara",
-  "vice_chancellor": "1992",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1021, Talata Mafara, Zamfara State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Abia State Polytechnic, Aba,",
-  "vice_chancellor": "1992",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 7166, Aba, Abia State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Abraham Adesanya Polytechnic, Dogbolu/Akanran Ibadan Road, Atikori, Ijebu Igbo,",
-  "vice_chancellor": "2004",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1020, Ijebu-Igbo, Ogun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Abubakar Tatari Ali Polytechnic, Bauchi,",
-  "vice_chancellor": "1988",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Jos Rd, Bauchi, Bauchi State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Adamawa State Polytechnic, Yola,",
-  "vice_chancellor": "1991",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 2146, Yola,",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Adamawa State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Akwa Ibom State College of Art \u0026 Science, Nung Ukim,",
-  "vice_chancellor": "1997",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1044, Akwa Ibom State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Akwa Ibom State Polytechnic,",
-  "vice_chancellor": "1991",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Ikot Osurua, Ikot -Ekpene,",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Akwa Ibom State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Bayelsa State College of Arts and Science, Elebele,",
-  "vice_chancellor": "2002",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.O. Box 1766, Yenogoa",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Benue State Polytechnic, Ugbokolo,",
-  "vice_chancellor": "1976",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 01 Ugbokolo, Benue State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Binyaminu Usman Polytechnic, Hadejia,",
-  "vice_chancellor": "2016",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Jigawa State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Cross River State Institute of Technology And Management, Ugep",
-  "vice_chancellor": "2012",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "D.S. Adegbenro ICT Polytechnic, Itori-Ewekoro,",
-  "vice_chancellor": "2004",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 5026, Ifo, Ogun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Delta State Polytechnic, Ogwashi-Uku,",
-  "vice_chancellor": "2002",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1030, Ogwashi-Uku,",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Delta State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Delta State Polytechnic, Otefe-Oghara,",
-  "vice_chancellor": "2002",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 03, Otefe-Oghara, Delta State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Delta State Polytechnic, Ozoro,",
-  "vice_chancellor": "2003",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 05, Ozoro, Delta State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Edo State Institute of Technology and Management, Usen.",
-  "vice_chancellor": "2002",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1104, Benin City, Edo State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Gateway Polytechnic, Saapade Prof. Wole Soyinka Way, Saapade Estate,",
-  "vice_chancellor": "2004",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 2003, Isara Ode-Remo, Ogun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Hassan Usman Katsina Polytechnic (HUK),",
-  "vice_chancellor": "1983",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 2052, Katsina, Nigeria.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Ibarapa Polytechnic, Eruwa",
-  "vice_chancellor": "2013",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Oyo State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Imo State Polytechnic, Umuagwo, Ohaji,",
-  "vice_chancellor": "1978",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1472, Umuagwo, Ohaji Owerri, Imo State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Institute of Management and Technology, Enugu,",
-  "vice_chancellor": "1965",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B 01079, Enugu, Enugu State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Jigawa State Polytechnic, Dutse",
-  "vice_chancellor": "1991/2008",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Block 40-42, Old Secretariat,",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 7040, Dutse, Jigawa State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Kano State Polytechnic, Kano,",
-  "vice_chancellor": "1976",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 3401, Kano, Kano State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Ken Sarowiwa Polytechnic, Bori,",
-  "vice_chancellor": "1988",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 20, Bori, Rivers State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Kogi State Polytechnic, Lokoja,",
-  "vice_chancellor": "1993",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1101, Lokoja Kogi State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Kwara State Polytechnic, Ilorin",
-  "vice_chancellor": "1973",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1375, Ilorin, Kwara State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Lagos State Polytechnic, Ikorodu,",
-  "vice_chancellor": "1977",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 21606, Ikeja, Lagos, Lagos State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Mai-Idris Alooma Polytechnic, Geidam,",
-  "vice_chancellor": "2002",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1020 Geidam, Yobe State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Nasarawa State Polytechnic,",
-  "vice_chancellor": "2001",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P. M. B. 109, Lafia, Nasarawa State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Niger State Polytechnic, Zungeru,",
-  "vice_chancellor": "1991",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1 Zungeru, Niger State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Nuhu Bamalli Polytechnic, Zaria,",
-  "vice_chancellor": "1989",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1061 Zaria Kaduna State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Ogun State Institute of Technology, Igbesa",
-  "vice_chancellor": "2004",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Oba Adesola Market Road,",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 2005, Igbesa, Ogun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Ogun State Polytechnic, Ipokia",
-  "vice_chancellor": "2017",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Oke-Ogun Polytechnic, Shaki,",
-  "vice_chancellor": "2013",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Oyo State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Osun State College of Technology,",
-  "vice_chancellor": "1991",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1011, Esa – Oke, Osun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Osun State Polytechnic, Iree,",
-  "vice_chancellor": "1992",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 301, Iree, Osun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Plateau State Polytechnic, Barkin-Ladi,",
-  "vice_chancellor": "1978",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 02023, Jos, Plateau State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Port-Harcourt Polytechnic",
-  "vice_chancellor": "1991",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 5936, Port-Harcourt,",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Rivers State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Ramat Polytechnic, Maiduguri,",
-  "vice_chancellor": "1976",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1070, Maiduguri,",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Borno State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Rufus Giwa Polytechnic, Owo,",
-  "vice_chancellor": "1979",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1019 Owo Ondo State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "The Polytechnic Ibadan,",
-  "vice_chancellor": "1970",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 22, Ibadan, Oyo State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Umaru Ali Shinkafi Polytechnic, Sokoto,",
-  "vice_chancellor": "2000",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 2356 Sokoto, Sokoto State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Zamfara State College of Arts and Science, Sani Abacha Way, Sokoto Road,",
-  "vice_chancellor": "2000",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "P.M.B. 1107, Gusau",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "state-polytechnic",
-  "url": ""
- },
- {
-  "name": "Al-Hikma Polytechnic Karu 1st Close, Off Tafawa Balewa Street,",
-  "vice_chancellor": "www.al-hikmapolytechnic.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Before Al-Hikma International Acadeny P.O. Box 453 Mararaba Gurku, Karu, Nasarawa State",
-  "vice_chancellor": "alhikmapolytechnic@yahoo.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": ""
- },
- {
-  "name": "Allover Central Polytechnic, Sango Ota, Plot 3A \u0026 B Abiodun Popoola Street,",
-  "vice_chancellor": "allovercentralpoly@yahoo.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "1998/2003"
- },
- {
-  "name": "Sango Ota, Ogun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": ""
- },
- {
-  "name": "Ajayi Polytechnic Ikere Ekiti, Ekiti State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2017"
- },
- {
-  "name": "Ashi Polytechnic, Anyiin, Logo Local Government P.M.B 102098, Benue State",
-  "vice_chancellor": "ashitechnigltd2007@gmail.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2018"
- },
- {
-  "name": "Best Solution Polytechnic, Akure KM 8 Akure - Ondo Road, P.O. Box 518, Akure, Ondo State",
-  "vice_chancellor": "bestsolutionn@yahoo.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Bolmor Polytechnic, GPO Box 11221 Dugbe, Ibadan, Oyo State.bolmorpolytechnic@yahoo.com",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2015"
- },
- {
-  "name": "Calvary Polytechnic, Owa-Oyibo, Delta State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Citi Polytechnic, Plot 182, Hillside Extension, Dutse-Dawaki Road, Dutse Alhaji, FCT Abuja.",
-  "vice_chancellor": "8062095916, 8065518944, 8166934660",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2018"
- },
- {
-  "name": "College of Technology, Iresi, Osun State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2014"
- },
- {
-  "name": "Covenant Polytechnic, Aba, P.M.B. 7065, Aba/Owerri Road, Abayi, Aba, Abia State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2010"
- },
- {
-  "name": "Crown Polytechnic, Ado-Ekiti, P.M.B. 5424, Km 10, Ilawe Road, Odo, Ekiti State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2008"
- },
- {
-  "name": "Dorben Polytechnic, Abuja, P. O. Box 6322 Garki, Bwari, Abuja.",
-  "vice_chancellor": "abupoly@yahoo.ca",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "1995/2008"
- },
- {
-  "name": "Eastern Polytechnic, 80c. Igwuruta Road (Tank), Rumuokwurusi, P.O. Box 12667 Port Harcourt, Rivers State.",
-  "vice_chancellor": "www.acmgt.org, info@acmggt.org",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2015"
- },
- {
-  "name": "Fidei Polytechnic, Gboko, P.M.B. 185, Km 8 Gboko-Aliade Road, Benue State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2007"
- },
- {
-  "name": "Gboko Polytechnic, Gboko, PMB 131, Gboko, Benue State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Global Polytechnic, Akure, Ondo State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Grace Polytechnic, Surulere, P.O. Box 9067, Lagos State.",
-  "vice_chancellor": "gracepoly@yahoo.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "1962/1999"
- },
- {
-  "name": "Heritage Polytechnic, Ikot Udota, Eket, Akwa Ibom State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2010"
- },
- {
-  "name": "Ibadan City Polytechnic, Alakia-Isebo/Iyana Church Road, PMB 10426, Ibadan, Oyo State",
-  "vice_chancellor": "www.icp.edu.ng",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2015"
- },
- {
-  "name": "Igbajo Polytechnic, Igbajo, P.M.B. 303, Osun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2009"
- },
- {
-  "name": "Interlink Polytechnic, Ijebu-Jesa, Km 1, Ado-Ekiti Road, P.M.B. 5060, Ijebu-Jesa, Osun State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2008"
- },
- {
-  "name": "Kalac Christal Polytechnic, 1A, Sikiru Adewale Street, Opposite Shoprite, Sangotedo, Lekki, Lagos State.",
-  "vice_chancellor": "info@kcpoly.edu.ng; www.kcpoly.ng",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2014"
- },
- {
-  "name": "Kings Polytechnic, Ubiaja, Edo State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2010"
- },
- {
-  "name": "Landmark Polytechnic, Ayetoro/Itele Via Ayobo, Ado Odo Ota LGA, Ogun State",
-  "vice_chancellor": "landmarkpoly@gmail.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2018"
- },
- {
-  "name": "Lagos City Polytechnic, Ikeja, P.M.B. 21200, Ikeja, Lagos State.",
-  "vice_chancellor": "info@lagoscitypolytechnic.net",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "1990/1995"
- },
- {
-  "name": "Lens Polytechnic, Kilometer 2 Irra Road, Beside Naval Base, Offa, Kawara State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Lighthouse Polytechnic, Sunshine Hills Evbuobanosa, Km 3, Asaba Road, P.M.B. 1724, Benin City, Edo State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2008"
- },
- {
-  "name": "Marist Polytechnic, Umuchigbo, Iji-Nike, Emene, Enugu State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Mater Dei Polytechnic",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2018"
- },
- {
-  "name": "Nacabs Polytechnic, Akwanga, P.M.B. 001 Akwanga, Nasarawa State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2013"
- },
- {
-  "name": "Nogak Polytechnic, Ikom, Cross Rivers State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2012"
- },
- {
-  "name": "Our Saviour Institute of Science, Agriculture \u0026 Technology, Enugu, P.M.B. 01161, Enugu, Enugu State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "1989/1991"
- },
- {
-  "name": "Prime Polytechnic, Jida Bassa, Ajaokuta, Kogi State.",
-  "vice_chancellor": "primepolytechnic@gmail.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2015"
- },
- {
-  "name": "Redeemers College of Technology and Management (RECTEM), KM 46 Lagos – Ibadan Expressway, Mowe, Ogun State",
-  "vice_chancellor": "www.rectem.edu.ng",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2018"
- },
- {
-  "name": "Ronik Polytechnic, Ejigbo, P.M.B. 21764, Ikeja, Lagos, Lagos State.",
-  "vice_chancellor": "ronikpolytechnic@yahoo.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2001/2003"
- },
- {
-  "name": "Saf Polytechnic, P.O. Box 55 Iseyin Oyo State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2018"
- },
- {
-  "name": "Savanah Institute of Technology, Ishieke Junction, Enugu-Abakaliki Expressway, Abakaliki, Ebonyi State",
-  "vice_chancellor": "www.savannah.edu.ng",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2017"
- },
- {
-  "name": "Shaka Polytechnic, No1 Prince Shaka Momodu Street, Ogiso, Off M.M. Way, P.M.B. 1240, Benin City, Edo State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2013"
- },
- {
-  "name": "St. Mary Polytechnic, Kwamba, P.M.B 418, Suleja, Niger State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2015"
- },
- {
-  "name": "Sure Foundation Polytechnic, Ikot Akai, Ukanafun LGA, Akwa Ibom State",
-  "vice_chancellor": "www.sfp.edu.ng",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Temple Gate Polytechnic, Abayi, Osisioma, P. O. Box 3448, Aba, Abia State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2009"
- },
- {
-  "name": "The Polytechnic, Igbo-Owu, Kwara State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2015"
- },
- {
-  "name": "The Polytechnic, Ile Ife, P.M.B. 009, O.A.U. Ile-Ife, Osun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "1994/1999"
- },
- {
-  "name": "The Polytechnic, Imesi-Ile, Km 2, Imesi-Ile/Igbajo Road, Osun State.",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2013"
- },
- {
-  "name": "The Polytechnic Otada Adoka, P.O.Box 280 Otukpo, Benue State",
-  "vice_chancellor": "www.thepolytechnicadoka.edu.ng",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Tower Polytechnic, Ibadan, 136, Liberty Road, P.O. Box 13039 G.P.O, Dugbe, Ibadan.",
-  "vice_chancellor": "towerpol@yahoo.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2010"
- },
- {
-  "name": "Trinity Polytechnic Uyo, Akwa Ibom State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Uma Ukpai Polytechnic, Asaga Ohafia, Abia State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2017"
- },
- {
-  "name": "Uyo City Polytechnic, P.M.B. 1067, Uyo, Akwa Ibom State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2014"
- },
- {
-  "name": "Valley View Polytechnic, Ohafia, Abia State",
-  "vice_chancellor": "",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "2016"
- },
- {
-  "name": "Wolex Polytechnic, Iwo. 1Km. 2, Iwo-Ejigbo Road, P.O. Box 255, Osun State.",
-  "vice_chancellor": "wolexpoju@yahoo.com",
-  "year_of_establishment": "",
-  "type": "private-polytechnic",
-  "url": "1996/1999"
  },
  {
   "name": "Rivers State University",
@@ -3309,5 +2833,1013 @@
   "year_of_establishment": "2025",
   "type": "private-univeristy",
   "url": ""
+ },
+ {
+  "name": "Abdu Gusau Polytechnic, Talata Mafara",
+  "vice_chancellor": "1992",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1021, Talata Mafara, Zamfara State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Abia State Polytechnic, Aba,",
+  "vice_chancellor": "1992",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 7166, Aba, Abia State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Abraham Adesanya Polytechnic, Dogbolu/Akanran Ibadan Road, Atikori, Ijebu Igbo,",
+  "vice_chancellor": "2004",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1020, Ijebu-Igbo, Ogun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Abubakar Tatari Ali Polytechnic, Bauchi,",
+  "vice_chancellor": "1988",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Jos Rd, Bauchi, Bauchi State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Adamawa State Polytechnic, Yola,",
+  "vice_chancellor": "1991",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 2146, Yola,",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Adamawa State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Akwa Ibom State College of Art \u0026 Science, Nung Ukim,",
+  "vice_chancellor": "1997",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1044, Akwa Ibom State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Akwa Ibom State Polytechnic,",
+  "vice_chancellor": "1991",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Ikot Osurua, Ikot -Ekpene,",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Akwa Ibom State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Bayelsa State College of Arts and Science, Elebele,",
+  "vice_chancellor": "2002",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.O. Box 1766, Yenogoa",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Benue State Polytechnic, Ugbokolo,",
+  "vice_chancellor": "1976",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 01 Ugbokolo, Benue State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Binyaminu Usman Polytechnic, Hadejia,",
+  "vice_chancellor": "2016",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Jigawa State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Cross River State Institute of Technology And Management, Ugep",
+  "vice_chancellor": "2012",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "D.S. Adegbenro ICT Polytechnic, Itori-Ewekoro,",
+  "vice_chancellor": "2004",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 5026, Ifo, Ogun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Delta State Polytechnic, Ogwashi-Uku,",
+  "vice_chancellor": "2002",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1030, Ogwashi-Uku,",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Delta State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Delta State Polytechnic, Otefe-Oghara,",
+  "vice_chancellor": "2002",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 03, Otefe-Oghara, Delta State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Delta State Polytechnic, Ozoro,",
+  "vice_chancellor": "2003",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 05, Ozoro, Delta State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Edo State Institute of Technology and Management, Usen.",
+  "vice_chancellor": "2002",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1104, Benin City, Edo State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Gateway Polytechnic, Saapade Prof. Wole Soyinka Way, Saapade Estate,",
+  "vice_chancellor": "2004",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 2003, Isara Ode-Remo, Ogun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Hassan Usman Katsina Polytechnic (HUK),",
+  "vice_chancellor": "1983",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 2052, Katsina, Nigeria.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Ibarapa Polytechnic, Eruwa",
+  "vice_chancellor": "2013",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Oyo State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Imo State Polytechnic, Umuagwo, Ohaji,",
+  "vice_chancellor": "1978",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1472, Umuagwo, Ohaji Owerri, Imo State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Institute of Management and Technology, Enugu,",
+  "vice_chancellor": "1965",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B 01079, Enugu, Enugu State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Jigawa State Polytechnic, Dutse",
+  "vice_chancellor": "1991/2008",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Block 40-42, Old Secretariat,",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 7040, Dutse, Jigawa State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Kano State Polytechnic, Kano,",
+  "vice_chancellor": "1976",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 3401, Kano, Kano State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Ken Sarowiwa Polytechnic, Bori,",
+  "vice_chancellor": "1988",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 20, Bori, Rivers State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Kogi State Polytechnic, Lokoja,",
+  "vice_chancellor": "1993",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1101, Lokoja Kogi State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Kwara State Polytechnic, Ilorin",
+  "vice_chancellor": "1973",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1375, Ilorin, Kwara State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Lagos State Polytechnic, Ikorodu,",
+  "vice_chancellor": "1977",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 21606, Ikeja, Lagos, Lagos State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Mai-Idris Alooma Polytechnic, Geidam,",
+  "vice_chancellor": "2002",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1020 Geidam, Yobe State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Nasarawa State Polytechnic,",
+  "vice_chancellor": "2001",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P. M. B. 109, Lafia, Nasarawa State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Niger State Polytechnic, Zungeru,",
+  "vice_chancellor": "1991",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1 Zungeru, Niger State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Nuhu Bamalli Polytechnic, Zaria,",
+  "vice_chancellor": "1989",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1061 Zaria Kaduna State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Ogun State Institute of Technology, Igbesa",
+  "vice_chancellor": "2004",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Oba Adesola Market Road,",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 2005, Igbesa, Ogun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Ogun State Polytechnic, Ipokia",
+  "vice_chancellor": "2017",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Oke-Ogun Polytechnic, Shaki,",
+  "vice_chancellor": "2013",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Oyo State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Osun State College of Technology,",
+  "vice_chancellor": "1991",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1011, Esa – Oke, Osun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Osun State Polytechnic, Iree,",
+  "vice_chancellor": "1992",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 301, Iree, Osun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Plateau State Polytechnic, Barkin-Ladi,",
+  "vice_chancellor": "1978",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 02023, Jos, Plateau State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Port-Harcourt Polytechnic",
+  "vice_chancellor": "1991",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 5936, Port-Harcourt,",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Rivers State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Ramat Polytechnic, Maiduguri,",
+  "vice_chancellor": "1976",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1070, Maiduguri,",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Borno State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Rufus Giwa Polytechnic, Owo,",
+  "vice_chancellor": "1979",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1019 Owo Ondo State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "The Polytechnic Ibadan,",
+  "vice_chancellor": "1970",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 22, Ibadan, Oyo State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Umaru Ali Shinkafi Polytechnic, Sokoto,",
+  "vice_chancellor": "2000",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 2356 Sokoto, Sokoto State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Zamfara State College of Arts and Science, Sani Abacha Way, Sokoto Road,",
+  "vice_chancellor": "2000",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "P.M.B. 1107, Gusau",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "state-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Al-Hikma Polytechnic Karu 1st Close, Off Tafawa Balewa Street,",
+  "vice_chancellor": "www.al-hikmapolytechnic.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Before Al-Hikma International Acadeny P.O. Box 453 Mararaba Gurku, Karu, Nasarawa State",
+  "vice_chancellor": "alhikmapolytechnic@yahoo.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Allover Central Polytechnic, Sango Ota, Plot 3A \u0026 B Abiodun Popoola Street,",
+  "vice_chancellor": "allovercentralpoly@yahoo.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "1998/2003"
+ },
+ {
+  "name": "Sango Ota, Ogun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": ""
+ },
+ {
+  "name": "Ajayi Polytechnic Ikere Ekiti, Ekiti State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2017"
+ },
+ {
+  "name": "Ashi Polytechnic, Anyiin, Logo Local Government P.M.B 102098, Benue State",
+  "vice_chancellor": "ashitechnigltd2007@gmail.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2018"
+ },
+ {
+  "name": "Best Solution Polytechnic, Akure KM 8 Akure - Ondo Road, P.O. Box 518, Akure, Ondo State",
+  "vice_chancellor": "bestsolutionn@yahoo.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Bolmor Polytechnic, GPO Box 11221 Dugbe, Ibadan, Oyo State.bolmorpolytechnic@yahoo.com",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2015"
+ },
+ {
+  "name": "Calvary Polytechnic, Owa-Oyibo, Delta State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Citi Polytechnic, Plot 182, Hillside Extension, Dutse-Dawaki Road, Dutse Alhaji, FCT Abuja.",
+  "vice_chancellor": "8062095916, 8065518944, 8166934660",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2018"
+ },
+ {
+  "name": "College of Technology, Iresi, Osun State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2014"
+ },
+ {
+  "name": "Covenant Polytechnic, Aba, P.M.B. 7065, Aba/Owerri Road, Abayi, Aba, Abia State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2010"
+ },
+ {
+  "name": "Crown Polytechnic, Ado-Ekiti, P.M.B. 5424, Km 10, Ilawe Road, Odo, Ekiti State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2008"
+ },
+ {
+  "name": "Dorben Polytechnic, Abuja, P. O. Box 6322 Garki, Bwari, Abuja.",
+  "vice_chancellor": "abupoly@yahoo.ca",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "1995/2008"
+ },
+ {
+  "name": "Eastern Polytechnic, 80c. Igwuruta Road (Tank), Rumuokwurusi, P.O. Box 12667 Port Harcourt, Rivers State.",
+  "vice_chancellor": "www.acmgt.org, info@acmggt.org",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2015"
+ },
+ {
+  "name": "Fidei Polytechnic, Gboko, P.M.B. 185, Km 8 Gboko-Aliade Road, Benue State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2007"
+ },
+ {
+  "name": "Gboko Polytechnic, Gboko, PMB 131, Gboko, Benue State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Global Polytechnic, Akure, Ondo State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Grace Polytechnic, Surulere, P.O. Box 9067, Lagos State.",
+  "vice_chancellor": "gracepoly@yahoo.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "1962/1999"
+ },
+ {
+  "name": "Heritage Polytechnic, Ikot Udota, Eket, Akwa Ibom State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2010"
+ },
+ {
+  "name": "Ibadan City Polytechnic, Alakia-Isebo/Iyana Church Road, PMB 10426, Ibadan, Oyo State",
+  "vice_chancellor": "www.icp.edu.ng",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2015"
+ },
+ {
+  "name": "Igbajo Polytechnic, Igbajo, P.M.B. 303, Osun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2009"
+ },
+ {
+  "name": "Interlink Polytechnic, Ijebu-Jesa, Km 1, Ado-Ekiti Road, P.M.B. 5060, Ijebu-Jesa, Osun State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2008"
+ },
+ {
+  "name": "Kalac Christal Polytechnic, 1A, Sikiru Adewale Street, Opposite Shoprite, Sangotedo, Lekki, Lagos State.",
+  "vice_chancellor": "info@kcpoly.edu.ng; www.kcpoly.ng",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2014"
+ },
+ {
+  "name": "Kings Polytechnic, Ubiaja, Edo State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2010"
+ },
+ {
+  "name": "Landmark Polytechnic, Ayetoro/Itele Via Ayobo, Ado Odo Ota LGA, Ogun State",
+  "vice_chancellor": "landmarkpoly@gmail.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2018"
+ },
+ {
+  "name": "Lagos City Polytechnic, Ikeja, P.M.B. 21200, Ikeja, Lagos State.",
+  "vice_chancellor": "info@lagoscitypolytechnic.net",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "1990/1995"
+ },
+ {
+  "name": "Lens Polytechnic, Kilometer 2 Irra Road, Beside Naval Base, Offa, Kawara State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Lighthouse Polytechnic, Sunshine Hills Evbuobanosa, Km 3, Asaba Road, P.M.B. 1724, Benin City, Edo State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2008"
+ },
+ {
+  "name": "Marist Polytechnic, Umuchigbo, Iji-Nike, Emene, Enugu State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Mater Dei Polytechnic",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2018"
+ },
+ {
+  "name": "Nacabs Polytechnic, Akwanga, P.M.B. 001 Akwanga, Nasarawa State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2013"
+ },
+ {
+  "name": "Nogak Polytechnic, Ikom, Cross Rivers State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2012"
+ },
+ {
+  "name": "Our Saviour Institute of Science, Agriculture \u0026 Technology, Enugu, P.M.B. 01161, Enugu, Enugu State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "1989/1991"
+ },
+ {
+  "name": "Prime Polytechnic, Jida Bassa, Ajaokuta, Kogi State.",
+  "vice_chancellor": "primepolytechnic@gmail.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2015"
+ },
+ {
+  "name": "Redeemers College of Technology and Management (RECTEM), KM 46 Lagos – Ibadan Expressway, Mowe, Ogun State",
+  "vice_chancellor": "www.rectem.edu.ng",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2018"
+ },
+ {
+  "name": "Ronik Polytechnic, Ejigbo, P.M.B. 21764, Ikeja, Lagos, Lagos State.",
+  "vice_chancellor": "ronikpolytechnic@yahoo.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2001/2003"
+ },
+ {
+  "name": "Saf Polytechnic, P.O. Box 55 Iseyin Oyo State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2018"
+ },
+ {
+  "name": "Savanah Institute of Technology, Ishieke Junction, Enugu-Abakaliki Expressway, Abakaliki, Ebonyi State",
+  "vice_chancellor": "www.savannah.edu.ng",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2017"
+ },
+ {
+  "name": "Shaka Polytechnic, No1 Prince Shaka Momodu Street, Ogiso, Off M.M. Way, P.M.B. 1240, Benin City, Edo State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2013"
+ },
+ {
+  "name": "St. Mary Polytechnic, Kwamba, P.M.B 418, Suleja, Niger State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2015"
+ },
+ {
+  "name": "Sure Foundation Polytechnic, Ikot Akai, Ukanafun LGA, Akwa Ibom State",
+  "vice_chancellor": "www.sfp.edu.ng",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Temple Gate Polytechnic, Abayi, Osisioma, P. O. Box 3448, Aba, Abia State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2009"
+ },
+ {
+  "name": "The Polytechnic, Igbo-Owu, Kwara State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2015"
+ },
+ {
+  "name": "The Polytechnic, Ile Ife, P.M.B. 009, O.A.U. Ile-Ife, Osun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "1994/1999"
+ },
+ {
+  "name": "The Polytechnic, Imesi-Ile, Km 2, Imesi-Ile/Igbajo Road, Osun State.",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2013"
+ },
+ {
+  "name": "The Polytechnic Otada Adoka, P.O.Box 280 Otukpo, Benue State",
+  "vice_chancellor": "www.thepolytechnicadoka.edu.ng",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Tower Polytechnic, Ibadan, 136, Liberty Road, P.O. Box 13039 G.P.O, Dugbe, Ibadan.",
+  "vice_chancellor": "towerpol@yahoo.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2010"
+ },
+ {
+  "name": "Trinity Polytechnic Uyo, Akwa Ibom State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Uma Ukpai Polytechnic, Asaga Ohafia, Abia State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2017"
+ },
+ {
+  "name": "Uyo City Polytechnic, P.M.B. 1067, Uyo, Akwa Ibom State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2014"
+ },
+ {
+  "name": "Valley View Polytechnic, Ohafia, Abia State",
+  "vice_chancellor": "",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "2016"
+ },
+ {
+  "name": "Wolex Polytechnic, Iwo. 1Km. 2, Iwo-Ejigbo Road, P.O. Box 255, Osun State.",
+  "vice_chancellor": "wolexpoju@yahoo.com",
+  "year_of_establishment": "",
+  "type": "private-polytechnic",
+  "url": "1996/1999"
  }
 ]

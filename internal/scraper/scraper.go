@@ -40,14 +40,22 @@ func NewInstitutionScrapper() *InstitutionScrapper {
 	return &InstitutionScrapper{}
 }
 
-func (s *InstitutionScrapper) ScrapeAllInstitution() {
+func (s *InstitutionScrapper) ScrapeAllInstitution() ([]model.Institution, error) {
+	var allInstitutions []model.Institution
 	for _, institution := range InstitutionRegistry {
-		_, _ = s.scrapeInstitution(institution.URL, string(institution.Type))
+		institutions, err := s.scrapeInstitution(institution.URL, string(institution.Type))
+		fmt.Println("scraped institutions", institutions)
+		if err != nil {
+			return nil, err
+		}
+		allInstitutions = append(allInstitutions, institutions...)
 	}
+	fmt.Println("all institutions", allInstitutions)
+	return allInstitutions, nil
 }
 
 func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]model.Institution, error) {
-	fmt.Println("Scraping", instituteType)
+	// fmt.Println("Scraping", instituteType)
 
 	collector := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"),
@@ -88,7 +96,6 @@ func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]mo
 		}
 
 		institutions = append(institutions, institution)
-
 	})
 
 	// for education.gov.ng (tablepress layout)
@@ -114,10 +121,9 @@ func (s *InstitutionScrapper) scrapeInstitution(url, instituteType string) ([]mo
 		}
 
 		institutions = append(institutions, institution)
-
 	})
 
-	fmt.Println("institutions", institutions)
+	// fmt.Println("institutions", institutions)
 	utils.WriteJSON("nigerian-institutions.json", institutions)
 
 	collector.OnRequest(func(r *colly.Request) {

@@ -32,7 +32,7 @@ const (
 	PrivatePolytechnicURL = "https://education.gov.ng/private-polytechnics/"
 
 	// college of education
-	FederalCollegeEductionURL = "https://education.gov.ng/federal-colleges/"
+	FederalCollegeEductionURL = "https://education.gov.ng/federal-college-of-education/"
 	StateCollegeEductionURL   = "https://education.gov.ng/state-college-of-education/"
 	PrivateCollegeEductionURL = "https://education.gov.ng/private-college-of-education/"
 )
