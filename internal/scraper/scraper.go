@@ -27,9 +27,9 @@ var InstitutionRegistry = map[constants.InstitutionType]InstitutionSource{
 	constants.PrivatePolytechnic: {URL: constants.PrivatePolytechnicURL, Type: constants.PrivatePolytechnic},
 
 	// college of education
-	constants.FederalCollegeEduction: {URL: constants.FederalCollegeEductionURL, Type: constants.FederalCollegeEduction},
-	constants.StateCollegeEduction:   {URL: constants.StateCollegeEductionURL, Type: constants.StateCollegeEduction},
-	constants.PrivateCollegeEduction: {URL: constants.PrivateCollegeEductionURL, Type: constants.PrivateCollegeEduction},
+	constants.FederalCollegeEducation: {URL: constants.FederalCollegeEducationURL, Type: constants.FederalCollegeEducation},
+	constants.StateCollegeEducation:   {URL: constants.StateCollegeEducationURL, Type: constants.StateCollegeEducation},
+	constants.PrivateCollegeEducation: {URL: constants.PrivateCollegeEducationURL, Type: constants.PrivateCollegeEducation},
 }
 
 type InstitutionScrapper struct{}

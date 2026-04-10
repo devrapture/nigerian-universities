@@ -6,8 +6,8 @@ type InstitutionType string
 const (
 	// Universities
 	FederalUniversity InstitutionType = "federal-university"
-	StateUniversity   InstitutionType = "state-univerisity"
-	PrivateUniversity InstitutionType = "private-univeristy"
+	StateUniversity   InstitutionType = "state-university"
+	PrivateUniversity InstitutionType = "private-university"
 
 	// Polytechnics
 	FederalPolytechnic InstitutionType = "federal-polytechnic"
@@ -15,9 +15,9 @@ const (
 	PrivatePolytechnic InstitutionType = "private-polytechnic"
 
 	// Colleges of education
-	FederalCollegeEduction InstitutionType = "federal-college-education"
-	StateCollegeEduction   InstitutionType = "state-college-education"
-	PrivateCollegeEduction InstitutionType = "private-college-education"
+	FederalCollegeEducation InstitutionType = "federal-college-education"
+	StateCollegeEducation   InstitutionType = "state-college-education"
+	PrivateCollegeEducation InstitutionType = "private-college-education"
 )
 
 // URLs for scraping each institution type.
@@ -32,7 +32,7 @@ const (
 	PrivatePolytechnicURL = "https://education.gov.ng/private-polytechnics/"
 
 	// college of education
-	FederalCollegeEductionURL = "https://education.gov.ng/federal-college-of-education/"
-	StateCollegeEductionURL   = "https://education.gov.ng/state-college-of-education/"
-	PrivateCollegeEductionURL = "https://education.gov.ng/private-college-of-education/"
+	FederalCollegeEducationURL = "https://education.gov.ng/federal-college-of-education/"
+	StateCollegeEducationURL   = "https://education.gov.ng/state-college-of-education/"
+	PrivateCollegeEducationURL = "https://education.gov.ng/private-college-of-education/"
 )

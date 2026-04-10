@@ -27,10 +27,10 @@ func main() {
 	s := scraper.NewInstitutionScrapper()
 	institutionService := service.NewInstitutionService(repo)
 	institutions, err := s.ScrapeAllInstitution()
-	log.Printf("scraping completed successfully: %d institutions processed", len(institutions))
 	if err != nil {
 		log.Fatalf("Failed to scrape institutions: %v", err)
 	}
+	log.Printf("scraping completed successfully: %d institutions processed", len(institutions))
 	if err := institutionService.StoreScrapedInstitutions(context.Background(), institutions); err != nil {
 		log.Fatalf("saving scraped data failed: %v", err)
 	}
