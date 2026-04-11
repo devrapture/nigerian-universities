@@ -31,7 +31,7 @@ func GetAllInstitutions(svc service.InstitutionService) gin.HandlerFunc {
 		}
 		allInstitution, total, err := svc.GetAllInstitutions(c.Request.Context(), queryDTO)
 		if err != nil {
-			utils.ErrorResponse(c, http.StatusInternalServerError, "", "unable to get data")
+			utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
 			return
 		}
 
@@ -47,6 +47,7 @@ func GetAllInstitutions(svc service.InstitutionService) gin.HandlerFunc {
 
 // parseListQuery manually parses query params to give clearer error messages than the default binder.
 func parseListQuery(c *gin.Context) (dto.ListInstitutionQuery, error) {
+	const maxLimit = 100
 	q := dto.ListInstitutionQuery{
 		Search: strings.TrimSpace(c.Query("search")),
 	}
@@ -57,12 +58,19 @@ func parseListQuery(c *gin.Context) (dto.ListInstitutionQuery, error) {
 		return q, friendlyNumErr("page", pageStr)
 	}
 	q.Page = page
+	if page < 1 {
+		return q, fmt.Errorf("query parameter 'page' must be at least 1, got '%d'", page)
+	}
 
 	limitStr := c.DefaultQuery("limit", "10")
 	limit, err := strconv.Atoi(limitStr)
 	if err != nil {
 		return q, friendlyNumErr("limit", limitStr)
 	}
+	if limit > maxLimit {
+		return q, fmt.Errorf("query parameter 'limit' must be <= %d", maxLimit)
+	}
+
 	q.Limit = limit
 
 	// optional type; leave empty if not provided
