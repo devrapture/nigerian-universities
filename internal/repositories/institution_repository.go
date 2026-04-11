@@ -4,15 +4,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
+	"github.com/coolpythoncodes/nigerian-universities/internal/dto"
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
 	"gorm.io/gorm"
 )
 
 type InstitutionRepository interface {
 	UpsertMany(ctx context.Context, institutions []model.Institution) error
-	FindAll(ctx context.Context) ([]model.Institution, error)
+	FindAll(ctx context.Context, queryDto dto.ListInstitutionQuery) ([]model.Institution, int64, error)
 }
 
 type institutionRepository struct {
@@ -49,7 +51,6 @@ func (r *institutionRepository) UpsertMany(ctx context.Context, institutions []m
 			institution.LastScrapedAt = &now
 			if err := r.db.WithContext(ctx).Create(&institution).Error; err != nil {
 				return err
-
 			}
 			continue
 		}
@@ -60,10 +61,29 @@ func (r *institutionRepository) UpsertMany(ctx context.Context, institutions []m
 	return nil
 }
 
-func (r *institutionRepository) FindAll(ctx context.Context) ([]model.Institution, error) {
+func (r *institutionRepository) FindAll(ctx context.Context, queryDto dto.ListInstitutionQuery) ([]model.Institution, int64, error) {
 	var institutions []model.Institution
-	if err := r.db.WithContext(ctx).Find(&institutions).Error; err != nil {
-		return nil, err
+	var total int64
+	query := r.db.WithContext(ctx).Model(&model.Institution{})
+
+	if queryDto.Type != "" {
+		query = query.Where("type=?", queryDto.Type)
 	}
-	return institutions, nil
+
+	if queryDto.Search != "" {
+		search := strings.ToLower(queryDto.Search)
+		query = query.Where("LOWER(name) LIKE ?", "%"+search+"%")
+	}
+
+	query.Count(&total)
+
+	query = query.Order("name ASC").
+		Offset((queryDto.Page - 1) * queryDto.Limit).
+		Limit(queryDto.Limit)
+
+	if err := query.Find(&institutions).Error; err != nil {
+		return nil, 0, err
+	}
+
+	return institutions, total, nil
 }
