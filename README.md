@@ -1,178 +1,125 @@
-## Nigerian Universities API Documentation
+# Nigerian Institutions API
 
-### Table of Contents
+A comprehensive API and scraper for Nigerian educational institutions, including Universities, Polytechnics, and Colleges of Education. Data is scraped from official sources such as the National Universities Commission (NUC) and the Federal Ministry of Education.
 
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Endpoints](#endpoints)
+## Project Structure
 
-### Overview
+This project follows the standard Go project layout:
 
-This API provides access to a list of Nigerian universities' scraped from the official website of the National Universities Commission (NUC) - https://www.nuc.edu.ng/.
+- `cmd/`: Entry points for the application.
+  - `api/`: The web API server.
+  - `scraper/`: The data scraping utility.
+- `internal/`: Private application and library code.
+  - `config/`: Configuration management.
+  - `constants/`: System-wide constants (e.g., institution types, URLs).
+  - `database/`: Database connection and initialization.
+  - `dto/`: Data Transfer Objects for API requests and responses.
+  - `handlers/`: HTTP request handlers.
+  - `model/`: GORM models.
+  - `repositories/`: Database access layer.
+  - `routes/`: API route definitions.
+  - `scraper/`: Scraping logic.
+  - `service/`: Business logic layer.
+  - `utils/`: Common utilities (e.g., standardized API responses).
+- `migrations/`: SQL migration files for database schema management.
 
-### Prerequisites
+## Prerequisites
 
-- [Go](https://go.dev/doc/install) installed
-- [Docker](https://www.docker.com/get-started/) installed (optional)
+- [Go](https://go.dev/doc/install) (v1.25.0 or later)
+- [PostgreSQL](https://www.postgresql.org/)
+- [golang-migrate](https://github.com/golang-migrate/migrate) (for running migrations)
+- [Air](https://github.com/cosmtrek/air) (optional, for live reloading)
 
-### Installation
+## Installation & Setup
 
-To run the API locally, follow these steps:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/coolpythoncodes/nigerian-universities.git
+   cd nigerian-universities
+   ```
 
-1. Clone the repository from Github:
+2. **Configure Environment Variables:**
+   Create a `.env` file in the root directory:
+   ```env
+   PORT=8080
+   DATABASE_URL=postgres://user:password@localhost:5432/dbname?sslmode=disable
+   App_Env=development
+   ```
 
+3. **Run Database Migrations:**
+   ```bash
+   make migrate-up
+   ```
+
+4. **Scrape Initial Data:**
+   Before running the API, you need to populate the database with institution data:
+   ```bash
+   go run cmd/scraper/main.go
+   ```
+
+5. **Run the API Server:**
+   ```bash
+   # Using Make (with Air for hot-reload)
+   make dev
+
+   # Or directly
+   go run cmd/api/main.go
+   ```
+
+## API Endpoints
+
+All API endpoints are prefixed with `/api/v1`.
+
+### Health Check
+`GET /api/v1/health`
+- Returns the status of the API.
+
+### Institutions
+`GET /api/v1/institutions`
+- Fetches a list of institutions with support for pagination, searching, and filtering.
+
+**Query Parameters:**
+- `page` (default: 1): The page number.
+- `limit` (default: 10, max: 100): Number of items per page.
+- `search`: Search institutions by name.
+- `type`: Filter by institution type. Valid types include:
+  - `federal-university`, `state-university`, `private-university`
+  - `federal-polytechnic`, `state-polytechnic`, `private-polytechnic`
+  - `federal-college-education`, `state-college-education`, `private-college-education`
+
+**Example Request:**
 ```bash
-git clone https://github.com/coolpythoncodes/nigerian-universities.git
+curl "http://localhost:8080/api/v1/institutions?type=federal-university&search=lagos"
 ```
 
-2. Navigate to the project directory:
-
-```bash
-cd nigerian-universities
-```
-
-3. Run the application:
-
-```bash
-go run main.go
-```
-
-The application will be served on port `8080`
-
-### Endpoints
-
-The App provides the following endpoints:
-
-GET / fetches all the Nigerian universities (Federal, State and Private)
-
-Example
-
-```bash
-curl http://localhost:8080
-```
-
-Response
-
+**Example Response:**
 ```json
-error: false,
-message: "success"
-data: [
+{
+  "success": true,
+  "message": "fetched all institutions",
+  "data": [
     {
-        name: "Abubakar Tafawa Balewa University, Bauchi",
-        vice_chancellor: "Professor M A Abdulazeez",
-        year_of_establishment: "1988",
-        type: "Federal",
-        url: "https://www.atbu.edu.ng"
-    },
-    {
-        name: "Ahmadu Bello University, Zaria",
-        vice_chancellor: "Professor Kabir Bala",
-        year_of_establishment: "1962",
-        type: "Federal",
-        url: "https://www.abu.edu.ng"
-    },
-    // more universities with also State and Private
-]
+      "id": "...",
+      "name": "University of Lagos",
+      "vice_chancellor": "...",
+      "year_of_establishment": "1962",
+      "type": "federal-university",
+      "url": "https://unilag.edu.ng"
+    }
+  ],
+  "meta": {
+    "current_page": 1,
+    "limit": 10,
+    "total_items": 1,
+    "total_pages": 1
+  }
+}
 ```
 
+## Contributing
 
-GET /federal fetches all the Nigerian Federal universities
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Example
+## License
 
-```bash
-curl http://localhost:8080/federal
-```
-
-Response
-
-```json
-error: false,
-message: "success"
-data: [
-    {
-        name: "Abubakar Tafawa Balewa University, Bauchi",
-        vice_chancellor: "Professor M A Abdulazeez",
-        year_of_establishment: "1988",
-        type: "Federal",
-        url: "https://www.atbu.edu.ng"
-    },
-    {
-        name: "Ahmadu Bello University, Zaria",
-        vice_chancellor: "Professor Kabir Bala",
-        year_of_establishment: "1962",
-        type: "Federal",
-        url: "https://www.abu.edu.ng"
-    },
-    // more federal universities 
-]
-```
-
-GET /state fetches all the Nigerian State universities
-
-Example
-
-```bash
-curl http://localhost:8080/state
-```
-
-Response
-
-```json
-error: false,
-message: "success"
-data: [
-    {
-        name: "Abia State University, Uturu",
-        vice_chancellor: "Prof. Onyemachi M. Ogbulu",
-        year_of_establishment: "1981",
-        type: "State",
-        url: "https://www.abiastateuniversity.edu.ng"
-    },
-    {
-        name: "Adamawa State University Mubi",
-        vice_chancellor: "Prof (Mrs) Kaletapwa Farauta",
-        year_of_establishment: "2002",
-        type: "State",
-        url: "https://www.adsu.edu.ng"
-    },
-    // more state universities 
-]
-```
-
-
-GET /private fetches all the Nigerian Private universities
-
-Example
-
-```bash
-curl http://localhost:8080/private
-```
-
-Response
-
-```json
-error: false,
-message: "success"
-data: [
-    {
-        name: "Achievers University, Owo",
-        vice_chancellor: "Professor Samuel Aje",
-        year_of_establishment: "2007",
-        type: "Private",
-        url: "https://www.achievers.edu.ng"
-    },
-    {
-        name: "Adeleke University, Ede",
-        vice_chancellor: "Prof. Samuel E Alao",
-        year_of_establishment: "2011",
-        type: "Private",
-        url: "https://www.adelekeuniversity.edu.ng"
-    },
-    // more private universities 
-]
-```
-
-
+This project is licensed under the MIT License.
