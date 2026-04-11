@@ -1,6 +1,6 @@
 package models
 
-type Universities struct {
+type Institution struct {
 	Name                string `json:"name"`
 	ViceChancellor      string `json:"vice_chancellor"`
 	YearOfEstablishment string `json:"year_of_establishment"`
