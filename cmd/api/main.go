@@ -35,7 +35,7 @@ func main() {
 
 	log.Printf("Server starting on %s", addr)
 
-	r := routes.Setup(svc, db, authHandler, userSvc)
+	r := routes.Setup(svc, db, authHandler)
 
 	if err := r.Run(addr); err != nil {
 		log.Fatalf("Failed to start server: %v", err)

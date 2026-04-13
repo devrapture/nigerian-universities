@@ -47,11 +47,9 @@ func Load() (*Config, error) {
 	jwtSecret := getEnv("JWT_SECRET", "")
 
 	if jwtSecret == "" {
-		appEnv := os.Getenv("APP_ENV")
 		if appEnv == "production" {
 			return nil, fmt.Errorf("JWT_SECRET must be set in production")
 		}
-		log.Println("JWT_SECRET is not set, generating a random secret")
 		log.Println("WARNING: using insecure default JWT_SECRET for development")
 		jwtSecret = "dev-secret-do-not-use-in-production"
 	}
@@ -74,7 +72,7 @@ func Load() (*Config, error) {
 		AppEnv:               appEnv,
 		Port:                 getEnv("PORT", "8080"),
 		DatabaseURL:          dbURL,
-		FrontendURL:          getEnv("FRONTEND_URL", "localhost:3000"),
+		FrontendURL:          getEnv("FRONTEND_URL", "http://localhost:3000"),
 		JwtSecret:            jwtSecret,
 		JwtExpires:           jwtHours,
 		GOOGLE_CLIENT_ID:     googleClientID,

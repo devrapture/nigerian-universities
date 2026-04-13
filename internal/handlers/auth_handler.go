@@ -54,7 +54,7 @@ func (h *AuthHandler) GoogleCallback(c *gin.Context) {
 	user, jwtToken, err := h.userService.HandleGoogleCallback(c, code)
 
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "Authentication failed")
 		return
 	}
 
@@ -67,6 +67,9 @@ func (h *AuthHandler) GoogleCallback(c *gin.Context) {
 }
 
 func toUserPayload(u *model.User) UserPayload {
+	if u == nil {
+		return UserPayload{}
+	}
 	return UserPayload{
 		ID:        u.ID,
 		Email:     u.Email,
@@ -96,7 +99,6 @@ func (h *AuthHandler) LoginWithGoogle(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Success", response, nil)
 }
 
-
 func (h *AuthHandler) GithubLogin(c *gin.Context) {
-	
+
 }

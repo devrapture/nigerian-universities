@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Setup(svc service.InstitutionService, db *gorm.DB, authHandler *handlers.AuthHandler, userSvc service.UserService) *gin.Engine {
+func Setup(svc service.InstitutionService, db *gorm.DB, authHandler *handlers.AuthHandler) *gin.Engine {
 	r := gin.Default()
 
 	v1 := r.Group("/api/v1")

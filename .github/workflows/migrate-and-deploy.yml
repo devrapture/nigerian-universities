@@ -26,7 +26,7 @@ jobs:
       - name: Run migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          ATLAS_DEV_URL: ${{ secrets.ATLAS_DEV_URL }}
+          ATLAS_DEV_URL: ${{ secrets.z }}
         run: atlas migrate apply --env local
 
       - name: Trigger Vercel deploy (optional)

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"net/http"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/config"
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
@@ -40,7 +41,7 @@ func NewUserService(cfg *config.Config, repo repositories.UserRepository) UserSe
 		ClientID:     cfg.GITHUB_CLIENT_ID,
 		ClientSecret: cfg.GITHUB_CLIENT_SECRET,
 		RedirectURL:  cfg.GITHUB_REDIRECT_URL,
-		Scopes:       []string{"read.user", "user:email"},
+		Scopes:       []string{"read:user", "user:email"},
 		Endpoint:     github.Endpoint,
 	}
 	return &userService{
@@ -64,6 +65,10 @@ func (s *userService) HandleGoogleCallback(ctx context.Context, code string) (*m
 		return nil, "", errors.New("failed to get user info")
 	}
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, "", errors.New("failed to get user info")
+	}
 
 	var userInfo struct {
 		ID      string `json:"id"`
