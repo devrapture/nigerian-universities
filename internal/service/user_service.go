@@ -8,7 +8,6 @@ import (
 	"errors"
 	"log"
 	"net/http"
-	"strconv"
 	"sync"
 	"time"
 
@@ -26,8 +25,8 @@ var ErrInvalidOAuthState = errors.New("invalid oauth state")
 type UserService interface {
 	GetGoogleAuthURL(ctx context.Context) (string, error)
 	HandleGoogleCallback(ctx context.Context, code, state string) (*model.User, string, error)
-	HandleLoginWithGoogle(ctx context.Context, id, email, name, picture string) (*model.User, string, error)
-	HandleLoginWithGithub(ctx context.Context, id, email, name, picture string) (*model.User, string, error)
+	HandleLoginWithGoogle(ctx context.Context, idToken string) (*model.User, string, error)
+	HandleLoginWithGithub(ctx context.Context, accessToken string) (*model.User, string, error)
 	GetGithubAuthUrl(ctx context.Context) (string, error)
 	HandleGithubCallback(ctx context.Context, code, state string) (*model.User, string, error)
 }
@@ -138,8 +137,13 @@ func (s *userService) GetGithubAuthUrl(ctx context.Context) (string, error) {
 	return s.githubOAuthConfig.AuthCodeURL(state), nil
 }
 
-func (s *userService) HandleLoginWithGoogle(ctx context.Context, id, email, name, picture string) (*model.User, string, error) {
-	user, err := s.repo.FindOrCreateUser(ctx, id, email, name, picture, "google")
+func (s *userService) HandleLoginWithGoogle(ctx context.Context, idToken string) (*model.User, string, error) {
+	claims, err := utils.VerifyGoogleIDToken(ctx, idToken, s.cfg.GOOGLE_CLIENT_ID)
+	if err != nil {
+		return nil, "", errors.New("failed to verify google id token")
+	}
+
+	user, err := s.repo.FindOrCreateUser(ctx, claims.Subject, claims.Email, claims.Name, claims.Picture, "google")
 	if err != nil {
 		return nil, "", errors.New("failed to create user")
 	}
@@ -161,45 +165,12 @@ func (s *userService) HandleGithubCallback(ctx context.Context, code, state stri
 		return nil, "", errors.New("failed to exchange token")
 	}
 
-	client := s.githubOAuthConfig.Client(ctx, token)
-	resp, err := client.Get("https://api.github.com/user")
+	userInfo, err := utils.VerifyGithubAccessToken(ctx, token.AccessToken)
 	if err != nil {
-		return nil, "", errors.New("failed to get user info")
+		return nil, "", err
 	}
 
-	defer resp.Body.Close()
-	var userInfo struct {
-		ID        int    `json:"id"`
-		Email     string `json:"email"`
-		Name      string `json:"name"`
-		AvatarURL string `json:"avatar_url"`
-	}
-	if err := json.NewDecoder(resp.Body).Decode(&userInfo); err != nil {
-		return nil, "", errors.New("failed to parse user info")
-	}
-
-	if userInfo.Email == "" {
-		emailResp, err := client.Get("https://api.github.com/user/emails")
-		if err == nil {
-			defer emailResp.Body.Close()
-
-			var emails []struct {
-				Email   string `json:"email"`
-				Primary bool   `json:"primary"`
-			}
-
-			if err := json.NewDecoder(emailResp.Body).Decode(&emails); err == nil {
-				for _, e := range emails {
-					if e.Primary {
-						userInfo.Email = e.Email
-						break
-					}
-				}
-			}
-		}
-	}
-	// find or create user
-	user, err := s.repo.FindOrCreateUser(ctx, strconv.Itoa(userInfo.ID), userInfo.Email, userInfo.Name, userInfo.AvatarURL, "github")
+	user, err := s.repo.FindOrCreateUser(ctx, userInfo.ID, userInfo.Email, userInfo.Name, userInfo.Picture, "github")
 	if err != nil {
 		return nil, "", errors.New("failed to create user")
 	}
@@ -261,8 +232,13 @@ func (s *oauthStateStore) cleanupExpiredLocked(now time.Time) {
 	}
 }
 
-func (s *userService) HandleLoginWithGithub(ctx context.Context, id, email, name, picture string) (*model.User, string, error) {
-	user, err := s.repo.FindOrCreateUser(ctx, id, email, name, picture, "github")
+func (s *userService) HandleLoginWithGithub(ctx context.Context, accessToken string) (*model.User, string, error) {
+	userInfo, err := utils.VerifyGithubAccessToken(ctx, accessToken)
+	if err != nil {
+		return nil, "", errors.New("failed to verify github access token")
+	}
+
+	user, err := s.repo.FindOrCreateUser(ctx, userInfo.ID, userInfo.Email, userInfo.Name, userInfo.Picture, "github")
 	if err != nil {
 		return nil, "", errors.New("failed to create user")
 	}

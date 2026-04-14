@@ -39,17 +39,11 @@ type UserPayload struct {
 }
 
 type LoginWithGoogleRequest struct {
-	ID        string `json:"id"`
-	Email     string `json:"email"`
-	Name      string `json:"name"`
-	AvatarURL string `json:"avatar_url"`
+	IDToken string `json:"id_token"`
 }
 
 type LoginWithGithubRequest struct {
-	ID        string `json:"id"`
-	Email     string `json:"email"`
-	Name      string `json:"name"`
-	AvatarURL string `json:"avatar_url"`
+	AccessToken string `json:"access_token"`
 }
 
 func (h *AuthHandler) GoogleLogin(c *gin.Context) {
@@ -109,7 +103,11 @@ func (h *AuthHandler) LoginWithGoogle(c *gin.Context) {
 		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "invalid request body")
 		return
 	}
-	user, jwtToken, err := h.userService.HandleLoginWithGoogle(c.Request.Context(), req.ID, req.Email, req.Name, req.AvatarURL)
+	if req.IDToken == "" {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "id_token is required")
+		return
+	}
+	user, jwtToken, err := h.userService.HandleLoginWithGoogle(c.Request.Context(), req.IDToken)
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
 		return
@@ -171,8 +169,12 @@ func (h *AuthHandler) LoginWithGithub(c *gin.Context) {
 		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "invalid request body")
 		return
 	}
+	if req.AccessToken == "" {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "access_token is required")
+		return
+	}
 
-	user, jwtToken, err := h.userService.HandleLoginWithGithub(c.Request.Context(), req.ID, req.Email, req.Name, req.AvatarURL)
+	user, jwtToken, err := h.userService.HandleLoginWithGithub(c.Request.Context(), req.AccessToken)
 
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
