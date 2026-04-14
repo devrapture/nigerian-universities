@@ -44,6 +44,13 @@ type LoginWithGoogleRequest struct {
 	AvatarURL string `json:"avatar_url"`
 }
 
+type LoginWithGithubRequest struct {
+	ID        string `json:"id"`
+	Email     string `json:"email"`
+	Name      string `json:"name"`
+	AvatarURL string `json:"avatar_url"`
+}
+
 func (h *AuthHandler) GoogleLogin(c *gin.Context) {
 	url := h.userService.GetGoogleAuthURL(c)
 	c.Redirect(http.StatusTemporaryRedirect, url)
@@ -128,5 +135,26 @@ func (h *AuthHandler) GihubCallback(c *gin.Context) {
 	}
 
 	utils.SuccessResponse(c, http.StatusOK, "Success", response, nil)
+}
 
+func (h *AuthHandler) LoginWithGithub(c *gin.Context) {
+	var req LoginWithGithubRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "invalid request body")
+		return
+	}
+
+	user, jwtToken, err := h.userService.HandleLoginWithGithub(c.Request.Context(), req.ID, req.Email, req.Name, req.AvatarURL)
+
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
+		return
+	}
+
+	response := GithubLoginResponse{
+		AccessToken: jwtToken,
+		User:        toUserPayload(user),
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Success", response, nil)
 }

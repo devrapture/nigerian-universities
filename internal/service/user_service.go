@@ -21,6 +21,7 @@ type UserService interface {
 	GetGoogleAuthURL(ctx context.Context) string
 	HandleGoogleCallback(ctx context.Context, code string) (*model.User, string, error)
 	HandleLoginWithGoogle(ctx context.Context, id, email, name, picture string) (*model.User, string, error)
+	HandleLoginWithGithub(ctx context.Context, id, email, name, picture string) (*model.User, string, error)
 	GetGithubAuthUrl(ctx context.Context) string
 	HandleGithubCallback(ctx context.Context, code string) (*model.User, string, error)
 }
@@ -102,7 +103,7 @@ func (s *userService) GetGithubAuthUrl(ctx context.Context) string {
 }
 
 func (s *userService) HandleLoginWithGoogle(ctx context.Context, id, email, name, picture string) (*model.User, string, error) {
-	user, err := s.repo.FindOrCreateUser(ctx, id, email, name, picture,"google")
+	user, err := s.repo.FindOrCreateUser(ctx, id, email, name, picture, "google")
 	if err != nil {
 		return nil, "", errors.New("failed to create user")
 	}
@@ -116,7 +117,7 @@ func (s *userService) HandleLoginWithGoogle(ctx context.Context, id, email, name
 func (s *userService) HandleGithubCallback(ctx context.Context, code string) (*model.User, string, error) {
 	token, err := s.githubOAuthConfig.Exchange(ctx, code)
 	if err != nil {
-		log.Println("failed to exchange token",err)
+		log.Println("failed to exchange token", err)
 		return nil, "", errors.New("failed to exchange token")
 	}
 
@@ -163,6 +164,18 @@ func (s *userService) HandleGithubCallback(ctx context.Context, code string) (*m
 		return nil, "", errors.New("failed to create user")
 	}
 
+	jwtToken, err := utils.GenerateJwt(user.ID, user.Email, s.cfg)
+	if err != nil {
+		return nil, "", errors.New("failed to generate jwt")
+	}
+	return user, jwtToken, nil
+}
+
+func (s *userService) HandleLoginWithGithub(ctx context.Context, id, email, name, picture string) (*model.User, string, error) {
+	user, err := s.repo.FindOrCreateUser(ctx, id, email, name, picture, "github")
+	if err != nil {
+		return nil, "", errors.New("failed to create user")
+	}
 	jwtToken, err := utils.GenerateJwt(user.ID, user.Email, s.cfg)
 	if err != nil {
 		return nil, "", errors.New("failed to generate jwt")

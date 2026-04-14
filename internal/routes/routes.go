@@ -44,7 +44,9 @@ func Setup(svc service.InstitutionService, db *gorm.DB, authHandler *handlers.Au
 			GET("/google/callback", authHandler.GoogleCallback).
 			POST("/google/login", authHandler.LoginWithGoogle). // when frontend is using Authjs library
 			GET("/github", authHandler.GithubLogin).
-			GET("/github/callback", authHandler.GihubCallback)
+			GET("/github/callback", authHandler.GihubCallback).
+			POST("/github/login", authHandler.LoginWithGithub)
+
 		// institution
 		institution := v1.Group("/institutions")
 
