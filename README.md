@@ -39,25 +39,40 @@ This project follows the standard Go project layout:
    ```
 
 2. **Configure Environment Variables:**
-   Create a `.env` file in the root directory:
+   Create a `.env` file in the root directory (values are examples):
    ```env
    PORT=8080
-   DATABASE_URL=postgres://user:password@localhost:5432/dbname?sslmode=disable
-   App_Env=development
+   AppEnv=development                 # production disables AutoMigrate
+   DATABASE_URL=postgres://postgres:postgres@localhost:5432/nigerian_universities_dev?sslmode=disable
+
+   GOOGLE_CLIENT_ID=...
+   GOOGLE_CLIENT_SECRET=...
+   GOOGLE_REDIRECT_URL=http://localhost:8080/api/v1/auth/google/callback
+
+   GITHUB_CLIENT_ID=...
+   GITHUB_CLIENT_SECRET=...
+   GITHUB_REDIRECT_URL=http://localhost:8080/api/v1/auth/github/callback
+
+   JWT_SECRET=change-me
+   JWT_EXPIRES_IN_HOURS=24
+   FRONTEND_URL=http://localhost:3000
    ```
 
-3. **Run Database Migrations:**
+3. **Run Database Migrations (prod / staging):**
    ```bash
    make migrate-up
    ```
 
-4. **Scrape Initial Data:**
+4. **(Dev only) AutoMigrate:**
+   When `AppEnv != "production"`, the API runs `db.AutoMigrate` for `Institution` and `User` on startup. Use a non-prod database for this (e.g., local Postgres).
+
+5. **Scrape Initial Data:**
    Before running the API, you need to populate the database with institution data:
    ```bash
    go run cmd/scraper/main.go
    ```
 
-5. **Run the API Server:**
+6. **Run the API Server:**
    ```bash
    # Using Make (with Air for hot-reload)
    make dev
@@ -65,6 +80,21 @@ This project follows the standard Go project layout:
    # Or directly
    go run cmd/api/main.go
    ```
+
+## Migrations & Atlas
+- SQL migrations live in `migrations/`.
+- Create a new migration: `make migrate-create name=add_users_table` (fills `migrations/*`).
+- Atlas config: `atlas.hcl` points to `DATABASE_URL` (target) and `ATLAS_DEV_URL` (scratch for diffs).
+- GitHub Actions workflow `.github/workflows/migrate-and-deploy.yml` runs `atlas migrate apply --env local` on pushes to `main` and can trigger Vercel via `VERCEL_DEPLOY_HOOK_URL`.
+
+## Authentication
+- Google OAuth (direct):  
+  - `GET /api/v1/auth/google` → redirects to Google  
+  - `GET /api/v1/auth/google/callback?code=...` → returns `{ access_token, user }`
+- Google (Auth.js flow):  
+  - Frontend handles OAuth; call `POST /api/v1/auth/google/login` with `{ id, email, name, avatar_url }` to upsert user and get API JWT.
+- GitHub routes are wired (`/api/v1/auth/github`, `/api/v1/auth/github/callback`); implement callback or use an Auth.js-style POST endpoint mirroring the Google flow for GitHub.
+
 
 ## API Endpoints
 
