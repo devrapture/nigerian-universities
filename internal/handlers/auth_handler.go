@@ -25,6 +25,11 @@ type GoogleLoginResponse struct {
 	User        UserPayload `json:"user"`
 }
 
+type GithubLoginResponse struct {
+	AccessToken string      `json:"access_token"`
+	User        UserPayload `json:"user"`
+}
+
 type UserPayload struct {
 	ID        uuid.UUID `json:"id"`
 	Email     string    `json:"email"`
@@ -52,7 +57,6 @@ func (h *AuthHandler) GoogleCallback(c *gin.Context) {
 		return
 	}
 	user, jwtToken, err := h.userService.HandleGoogleCallback(c, code)
-
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "Authentication failed")
 		return
@@ -85,7 +89,6 @@ func (h *AuthHandler) LoginWithGoogle(c *gin.Context) {
 		return
 	}
 	user, jwtToken, err := h.userService.HandleLoginWithGoogle(c.Request.Context(), req.ID, req.Email, req.Name, req.AvatarURL)
-
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
 		return
@@ -100,5 +103,30 @@ func (h *AuthHandler) LoginWithGoogle(c *gin.Context) {
 }
 
 func (h *AuthHandler) GithubLogin(c *gin.Context) {
+	url := h.userService.GetGithubAuthUrl(c)
+	c.Redirect(http.StatusTemporaryRedirect, url)
+}
+
+func (h *AuthHandler) GihubCallback(c *gin.Context) {
+	code := c.Query("code")
+
+	if code == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "code not found",
+		})
+	}
+
+	user, jwtToken, err := h.userService.HandleGithubCallback(c.Request.Context(), code)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
+		return
+	}
+
+	response := GithubLoginResponse{
+		AccessToken: jwtToken,
+		User:        toUserPayload(user),
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Success", response, nil)
 
 }

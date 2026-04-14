@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/config"
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
@@ -19,6 +21,8 @@ type UserService interface {
 	GetGoogleAuthURL(ctx context.Context) string
 	HandleGoogleCallback(ctx context.Context, code string) (*model.User, string, error)
 	HandleLoginWithGoogle(ctx context.Context, id, email, name, picture string) (*model.User, string, error)
+	GetGithubAuthUrl(ctx context.Context) string
+	HandleGithubCallback(ctx context.Context, code string) (*model.User, string, error)
 }
 
 type userService struct {
@@ -54,7 +58,6 @@ func NewUserService(cfg *config.Config, repo repositories.UserRepository) UserSe
 
 func (s *userService) HandleGoogleCallback(ctx context.Context, code string) (*model.User, string, error) {
 	token, err := s.googleOAuthConfig.Exchange(ctx, code)
-
 	if err != nil {
 		return nil, "", errors.New("failed to exchange token")
 	}
@@ -79,34 +82,90 @@ func (s *userService) HandleGoogleCallback(ctx context.Context, code string) (*m
 	if err := json.NewDecoder(resp.Body).Decode(&userInfo); err != nil {
 		return nil, "", errors.New("failed to parse user info")
 	}
-	user, err := s.repo.FindOrCreateUser(ctx, userInfo.ID, userInfo.Email, userInfo.Name, userInfo.Picture)
+	user, err := s.repo.FindOrCreateUser(ctx, userInfo.ID, userInfo.Email, userInfo.Name, userInfo.Picture, "google")
 	if err != nil {
 		return nil, "", errors.New("failed to create user")
 	}
 	jwtToken, err := utils.GenerateJwt(user.ID, user.Email, s.cfg)
-
 	if err != nil {
 		return nil, "", errors.New("failed to generate jwt")
 	}
 	return user, jwtToken, nil
-
 }
 
 func (s *userService) GetGoogleAuthURL(ctx context.Context) string {
-	url := s.googleOAuthConfig.AuthCodeURL("state", oauth2.AccessTypeOffline)
-	return url
+	return s.googleOAuthConfig.AuthCodeURL("state", oauth2.AccessTypeOffline)
+}
+
+func (s *userService) GetGithubAuthUrl(ctx context.Context) string {
+	return s.githubOAuthConfig.AuthCodeURL("state")
 }
 
 func (s *userService) HandleLoginWithGoogle(ctx context.Context, id, email, name, picture string) (*model.User, string, error) {
-	user, err := s.repo.FindOrCreateUser(ctx, id, email, name, picture)
+	user, err := s.repo.FindOrCreateUser(ctx, id, email, name, picture,"google")
 	if err != nil {
 		return nil, "", errors.New("failed to create user")
 	}
 	jwtToken, err := utils.GenerateJwt(user.ID, user.Email, s.cfg)
-
 	if err != nil {
 		return nil, "", errors.New("failed to generate jwt")
 	}
 	return user, jwtToken, nil
+}
 
+func (s *userService) HandleGithubCallback(ctx context.Context, code string) (*model.User, string, error) {
+	token, err := s.githubOAuthConfig.Exchange(ctx, code)
+	if err != nil {
+		log.Println("failed to exchange token",err)
+		return nil, "", errors.New("failed to exchange token")
+	}
+
+	client := s.githubOAuthConfig.Client(ctx, token)
+	resp, err := client.Get("https://api.github.com/user")
+	if err != nil {
+		return nil, "", errors.New("failed to get user info")
+	}
+
+	defer resp.Body.Close()
+	var userInfo struct {
+		ID        int    `json:"id"`
+		Email     string `json:"email"`
+		Name      string `json:"name"`
+		AvatarURL string `json:"avatar_url"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&userInfo); err != nil {
+		return nil, "", errors.New("failed to parse user info")
+	}
+
+	if userInfo.Email == "" {
+		emailResp, err := client.Get("https://api.github.com/user/emails")
+		if err == nil {
+			defer emailResp.Body.Close()
+
+			var emails []struct {
+				Email   string `json:"email"`
+				Primary bool   `json:"primary"`
+			}
+
+			if err := json.NewDecoder(emailResp.Body).Decode(&emails); err == nil {
+				for _, e := range emails {
+					if e.Primary {
+						userInfo.Email = e.Email
+						break
+					}
+				}
+			}
+		}
+	}
+	// find or create user
+	user, err := s.repo.FindOrCreateUser(ctx, strconv.Itoa(userInfo.ID), userInfo.Email, userInfo.Name, userInfo.AvatarURL, "github")
+	if err != nil {
+		return nil, "", errors.New("failed to create user")
+	}
+
+	jwtToken, err := utils.GenerateJwt(user.ID, user.Email, s.cfg)
+	if err != nil {
+		return nil, "", errors.New("failed to generate jwt")
+	}
+	return user, jwtToken, nil
 }
