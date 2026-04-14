@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
@@ -52,19 +53,32 @@ type LoginWithGithubRequest struct {
 }
 
 func (h *AuthHandler) GoogleLogin(c *gin.Context) {
-	url := h.userService.GetGoogleAuthURL(c)
+	url, err := h.userService.GetGoogleAuthURL(c)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "failed to initialize google oauth")
+		return
+	}
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
 func (h *AuthHandler) GoogleCallback(c *gin.Context) {
 	code := c.Query("code")
+	state := c.Query("state")
 
 	if code == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Code not found"})
 		return
 	}
-	user, jwtToken, err := h.userService.HandleGoogleCallback(c, code)
+	if state == "" {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "state not found")
+		return
+	}
+	user, jwtToken, err := h.userService.HandleGoogleCallback(c, code, state)
 	if err != nil {
+		if errors.Is(err, service.ErrInvalidOAuthState) {
+			utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "invalid oauth state")
+			return
+		}
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "Authentication failed")
 		return
 	}
@@ -110,21 +124,35 @@ func (h *AuthHandler) LoginWithGoogle(c *gin.Context) {
 }
 
 func (h *AuthHandler) GithubLogin(c *gin.Context) {
-	url := h.userService.GetGithubAuthUrl(c)
+	url, err := h.userService.GetGithubAuthUrl(c)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "failed to initialize github oauth")
+		return
+	}
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
 func (h *AuthHandler) GihubCallback(c *gin.Context) {
 	code := c.Query("code")
+	state := c.Query("state")
 
 	if code == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "code not found",
 		})
+		return
+	}
+	if state == "" {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "state not found")
+		return
 	}
 
-	user, jwtToken, err := h.userService.HandleGithubCallback(c.Request.Context(), code)
+	user, jwtToken, err := h.userService.HandleGithubCallback(c.Request.Context(), code, state)
 	if err != nil {
+		if errors.Is(err, service.ErrInvalidOAuthState) {
+			utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", "invalid oauth state")
+			return
+		}
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
 		return
 	}
