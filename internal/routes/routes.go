@@ -51,7 +51,13 @@ func Setup(svc service.InstitutionService, db *gorm.DB, authHandler *handlers.Au
 		institution := v1.Group("/institutions")
 
 		institution.GET("", handlers.GetAllInstitutions(svc))
+
+		// api-keys
+		keys := v1.Group("/api-keys")
+
+		keys.
+			POST("", handlers.CreateApiKey)
 	}
 
 	return r
-}
+
