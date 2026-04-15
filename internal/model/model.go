@@ -35,16 +35,16 @@ type Institution struct {
 }
 
 type ProductKey struct {
-	ID        uuid.UUID      `json:"id" gorm:"type:uuid;primary_key" example:"123e4567-e89b-12d3-a456-426614174000"`
-	UserID    uuid.UUID      `json:"user_id" gorm:"type:uuid;not null;index:idx_product_keys_user_id" example:"123e4567-e89b-12d3-a456-426614174000"`
-	KeyHash   string         `json:"key_hash" gorm:"not null;uniqueIndex" example:"123e4567-e89b-12d3-a456-426614174000"`
-	KeyPrefix string         `json:"key_prefix" gorm:"not null"`
-	IsActive  bool           `json:"is_active" gorm:"not null;default:true" example:"true"`
-	LastUsedAt *time.Time    `json:"last_used_at,omitempty" example:"2021-01-01T00:00:00Z"`
-	RevokedAt *time.Time     `json:"revoked_at,omitempty" example:"2021-01-01T00:00:00Z"`
-	CreatedAt time.Time      `json:"created_at" example:"2021-01-01T00:00:00Z"`
-	UpdatedAt time.Time      `json:"updated_at" example:"2021-01-01T00:00:00Z"`
-	DeletedAt gorm.DeletedAt `json:"-" gorm:"index" example:"2021-01-01T00:00:00Z"`
+	ID         uuid.UUID      `json:"id" gorm:"type:uuid;primary_key" example:"123e4567-e89b-12d3-a456-426614174000"`
+	UserID     uuid.UUID      `json:"user_id" gorm:"type:uuid;not null;index:idx_product_keys_user_id" example:"123e4567-e89b-12d3-a456-426614174000"`
+	KeyHash    string         `json:"-" gorm:"not null;uniqueIndex"`
+	KeyPrefix  string         `json:"key_prefix" gorm:"not null"`
+	IsActive   bool           `json:"is_active" gorm:"not null;default:true" example:"true"`
+	LastUsedAt *time.Time     `json:"last_used_at,omitempty" example:"2021-01-01T00:00:00Z"`
+	RevokedAt  *time.Time     `json:"revoked_at,omitempty" example:"2021-01-01T00:00:00Z"`
+	CreatedAt  time.Time      `json:"created_at" example:"2021-01-01T00:00:00Z"`
+	UpdatedAt  time.Time      `json:"updated_at" example:"2021-01-01T00:00:00Z"`
+	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index" example:"2021-01-01T00:00:00Z"`
 }
 
 // BeforeCreate generates UUID before inserting

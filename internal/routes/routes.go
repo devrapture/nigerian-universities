@@ -64,7 +64,7 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 		keys.Use(middleware.AuthMiddleware(cfg))
 		keys.
 			POST("/generate", deps.KeyHandler.CreateApiKey).
-			GET("/", deps.KeyHandler.GetAllKeys).
+			GET("", deps.KeyHandler.GetAllKeys).
 			POST("/:key_id/revoke", deps.KeyHandler.RevokeKey)
 
 	}
