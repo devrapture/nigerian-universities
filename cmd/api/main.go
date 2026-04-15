@@ -23,13 +23,17 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
+	// Repositories
 	institutionRepo := repositories.NewInstitutionRepository(db)
 	userRepo := repositories.NewUserRepository(db)
+	keyRepo := repositories.NewKeyRepository(db)
 
+	// Services
 	institutionService := service.NewInstitutionService(institutionRepo)
 	userSvc := service.NewUserService(cfg, userRepo)
-	keyService := service.NewKeyService()
+	keyService := service.NewKeyService(keyRepo)
 
+	// Handlers
 	authHandler := handlers.NewAuthHandler(userSvc)
 	institutionHandler := handlers.NewInstitutionHandler(institutionService)
 	keyHandler := handlers.NewKeyHandler(keyService)
@@ -44,7 +48,7 @@ func main() {
 
 	log.Printf("Server starting on %s", addr)
 
-	r := routes.Setup(db, deps)
+	r := routes.Setup(db, cfg, deps)
 
 	if err := r.Run(addr); err != nil {
 		log.Fatalf("Failed to start server: %v", err)

@@ -3,7 +3,9 @@ package routes
 import (
 	"net/http"
 
+	"github.com/coolpythoncodes/nigerian-universities/internal/config"
 	"github.com/coolpythoncodes/nigerian-universities/internal/handlers"
+	"github.com/coolpythoncodes/nigerian-universities/internal/middleware"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -14,7 +16,7 @@ type HandlerDependencies struct {
 	KeyHandler         *handlers.KeyHandlers
 }
 
-func Setup(db *gorm.DB, deps HandlerDependencies) *gin.Engine {
+func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engine {
 	r := gin.Default()
 
 	v1 := r.Group("/api/v1")
@@ -59,9 +61,12 @@ func Setup(db *gorm.DB, deps HandlerDependencies) *gin.Engine {
 
 		// api-keys
 		keys := v1.Group("/api-keys")
-
+		keys.Use(middleware.AuthMiddleware(cfg))
 		keys.
-			POST("/generate", deps.KeyHandler.CreateApiKey)
+			POST("/generate", deps.KeyHandler.CreateApiKey).
+			GET("/", deps.KeyHandler.GetAllKeys).
+			POST("/:key_id/revoke", deps.KeyHandler.RevokeKey)
+
 	}
 
 	return r
