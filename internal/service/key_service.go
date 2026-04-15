@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"crypto/rand"
 
 	"github.com/google/uuid"
 )
@@ -18,8 +17,8 @@ func NewKeyService() KeyService {
 }
 
 func (s *keyService) HandleCreateKey(ctx context.Context, userID uuid.UUID) {
-	bytes := make([]byte, 32)
-	if _, err := rand.Read(bytes); err != nil {
-		
-	}
+	// bytes := make([]byte, 32)
+	// if _, err := rand.Read(bytes); err != nil {
+
+	// }
 }

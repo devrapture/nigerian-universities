@@ -23,19 +23,28 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
-	repo := repositories.NewInstitutionRepository(db)
-	svc := service.NewInstitutionService(repo)
-
+	institutionRepo := repositories.NewInstitutionRepository(db)
 	userRepo := repositories.NewUserRepository(db)
+
+	institutionService := service.NewInstitutionService(institutionRepo)
 	userSvc := service.NewUserService(cfg, userRepo)
+	keyService := service.NewKeyService()
 
 	authHandler := handlers.NewAuthHandler(userSvc)
+	institutionHandler := handlers.NewInstitutionHandler(institutionService)
+	keyHandler := handlers.NewKeyHandler(keyService)
+
+	deps := routes.HandlerDependencies{
+		AuthHandler:        authHandler,
+		InstitutionHandler: institutionHandler,
+		KeyHandler:         keyHandler,
+	}
 
 	addr := fmt.Sprintf(":%s", cfg.Port)
 
 	log.Printf("Server starting on %s", addr)
 
-	r := routes.Setup(svc, db, authHandler)
+	r := routes.Setup(db, deps)
 
 	if err := r.Run(addr); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
