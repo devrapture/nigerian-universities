@@ -29,15 +29,30 @@ func NewKeyRepository(DB *gorm.DB) KeyRepository {
 }
 
 func (r *keyRepository) CreateKey(ctx context.Context, userID uuid.UUID, rawKey string) (*model.ProductKey, error) {
+	now := time.Now().UTC()
 	key := &model.ProductKey{
 		UserID:    userID,
 		KeyHash:   utils.HashKey(rawKey),
 		KeyPrefix: rawKey[:8],
 	}
 
-	if err := r.db.WithContext(ctx).Create(key).Error; err != nil {
+	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		if err := tx.WithContext(ctx).Model(&model.ProductKey{}).Where("user_id = ? AND is_active = true", userID).Updates(map[string]interface{}{
+			"is_active":  false,
+			"revoked_at": now,
+		}).Error; err != nil {
+			return err
+		}
+		if err := r.db.WithContext(ctx).Create(key).Error; err != nil {
+			return fmt.Errorf("failed to create key")
+		}
+		return nil
+	})
+
+	if err != nil {
 		return nil, err
 	}
+
 	return key, nil
 }
 
