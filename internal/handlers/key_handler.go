@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"math"
 	"net/http"
 	"strconv"
 	"time"
@@ -50,13 +51,24 @@ func (h *KeyHandlers) CreateApiKey(c *gin.Context) {
 
 func (h *KeyHandlers) GetAllKeys(c *gin.Context) {
 	userID, _ := c.Get("userID")
-	keys, err := h.keyService.HandleGetAllKeys(c.Request.Context(), userID.(uuid.UUID))
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	perPage, _ := strconv.Atoi(c.DefaultQuery("per_page", "10"))
+
+	keys, total, err := h.keyService.HandleGetAllKeys(c.Request.Context(), userID.(uuid.UUID), page, perPage)
+
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "failed to get all keys")
 		return
 	}
 
-	utils.SuccessResponse(c, http.StatusOK, "Fetched all keys", keys, nil)
+	meta := &utils.PaginationMeta{
+		Page:    page,
+		PerPage: perPage,
+		Total:   total,
+		Pages:   int64(math.Ceil(float64(total) / float64(perPage))),
+	}
+
+	utils.SuccessResponse(c, http.StatusOK, "Fetched all keys", keys, meta)
 }
 
 func (h *KeyHandlers) RevokeKey(c *gin.Context) {

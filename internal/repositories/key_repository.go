@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	apperrors "github.com/coolpythoncodes/nigerian-universities/internal/errors"
@@ -13,7 +14,7 @@ import (
 
 type KeyRepository interface {
 	CreateKey(ctx context.Context, userID uuid.UUID, rawKey string) (*model.ProductKey, error)
-	GetAllKeys(ctx context.Context, userID uuid.UUID) ([]model.ProductKey, error)
+	GetAllKeys(ctx context.Context, userID uuid.UUID, page, perPage int) ([]model.ProductKey, int64, error)
 	RevokeKey(ctx context.Context, userID, keyID uuid.UUID) error
 }
 
@@ -40,14 +41,18 @@ func (r *keyRepository) CreateKey(ctx context.Context, userID uuid.UUID, rawKey 
 	return key, nil
 }
 
-func (r *keyRepository) GetAllKeys(ctx context.Context, userID uuid.UUID) ([]model.ProductKey, error) {
+func (r *keyRepository) GetAllKeys(ctx context.Context, userID uuid.UUID, page, perPage int) ([]model.ProductKey, int64, error) {
+	var total int64
 	var keys []model.ProductKey
 
-	if err := r.db.WithContext(ctx).Where("user_id = ?", userID).Find(&keys).Error; err != nil {
-		return nil, err
-	}
+	query := r.db.WithContext(ctx).Model(&model.ProductKey{}).Where("user_id = ?", userID)
 
-	return keys, nil
+	query.Count(&total)
+	query = query.Order("created_at DESC").Offset((page - 1) * perPage).Limit(perPage)
+	if err := query.Find(&keys).Error; err != nil {
+		return nil, 0, fmt.Errorf("failed to get keys")
+	}
+	return keys, total, nil
 }
 
 func (r *keyRepository) RevokeKey(ctx context.Context, userID, keyID uuid.UUID) error {

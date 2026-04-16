@@ -11,7 +11,7 @@ import (
 
 type KeyService interface {
 	HandleCreateKey(ctx context.Context, userID uuid.UUID) (*model.ProductKey, string, error)
-	HandleGetAllKeys(ctx context.Context, userID uuid.UUID) ([]model.ProductKey, error)
+	HandleGetAllKeys(ctx context.Context, userID uuid.UUID,page, perPage int) ([]model.ProductKey, int64, error)
 	HandleRevokeKey(ctx context.Context, userID, keyID uuid.UUID) error
 }
 
@@ -38,8 +38,8 @@ func (s *keyService) HandleCreateKey(ctx context.Context, userID uuid.UUID) (*mo
 	return productKey, rawKey, nil
 }
 
-func (s *keyService) HandleGetAllKeys(ctx context.Context, userID uuid.UUID) ([]model.ProductKey, error) {
-	return s.keyRepo.GetAllKeys(ctx, userID)
+func (s *keyService) HandleGetAllKeys(ctx context.Context, userID uuid.UUID,page, perPage int) ([]model.ProductKey, int64, error) {
+	return s.keyRepo.GetAllKeys(ctx, userID, page, perPage)
 }
 
 func (s *keyService) HandleRevokeKey(ctx context.Context, userID, keyID uuid.UUID) error {
