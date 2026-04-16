@@ -130,7 +130,7 @@ func (h *AuthHandler) GithubLogin(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
-func (h *AuthHandler) GihubCallback(c *gin.Context) {
+func (h *AuthHandler) GithubCallback(c *gin.Context) {
 	code := c.Query("code")
 	state := c.Query("state")
 

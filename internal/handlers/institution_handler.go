@@ -22,27 +22,36 @@ type Institution struct {
 	Url                 string `json:"url"`
 }
 
-func GetAllInstitutions(svc service.InstitutionService) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		queryDTO, err := parseListQuery(c)
-		if err != nil {
-			utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", err.Error())
-			return
-		}
-		allInstitution, total, err := svc.GetAllInstitutions(c.Request.Context(), queryDTO)
-		if err != nil {
-			utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
-			return
-		}
+type InstitutionHandler struct {
+	institutionService service.InstitutionService
+}
 
-		meta := &utils.PaginationMeta{
-			Page:    queryDTO.Page,
-			PerPage: queryDTO.Limit,
-			Total:   total,
-			Pages:   int64(math.Ceil(float64(total) / float64(queryDTO.Limit))),
-		}
-		utils.SuccessResponse(c, http.StatusOK, "fetched all institutions", allInstitution, meta)
+func NewInstitutionHandler(institutionService service.InstitutionService) *InstitutionHandler {
+	return &InstitutionHandler{
+		institutionService: institutionService,
 	}
+}
+
+func (h *InstitutionHandler) GetAllInstitutions(c *gin.Context) {
+	queryDTO, err := parseListQuery(c)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", err.Error())
+		return
+	}
+	allInstitution, total, err := h.institutionService.GetAllInstitutions(c.Request.Context(), queryDTO)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "An unexpected error occurred")
+		return
+	}
+
+	meta := &utils.PaginationMeta{
+		Page:    queryDTO.Page,
+		PerPage: queryDTO.Limit,
+		Total:   total,
+		Pages:   int64(math.Ceil(float64(total) / float64(queryDTO.Limit))),
+	}
+	utils.SuccessResponse(c, http.StatusOK, "fetched all institutions", allInstitution, meta)
+
 }
 
 // parseListQuery manually parses query params to give clearer error messages than the default binder.
@@ -66,6 +75,9 @@ func parseListQuery(c *gin.Context) (dto.ListInstitutionQuery, error) {
 	limit, err := strconv.Atoi(limitStr)
 	if err != nil {
 		return q, friendlyNumErr("limit", limitStr)
+	}
+	if limit < 1 {
+		return q, fmt.Errorf("query parameter 'limit' must be at least 1, got '%d'", limit)
 	}
 	if limit > maxLimit {
 		return q, fmt.Errorf("query parameter 'limit' must be <= %d", maxLimit)
