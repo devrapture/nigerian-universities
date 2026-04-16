@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -75,14 +76,10 @@ func (r *keyRepository) RevokeKey(ctx context.Context, userID, keyID uuid.UUID) 
 	var keyToRevoke model.ProductKey
 
 	if err := r.db.WithContext(ctx).Where("user_id = ? AND id = ?", userID, keyID).First(&keyToRevoke).Error; err != nil {
-		if err == gorm.ErrRecordNotFound {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return apperrors.ErrKeyNotFound
 		}
 		return err
-	}
-
-	if userID != keyToRevoke.UserID {
-		return apperrors.ErrUnauthorized
 	}
 
 	now := time.Now().UTC()

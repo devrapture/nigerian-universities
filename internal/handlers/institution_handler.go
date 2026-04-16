@@ -76,6 +76,9 @@ func parseListQuery(c *gin.Context) (dto.ListInstitutionQuery, error) {
 	if err != nil {
 		return q, friendlyNumErr("limit", limitStr)
 	}
+	if limit < 1 {
+		return q, fmt.Errorf("query parameter 'limit' must be at least 1, got '%d'", limit)
+	}
 	if limit > maxLimit {
 		return q, fmt.Errorf("query parameter 'limit' must be <= %d", maxLimit)
 	}

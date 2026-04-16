@@ -3,7 +3,6 @@ package handlers
 import (
 	"math"
 	"net/http"
-	"strconv"
 	"time"
 
 	apperrors "github.com/coolpythoncodes/nigerian-universities/internal/errors"
@@ -20,7 +19,7 @@ type KeyHandlers struct {
 type GenerateKeyResponse struct {
 	ID        uuid.UUID `json:"id"`
 	Key       string    `json:"key"`
-	IsActive  string    `json:"is_active"`
+	IsActive  bool      `json:"is_active"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -42,7 +41,7 @@ func (h *KeyHandlers) CreateApiKey(c *gin.Context) {
 	resp := GenerateKeyResponse{
 		ID:        productKey.ID,
 		Key:       rawKey,
-		IsActive:  strconv.FormatBool(productKey.IsActive),
+		IsActive:  productKey.IsActive,
 		CreatedAt: productKey.CreatedAt,
 		UpdatedAt: productKey.UpdatedAt,
 	}
