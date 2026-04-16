@@ -40,7 +40,7 @@ func (h *InstitutionHandler) GetAllInstitutions(c *gin.Context) {
 	}
 	allInstitution, total, err := h.institutionService.GetAllInstitutions(c.Request.Context(), queryDTO)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "An unexpected error occurred")
 		return
 	}
 
@@ -53,8 +53,6 @@ func (h *InstitutionHandler) GetAllInstitutions(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "fetched all institutions", allInstitution, meta)
 
 }
-
-
 
 // parseListQuery manually parses query params to give clearer error messages than the default binder.
 func parseListQuery(c *gin.Context) (dto.ListInstitutionQuery, error) {

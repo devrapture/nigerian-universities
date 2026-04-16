@@ -51,7 +51,7 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 			GET("/google/callback", deps.AuthHandler.GoogleCallback).
 			POST("/google/login", deps.AuthHandler.LoginWithGoogle). // when frontend is using Authjs library
 			GET("/github", deps.AuthHandler.GithubLogin).
-			GET("/github/callback", deps.AuthHandler.GihubCallback).
+			GET("/github/callback", deps.AuthHandler.GithubCallback).
 			POST("/github/login", deps.AuthHandler.LoginWithGithub)
 
 		// institution

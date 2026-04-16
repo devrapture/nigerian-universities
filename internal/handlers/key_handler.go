@@ -51,10 +51,13 @@ func (h *KeyHandlers) CreateApiKey(c *gin.Context) {
 
 func (h *KeyHandlers) GetAllKeys(c *gin.Context) {
 	userID, _ := c.Get("userID")
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
-	perPage, _ := strconv.Atoi(c.DefaultQuery("per_page", "10"))
+	queryDTO, err := parseListQuery(c)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", err.Error())
+		return
+	}
 
-	keys, total, err := h.keyService.HandleGetAllKeys(c.Request.Context(), userID.(uuid.UUID), page, perPage)
+	keys, total, err := h.keyService.HandleGetAllKeys(c.Request.Context(), userID.(uuid.UUID), queryDTO)
 
 	if err != nil {
 		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "failed to get all keys")
@@ -62,10 +65,10 @@ func (h *KeyHandlers) GetAllKeys(c *gin.Context) {
 	}
 
 	meta := &utils.PaginationMeta{
-		Page:    page,
-		PerPage: perPage,
+		Page:    queryDTO.Page,
+		PerPage: queryDTO.Limit,
 		Total:   total,
-		Pages:   int64(math.Ceil(float64(total) / float64(perPage))),
+		Pages:   int64(math.Ceil(float64(total) / float64(queryDTO.Limit))),
 	}
 
 	utils.SuccessResponse(c, http.StatusOK, "Fetched all keys", keys, meta)

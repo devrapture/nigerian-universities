@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/coolpythoncodes/nigerian-universities/internal/dto"
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
 	"github.com/coolpythoncodes/nigerian-universities/internal/repositories"
 	"github.com/coolpythoncodes/nigerian-universities/internal/utils"
@@ -11,7 +12,7 @@ import (
 
 type KeyService interface {
 	HandleCreateKey(ctx context.Context, userID uuid.UUID) (*model.ProductKey, string, error)
-	HandleGetAllKeys(ctx context.Context, userID uuid.UUID,page, perPage int) ([]model.ProductKey, int64, error)
+	HandleGetAllKeys(ctx context.Context, userID uuid.UUID,queryDTO dto.ListInstitutionQuery) ([]model.ProductKey, int64, error)
 	HandleRevokeKey(ctx context.Context, userID, keyID uuid.UUID) error
 }
 
@@ -38,8 +39,8 @@ func (s *keyService) HandleCreateKey(ctx context.Context, userID uuid.UUID) (*mo
 	return productKey, rawKey, nil
 }
 
-func (s *keyService) HandleGetAllKeys(ctx context.Context, userID uuid.UUID,page, perPage int) ([]model.ProductKey, int64, error) {
-	return s.keyRepo.GetAllKeys(ctx, userID, page, perPage)
+func (s *keyService) HandleGetAllKeys(ctx context.Context, userID uuid.UUID,queryDTO dto.ListInstitutionQuery) ([]model.ProductKey, int64, error) {
+	return s.keyRepo.GetAllKeys(ctx, userID, queryDTO)
 }
 
 func (s *keyService) HandleRevokeKey(ctx context.Context, userID, keyID uuid.UUID) error {

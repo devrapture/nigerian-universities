@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/coolpythoncodes/nigerian-universities/internal/dto"
 	apperrors "github.com/coolpythoncodes/nigerian-universities/internal/errors"
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
 	"github.com/coolpythoncodes/nigerian-universities/internal/utils"
@@ -14,7 +15,7 @@ import (
 
 type KeyRepository interface {
 	CreateKey(ctx context.Context, userID uuid.UUID, rawKey string) (*model.ProductKey, error)
-	GetAllKeys(ctx context.Context, userID uuid.UUID, page, perPage int) ([]model.ProductKey, int64, error)
+	GetAllKeys(ctx context.Context, userID uuid.UUID, queryDTO dto.ListInstitutionQuery) ([]model.ProductKey, int64, error)
 	RevokeKey(ctx context.Context, userID, keyID uuid.UUID) error
 }
 
@@ -43,7 +44,7 @@ func (r *keyRepository) CreateKey(ctx context.Context, userID uuid.UUID, rawKey 
 		}).Error; err != nil {
 			return err
 		}
-		if err := r.db.WithContext(ctx).Create(key).Error; err != nil {
+		if err := tx.WithContext(ctx).Create(key).Error; err != nil {
 			return fmt.Errorf("failed to create key")
 		}
 		return nil
@@ -56,14 +57,14 @@ func (r *keyRepository) CreateKey(ctx context.Context, userID uuid.UUID, rawKey 
 	return key, nil
 }
 
-func (r *keyRepository) GetAllKeys(ctx context.Context, userID uuid.UUID, page, perPage int) ([]model.ProductKey, int64, error) {
+func (r *keyRepository) GetAllKeys(ctx context.Context, userID uuid.UUID, queryDTO dto.ListInstitutionQuery) ([]model.ProductKey, int64, error) {
 	var total int64
 	var keys []model.ProductKey
 
 	query := r.db.WithContext(ctx).Model(&model.ProductKey{}).Where("user_id = ?", userID)
 
 	query.Count(&total)
-	query = query.Order("created_at DESC").Offset((page - 1) * perPage).Limit(perPage)
+	query = query.Order("created_at DESC").Offset((queryDTO.Page - 1) * queryDTO.Limit).Limit(queryDTO.Limit)
 	if err := query.Find(&keys).Error; err != nil {
 		return nil, 0, fmt.Errorf("failed to get keys")
 	}
