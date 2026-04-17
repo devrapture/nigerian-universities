@@ -19,6 +19,15 @@ type HandlerDependencies struct {
 	KeyRepo            repositories.KeyRepository
 }
 
+type HealthSuccessResponse struct {
+	Status string `json:"status" example:"ok"`
+}
+
+type HealthErrorResponse struct {
+	Status string `json:"status" example:"db-unreachable"`
+	Error  string `json:"error" example:"failed to ping database"`
+}
+
 func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engine {
 	r := gin.Default()
 	ipStore := middleware.NewRateLimiterStore(rate.Limit(5), 10)
@@ -27,26 +36,7 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 	v1.Use(middleware.IPRateLimiter(ipStore))
 
 	{
-		v1.GET("/health", func(c *gin.Context) {
-			sqlDB, err := db.DB()
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{
-					"status": "db-unreachable",
-					"error":  "failed to get database connection",
-				})
-				return
-			}
-
-			if err := sqlDB.Ping(); err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{
-					"status": "db-unreachable",
-					"error":  "failed to ping database",
-				})
-				return
-			}
-
-			c.JSON(http.StatusOK, gin.H{"status": "ok"})
-		})
+		v1.GET("/health", healthHandler(db))
 
 		// auth
 		auth := v1.Group("/auth")
@@ -77,4 +67,36 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 	}
 
 	return r
+}
+
+// HealthCheck reports API and database availability.
+// @Summary Health check
+// @Description Returns API health status and verifies database connectivity
+// @Tags Health
+// @Accept json
+// @Produce json
+// @Success 200 {object} routes.HealthSuccessResponse
+// @Failure 500 {object} routes.HealthErrorResponse
+// @Router /health [get]
+func healthHandler(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		sqlDB, err := db.DB()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "db-unreachable",
+				"error":  "failed to get database connection",
+			})
+			return
+		}
+
+		if err := sqlDB.Ping(); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "db-unreachable",
+				"error":  "failed to ping database",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"status": "ok"})
+	}
 }

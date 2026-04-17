@@ -1,0 +1,728 @@
+basePath: /api/v1
+definitions:
+  routes.HealthErrorResponse:
+    properties:
+      error:
+        example: failed to ping database
+        type: string
+      status:
+        example: db-unreachable
+        type: string
+    type: object
+  routes.HealthSuccessResponse:
+    properties:
+      status:
+        example: ok
+        type: string
+    type: object
+  schema.AuthBadRequestError:
+    properties:
+      code:
+        example: BAD_REQUEST
+        type: string
+      message:
+        example: invalid request body
+        type: string
+    type: object
+  schema.AuthBadRequestResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.AuthBadRequestError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.AuthGithubLoginResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.AuthTokenData'
+      message:
+        example: Success
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  schema.AuthGoogleLoginResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.AuthTokenData'
+      message:
+        example: Success
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  schema.AuthInternalServerError:
+    properties:
+      code:
+        example: INTERNAL_SERVER_ERROR
+        type: string
+      message:
+        example: Authentication failed
+        type: string
+    type: object
+  schema.AuthInternalServerErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.AuthInternalServerError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.AuthTokenData:
+    properties:
+      access_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+      user:
+        $ref: '#/definitions/schema.AuthUser'
+    type: object
+  schema.AuthUser:
+    properties:
+      avatar_url:
+        example: https://example.com/avatar.png
+        type: string
+      email:
+        example: john.doe@example.com
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+      name:
+        example: John Doe
+        type: string
+    type: object
+  schema.GeneratedKey:
+    properties:
+      created_at:
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      key:
+        example: sk_live_0123456789abcdef
+        type: string
+      updated_at:
+        type: string
+    type: object
+  schema.InstitutionBadRequestError:
+    properties:
+      code:
+        example: BAD_REQUEST
+        type: string
+      message:
+        example: query parameter 'page' must be a number, got 'abc'
+        type: string
+    type: object
+  schema.InstitutionBadRequestResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.InstitutionBadRequestError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.InstitutionInternalServerError:
+    properties:
+      code:
+        example: INTERNAL_SERVER_ERROR
+        type: string
+      message:
+        example: An unexpected error occurred
+        type: string
+    type: object
+  schema.InstitutionInternalServerErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.InstitutionInternalServerError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.InstitutionItem:
+    properties:
+      created_at:
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+      last_scraped_at:
+        type: string
+      name:
+        example: University of Lagos
+        type: string
+      type:
+        example: federal-university
+        type: string
+      updated_at:
+        type: string
+      vice_chancellor:
+        example: Prof. Olatunji Afolabi Oyelana
+        type: string
+      website:
+        example: https://www.unilag.edu.ng
+        type: string
+      year_of_establishment:
+        example: "1962"
+        type: string
+    type: object
+  schema.InstitutionListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.InstitutionItem'
+        type: array
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/schema.PaginationMeta'
+      success:
+        type: boolean
+    type: object
+  schema.InstitutionUnauthorizedError:
+    properties:
+      code:
+        example: INVALID_API_KEY
+        type: string
+      message:
+        example: Invalid or missing X-API-Key header
+        type: string
+    type: object
+  schema.InstitutionUnauthorizedResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.InstitutionUnauthorizedError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.KeyBadRequestError:
+    properties:
+      code:
+        example: BAD_REQUEST
+        type: string
+      message:
+        example: invalid key id
+        type: string
+    type: object
+  schema.KeyBadRequestResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.KeyBadRequestError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.KeyCreateResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.GeneratedKey'
+      message:
+        example: Store this key securely. It will not be shown again.
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  schema.KeyInternalServerError:
+    properties:
+      code:
+        example: INTERNAL_SERVER_ERROR
+        type: string
+      message:
+        example: failed to create api key
+        type: string
+    type: object
+  schema.KeyInternalServerErrorResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.KeyInternalServerError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.KeyItem:
+    properties:
+      created_at:
+        type: string
+      id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      key_prefix:
+        example: sk_live_
+        type: string
+      last_used_at:
+        type: string
+      revoked_at:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        example: 123e4567-e89b-12d3-a456-426614174000
+        type: string
+    type: object
+  schema.KeyListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.KeyItem'
+        type: array
+      message:
+        example: Fetched all keys
+        type: string
+      meta:
+        $ref: '#/definitions/schema.PaginationMeta'
+      success:
+        example: true
+        type: boolean
+    type: object
+  schema.KeyNotFoundError:
+    properties:
+      code:
+        example: NOT_FOUND
+        type: string
+      message:
+        example: key not found
+        type: string
+    type: object
+  schema.KeyNotFoundResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.KeyNotFoundError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.KeySuccessResponse:
+    properties:
+      message:
+        example: Key deactivated successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  schema.KeyUnauthorizedError:
+    properties:
+      code:
+        example: UNAUTHORIZED
+        type: string
+      message:
+        example: Invalid or expired token
+        type: string
+    type: object
+  schema.KeyUnauthorizedResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.KeyUnauthorizedError'
+      success:
+        example: false
+        type: boolean
+    type: object
+  schema.LoginWithGithubRequest:
+    properties:
+      access_token:
+        example: github-access-token
+        type: string
+    type: object
+  schema.LoginWithGoogleRequest:
+    properties:
+      id_token:
+        example: google-id-token
+        type: string
+    type: object
+  schema.PaginationMeta:
+    properties:
+      page:
+        type: integer
+      pages:
+        type: integer
+      per_page:
+        type: integer
+      total:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: devrapture@proton.me
+    name: Rapture Chijioke Godson
+    url: https://github.com/devrapture
+  description: This is an API for Nigerian Institutions
+  license:
+    name: MIT
+  title: Nigerian Universities API
+  version: "1.0"
+paths:
+  /api-keys:
+    get:
+      consumes:
+      - application/json
+      description: Get all keys for the user
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.KeyListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.KeyBadRequestResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/schema.KeyUnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.KeyInternalServerErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get all keys
+      tags:
+      - Keys
+  /api-keys/{key_id}/revoke:
+    post:
+      consumes:
+      - application/json
+      description: Deactivate a key
+      parameters:
+      - description: Key ID
+        in: path
+        name: key_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.KeySuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.KeyBadRequestResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/schema.KeyUnauthorizedResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/schema.KeyNotFoundResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.KeyInternalServerErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Revoke a key
+      tags:
+      - Keys
+  /api-keys/generate:
+    post:
+      consumes:
+      - application/json
+      description: Create a new api key for the user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.KeyCreateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.KeyBadRequestResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/schema.KeyUnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.KeyInternalServerErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new api key
+      tags:
+      - Keys
+  /auth/github:
+    get:
+      consumes:
+      - application/json
+      description: Github Login
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.AuthGithubLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.AuthBadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.AuthInternalServerErrorResponse'
+      summary: Github Login
+      tags:
+      - Auth
+  /auth/github/callback:
+    get:
+      consumes:
+      - application/json
+      description: Github OAuth callback
+      parameters:
+      - description: OAuth code
+        in: query
+        name: code
+        required: true
+        type: string
+      - description: OAuth state
+        in: query
+        name: state
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.AuthGithubLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.AuthBadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.AuthInternalServerErrorResponse'
+      summary: Github Callback
+      tags:
+      - Auth
+  /auth/github/login:
+    post:
+      consumes:
+      - application/json
+      description: Login with Github access token
+      parameters:
+      - description: Github login payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/schema.LoginWithGithubRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.AuthGithubLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.AuthBadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.AuthInternalServerErrorResponse'
+      summary: Login with Github token
+      tags:
+      - Auth
+  /auth/google:
+    get:
+      consumes:
+      - application/json
+      description: Google Login
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.AuthGoogleLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.AuthBadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.AuthInternalServerErrorResponse'
+      summary: Google Login
+      tags:
+      - Auth
+  /auth/google/callback:
+    get:
+      consumes:
+      - application/json
+      description: Google OAuth callback
+      parameters:
+      - description: OAuth code
+        in: query
+        name: code
+        required: true
+        type: string
+      - description: OAuth state
+        in: query
+        name: state
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.AuthGoogleLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.AuthBadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.AuthInternalServerErrorResponse'
+      summary: Google Callback
+      tags:
+      - Auth
+  /auth/google/login:
+    post:
+      consumes:
+      - application/json
+      description: Login with Google ID token
+      parameters:
+      - description: Google login payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/schema.LoginWithGoogleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.AuthGoogleLoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.AuthBadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.AuthInternalServerErrorResponse'
+      summary: Login with Google token
+      tags:
+      - Auth
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Returns API health status and verifies database connectivity
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/routes.HealthSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/routes.HealthErrorResponse'
+      summary: Health check
+      tags:
+      - Health
+  /institutions:
+    get:
+      consumes:
+      - application/json
+      description: Get all institutions
+      parameters:
+      - description: API Key
+        in: header
+        name: X-API-Key
+        required: true
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      - description: Search institutions by name
+        in: query
+        name: search
+        type: string
+      - description: Institution type
+        enum:
+        - federal-university
+        - state-university
+        - private-university
+        - federal-polytechnic
+        - state-polytechnic
+        - private-polytechnic
+        - federal-college-education
+        - state-college-of-education
+        - private-college-of-education
+        in: query
+        name: type
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.InstitutionListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.InstitutionBadRequestResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/schema.InstitutionUnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.InstitutionInternalServerErrorResponse'
+      summary: Get all institutions
+      tags:
+      - Institutions
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
