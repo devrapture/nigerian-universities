@@ -3,55 +3,100 @@ package routes
 import (
 	"net/http"
 
+	"github.com/coolpythoncodes/nigerian-universities/internal/config"
 	"github.com/coolpythoncodes/nigerian-universities/internal/handlers"
-	"github.com/coolpythoncodes/nigerian-universities/internal/service"
+	"github.com/coolpythoncodes/nigerian-universities/internal/middleware"
+	"github.com/coolpythoncodes/nigerian-universities/internal/repositories"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/time/rate"
 	"gorm.io/gorm"
 )
 
-func Setup(svc service.InstitutionService, db *gorm.DB, authHandler *handlers.AuthHandler) *gin.Engine {
-	r := gin.Default()
+type HandlerDependencies struct {
+	AuthHandler        *handlers.AuthHandler
+	InstitutionHandler *handlers.InstitutionHandler
+	KeyHandler         *handlers.KeyHandlers
+	KeyRepo            repositories.KeyRepository
+}
 
+type HealthSuccessResponse struct {
+	Status string `json:"status" example:"ok"`
+}
+
+type HealthErrorResponse struct {
+	Status string `json:"status" example:"db-unreachable"`
+	Error  string `json:"error" example:"failed to ping database"`
+}
+
+func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engine {
+	r := gin.Default()
+	ipStore := middleware.NewRateLimiterStore(rate.Limit(5), 10)
+	apiKeyStore := middleware.NewRateLimiterStore(rate.Limit(2), 5)
 	v1 := r.Group("/api/v1")
+	v1.Use(middleware.IPRateLimiter(ipStore))
 
 	{
-		v1.GET("/health", func(c *gin.Context) {
-			sqlDB, err := db.DB()
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{
-					"status": "db-unreachable",
-					"error":  "failed to get database connection",
-				})
-				return
-			}
-
-			if err := sqlDB.Ping(); err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{
-					"status": "db-unreachable",
-					"error":  "failed to ping database",
-				})
-				return
-			}
-
-			c.JSON(http.StatusOK, gin.H{"status": "ok"})
-		})
+		v1.GET("/health", healthHandler(db))
 
 		// auth
 		auth := v1.Group("/auth")
 
 		auth.
-			GET("/google", authHandler.GoogleLogin).
-			GET("/google/callback", authHandler.GoogleCallback).
-			POST("/google/login", authHandler.LoginWithGoogle). // when frontend is using Authjs library
-			GET("/github", authHandler.GithubLogin).
-			GET("/github/callback", authHandler.GihubCallback).
-			POST("/github/login", authHandler.LoginWithGithub)
+			GET("/google", deps.AuthHandler.GoogleLogin).
+			GET("/google/callback", deps.AuthHandler.GoogleCallback).
+			POST("/google/login", deps.AuthHandler.LoginWithGoogle). // when frontend is using Authjs library
+			GET("/github", deps.AuthHandler.GithubLogin).
+			GET("/github/callback", deps.AuthHandler.GithubCallback).
+			POST("/github/login", deps.AuthHandler.LoginWithGithub)
 
 		// institution
 		institution := v1.Group("/institutions")
+		institution.Use(middleware.ProductKeyMiddleware(deps.KeyRepo))
 
-		institution.GET("", handlers.GetAllInstitutions(svc))
+		institution.GET("", deps.InstitutionHandler.GetAllInstitutions)
+
+		// api-keys
+		keys := v1.Group("/api-keys")
+		keys.Use(middleware.AuthMiddleware(cfg))
+		keys.Use(middleware.APIKeyRateLimiter(apiKeyStore))
+		keys.
+			POST("/generate", deps.KeyHandler.CreateApiKey).
+			GET("", deps.KeyHandler.GetAllKeys).
+			POST("/:key_id/revoke", deps.KeyHandler.RevokeKey)
+
 	}
 
 	return r
+}
+
+// HealthCheck reports API and database availability.
+// @Summary Health check
+// @Description Returns API health status and verifies database connectivity
+// @Tags Health
+// @Accept json
+// @Produce json
+// @Success 200 {object} routes.HealthSuccessResponse
+// @Failure 500 {object} routes.HealthErrorResponse
+// @Router /health [get]
+func healthHandler(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		sqlDB, err := db.DB()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "db-unreachable",
+				"error":  "failed to get database connection",
+			})
+			return
+		}
+
+		if err := sqlDB.Ping(); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status": "db-unreachable",
+				"error":  "failed to ping database",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"status": "ok"})
+	}
 }

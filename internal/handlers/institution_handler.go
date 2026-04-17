@@ -14,35 +14,52 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Institution struct {
-	Name                string `json:"name"`
-	ViceChancellor      string `json:"vice_chancellor"`
-	YearOfEstablishment string `json:"year_of_establishment"`
-	Type                string `json:"type"`
-	Url                 string `json:"url"`
+type InstitutionHandler struct {
+	institutionService service.InstitutionService
 }
 
-func GetAllInstitutions(svc service.InstitutionService) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		queryDTO, err := parseListQuery(c)
-		if err != nil {
-			utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", err.Error())
-			return
-		}
-		allInstitution, total, err := svc.GetAllInstitutions(c.Request.Context(), queryDTO)
-		if err != nil {
-			utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", err.Error())
-			return
-		}
-
-		meta := &utils.PaginationMeta{
-			Page:    queryDTO.Page,
-			PerPage: queryDTO.Limit,
-			Total:   total,
-			Pages:   int64(math.Ceil(float64(total) / float64(queryDTO.Limit))),
-		}
-		utils.SuccessResponse(c, http.StatusOK, "fetched all institutions", allInstitution, meta)
+func NewInstitutionHandler(institutionService service.InstitutionService) *InstitutionHandler {
+	return &InstitutionHandler{
+		institutionService: institutionService,
 	}
+}
+
+// GetAllInstitutions returns a list of all institutions
+// @Summary Get all institutions
+// @Description Get all institutions
+// @Tags Institutions
+// @Accept json
+// @Produce json
+// @Param X-API-Key header string true "API Key"
+// @Param page query int false "Page number"
+// @Param limit query int false "Items per page"
+// @Param search query string false "Search institutions by name"
+// @Param type query string false "Institution type" Enums(federal-university,state-university,private-university,federal-polytechnic,state-polytechnic,private-polytechnic,federal-college-education,state-college-of-education,private-college-of-education)
+// @Success 200 {object} schema.InstitutionListResponse
+// @Failure 400 {object} schema.InstitutionBadRequestResponse
+// @Failure 401 {object} schema.InstitutionUnauthorizedResponse
+// @Failure 500 {object} schema.InstitutionInternalServerErrorResponse
+// @Router /institutions [get]
+func (h *InstitutionHandler) GetAllInstitutions(c *gin.Context) {
+	queryDTO, err := parseListQuery(c)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", err.Error())
+		return
+	}
+	allInstitution, total, err := h.institutionService.GetAllInstitutions(c.Request.Context(), queryDTO)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "An unexpected error occurred")
+		return
+	}
+
+	meta := &utils.PaginationMeta{
+		Page:    queryDTO.Page,
+		PerPage: queryDTO.Limit,
+		Total:   total,
+		Pages:   int64(math.Ceil(float64(total) / float64(queryDTO.Limit))),
+	}
+	utils.SuccessResponse(c, http.StatusOK, "fetched all institutions", allInstitution, meta)
+
 }
 
 // parseListQuery manually parses query params to give clearer error messages than the default binder.
@@ -66,6 +83,9 @@ func parseListQuery(c *gin.Context) (dto.ListInstitutionQuery, error) {
 	limit, err := strconv.Atoi(limitStr)
 	if err != nil {
 		return q, friendlyNumErr("limit", limitStr)
+	}
+	if limit < 1 {
+		return q, fmt.Errorf("query parameter 'limit' must be at least 1, got '%d'", limit)
 	}
 	if limit > maxLimit {
 		return q, fmt.Errorf("query parameter 'limit' must be <= %d", maxLimit)

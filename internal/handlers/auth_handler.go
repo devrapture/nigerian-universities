@@ -46,6 +46,15 @@ type LoginWithGithubRequest struct {
 	AccessToken string `json:"access_token"`
 }
 
+// @Summary Google Login
+// @Description Google Login
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Success 200 {object} schema.AuthGoogleLoginResponse
+// @Failure 400 {object} schema.AuthBadRequestResponse
+// @Failure 500 {object} schema.AuthInternalServerErrorResponse
+// @Router /auth/google [get]
 func (h *AuthHandler) GoogleLogin(c *gin.Context) {
 	url, err := h.userService.GetGoogleAuthURL(c)
 	if err != nil {
@@ -55,6 +64,17 @@ func (h *AuthHandler) GoogleLogin(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
+// @Summary Google Callback
+// @Description Google OAuth callback
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param code query string true "OAuth code"
+// @Param state query string true "OAuth state"
+// @Success 200 {object} schema.AuthGoogleLoginResponse
+// @Failure 400 {object} schema.AuthBadRequestResponse
+// @Failure 500 {object} schema.AuthInternalServerErrorResponse
+// @Router /auth/google/callback [get]
 func (h *AuthHandler) GoogleCallback(c *gin.Context) {
 	code := c.Query("code")
 	state := c.Query("state")
@@ -97,6 +117,16 @@ func toUserPayload(u *model.User) UserPayload {
 	}
 }
 
+// @Summary Login with Google token
+// @Description Login with Google ID token
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body schema.LoginWithGoogleRequest true "Google login payload"
+// @Success 200 {object} schema.AuthGoogleLoginResponse
+// @Failure 400 {object} schema.AuthBadRequestResponse
+// @Failure 500 {object} schema.AuthInternalServerErrorResponse
+// @Router /auth/google/login [post]
 func (h *AuthHandler) LoginWithGoogle(c *gin.Context) {
 	var req LoginWithGoogleRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -121,6 +151,15 @@ func (h *AuthHandler) LoginWithGoogle(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Success", response, nil)
 }
 
+// @Summary Github Login
+// @Description Github Login
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Success 200 {object} schema.AuthGithubLoginResponse
+// @Failure 400 {object} schema.AuthBadRequestResponse
+// @Failure 500 {object} schema.AuthInternalServerErrorResponse
+// @Router /auth/github [get]
 func (h *AuthHandler) GithubLogin(c *gin.Context) {
 	url, err := h.userService.GetGithubAuthUrl(c)
 	if err != nil {
@@ -130,7 +169,18 @@ func (h *AuthHandler) GithubLogin(c *gin.Context) {
 	c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
-func (h *AuthHandler) GihubCallback(c *gin.Context) {
+// @Summary Github Callback
+// @Description Github OAuth callback
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param code query string true "OAuth code"
+// @Param state query string true "OAuth state"
+// @Success 200 {object} schema.AuthGithubLoginResponse
+// @Failure 400 {object} schema.AuthBadRequestResponse
+// @Failure 500 {object} schema.AuthInternalServerErrorResponse
+// @Router /auth/github/callback [get]
+func (h *AuthHandler) GithubCallback(c *gin.Context) {
 	code := c.Query("code")
 	state := c.Query("state")
 
@@ -163,6 +213,16 @@ func (h *AuthHandler) GihubCallback(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Success", response, nil)
 }
 
+// @Summary Login with Github token
+// @Description Login with Github access token
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body schema.LoginWithGithubRequest true "Github login payload"
+// @Success 200 {object} schema.AuthGithubLoginResponse
+// @Failure 400 {object} schema.AuthBadRequestResponse
+// @Failure 500 {object} schema.AuthInternalServerErrorResponse
+// @Router /auth/github/login [post]
 func (h *AuthHandler) LoginWithGithub(c *gin.Context) {
 	var req LoginWithGithubRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
