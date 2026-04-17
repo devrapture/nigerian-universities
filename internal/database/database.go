@@ -59,7 +59,7 @@ func validateSchema(db *gorm.DB) error {
 	// Check if required tables/columns exist without modifying
 	migrator := db.Migrator()
 
-	// Ensure both core tables exist in production; fail fast if either is missing.
+	// Ensure all core tables exist in production; fail fast if any is missing.
 	if !migrator.HasTable(&internalModel.Institution{}) || !migrator.HasTable(&internalModel.User{}) || !migrator.HasTable(&internalModel.ProductKey{}) {
 		return errors.New("required database tables are missing in production")
 	}

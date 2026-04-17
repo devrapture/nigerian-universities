@@ -99,6 +99,9 @@ func (r *keyRepository) RevokeKey(ctx context.Context, userID, keyID uuid.UUID) 
 func (r *keyRepository) GetActiveKeyByHash(ctx context.Context, keyHash string) (*model.ProductKey, error) {
 	var key model.ProductKey
 	if err := r.db.WithContext(ctx).Where("key_hash = ? AND is_active = true", keyHash).First(&key).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, apperrors.ErrKeyNotFound
+		}
 		return nil, err
 	}
 

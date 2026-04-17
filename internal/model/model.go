@@ -36,7 +36,7 @@ type Institution struct {
 
 type ProductKey struct {
 	ID         uuid.UUID      `json:"id" gorm:"type:uuid;primary_key" example:"123e4567-e89b-12d3-a456-426614174000"`
-	UserID     uuid.UUID      `json:"user_id" gorm:"type:uuid;not null;index:idx_product_keys_user_id;uniqueIndex:idx_one_active_key_per_user,where:is_active = true" example:"123e4567-e89b-12d3-a456-426614174000"`
+	UserID     uuid.UUID      `json:"user_id" gorm:"type:uuid;not null;index:idx_product_keys_user_id;uniqueIndex:idx_one_active_key_per_user,where:is_active=true" example:"123e4567-e89b-12d3-a456-426614174000"`
 	KeyHash    string         `json:"-" gorm:"not null;uniqueIndex"`
 	KeyPrefix  string         `json:"key_prefix" gorm:"not null"`
 	IsActive   bool           `json:"is_active" gorm:"not null;default:true;uniqueIndex:idx_one_active_key_per_user,where:is_active=true" example:"true"`
