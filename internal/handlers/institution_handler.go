@@ -14,14 +14,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Institution struct {
-	Name                string `json:"name"`
-	ViceChancellor      string `json:"vice_chancellor"`
-	YearOfEstablishment string `json:"year_of_establishment"`
-	Type                string `json:"type"`
-	Url                 string `json:"url"`
-}
-
 type InstitutionHandler struct {
 	institutionService service.InstitutionService
 }
@@ -32,6 +24,22 @@ func NewInstitutionHandler(institutionService service.InstitutionService) *Insti
 	}
 }
 
+// GetAllInstitutions returns a list of all institutions
+// @Summary Get all institutions
+// @Description Get all institutions
+// @Tags Institutions
+// @Accept json
+// @Produce json
+// @Param X-API-Key header string true "API Key"
+// @Param page query int false "Page number"
+// @Param limit query int false "Items per page"
+// @Param search query string false "Search institutions by name"
+// @Param type query string false "Institution type" Enums(federal-university,state-university,private-university,federal-polytechnic,state-polytechnic,private-polytechnic,federal-college-education,state-college-of-education,private-college-of-education)
+// @Success 200 {object} schema.InstitutionListResponse
+// @Failure 400 {object} schema.InstitutionBadRequestResponse
+// @Failure 401 {object} schema.InstitutionUnauthorizedResponse
+// @Failure 500 {object} schema.InstitutionInternalServerErrorResponse
+// @Router /institutions [get]
 func (h *InstitutionHandler) GetAllInstitutions(c *gin.Context) {
 	queryDTO, err := parseListQuery(c)
 	if err != nil {

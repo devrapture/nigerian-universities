@@ -30,6 +30,18 @@ func NewKeyHandler(keyService service.KeyService) *KeyHandlers {
 	}
 }
 
+// CreateApiKey creates a new api key for the user
+// @Summary Create a new api key
+// @Description Create a new api key for the user
+// @Tags Keys
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} schema.KeyCreateResponse
+// @Failure 400 {object} schema.KeyBadRequestResponse
+// @Failure 401 {object} schema.KeyUnauthorizedResponse
+// @Failure 500 {object} schema.KeyInternalServerErrorResponse
+// @Router /api-keys/generate [post]
 func (h *KeyHandlers) CreateApiKey(c *gin.Context) {
 	userID, _ := c.Get("userID")
 	productKey, rawKey, err := h.keyService.HandleCreateKey(c.Request.Context(), userID.(uuid.UUID))
@@ -48,6 +60,20 @@ func (h *KeyHandlers) CreateApiKey(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Store this key securely. It will not be shown again.", resp, nil)
 }
 
+// GetAllKeys returns a list of all keys for the user
+// @Summary Get all keys
+// @Description Get all keys for the user
+// @Tags Keys
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param page query int false "Page number"
+// @Param limit query int false "Items per page"
+// @Success 200 {object} schema.KeyListResponse
+// @Failure 400 {object} schema.KeyBadRequestResponse
+// @Failure 401 {object} schema.KeyUnauthorizedResponse
+// @Failure 500 {object} schema.KeyInternalServerErrorResponse
+// @Router /api-keys [get]
 func (h *KeyHandlers) GetAllKeys(c *gin.Context) {
 	userID, _ := c.Get("userID")
 	queryDTO, err := parseListQuery(c)
@@ -73,6 +99,20 @@ func (h *KeyHandlers) GetAllKeys(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusOK, "Fetched all keys", keys, meta)
 }
 
+// RevokeKey deactivates a key
+// @Summary Revoke a key
+// @Description Deactivate a key
+// @Tags Keys
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param key_id path string true "Key ID"
+// @Success 200 {object} schema.KeySuccessResponse
+// @Failure 400 {object} schema.KeyBadRequestResponse
+// @Failure 401 {object} schema.KeyUnauthorizedResponse
+// @Failure 404 {object} schema.KeyNotFoundResponse
+// @Failure 500 {object} schema.KeyInternalServerErrorResponse
+// @Router /api-keys/{key_id}/revoke [post]
 func (h *KeyHandlers) RevokeKey(c *gin.Context) {
 	userID, _ := c.Get("userID")
 	keyID := c.Param("key_id")
