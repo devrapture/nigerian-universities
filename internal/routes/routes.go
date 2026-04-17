@@ -8,6 +8,7 @@ import (
 	"github.com/coolpythoncodes/nigerian-universities/internal/middleware"
 	"github.com/coolpythoncodes/nigerian-universities/internal/repositories"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/time/rate"
 	"gorm.io/gorm"
 )
 
@@ -20,8 +21,10 @@ type HandlerDependencies struct {
 
 func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engine {
 	r := gin.Default()
-
+	ipStore := middleware.NewRateLimiterStore(rate.Limit(5), 10)
+	apiKeyStore := middleware.NewRateLimiterStore(rate.Limit(2), 5)
 	v1 := r.Group("/api/v1")
+	v1.Use(middleware.IPRateLimiter(ipStore))
 
 	{
 		v1.GET("/health", func(c *gin.Context) {
@@ -65,6 +68,7 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 		// api-keys
 		keys := v1.Group("/api-keys")
 		keys.Use(middleware.AuthMiddleware(cfg))
+		keys.Use(middleware.APIKeyRateLimiter(apiKeyStore))
 		keys.
 			POST("/generate", deps.KeyHandler.CreateApiKey).
 			GET("", deps.KeyHandler.GetAllKeys).
