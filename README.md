@@ -1,125 +1,258 @@
 # Nigerian Institutions API
 
-A comprehensive API and scraper for Nigerian educational institutions, including Universities, Polytechnics, and Colleges of Education. Data is scraped from official sources such as the National Universities Commission (NUC) and the Federal Ministry of Education.
+The Nigerian Institutions API provides a comprehensive and searchable database of educational institutions in Nigeria, including universities, polytechnics, and colleges of education. It consists of a high-performance Go API and a specialized scraper that aggregates data from official government sources (NUC, Federal Ministry of Education).
+
+## Tech Stack
+
+- **Language:** Go (v1.25.0+)
+- **Web Framework:** Gin Gonic
+- **Database:** PostgreSQL with GORM
+- **Migrations:** golang-migrate & Atlas
+- **Authentication:** JWT with Google and GitHub OAuth2 integration
+- **Documentation:** Swagger (OpenAPI 2.0) via `swaggo/swag`
+- **Development Tooling:** Air (hot-reload), Makefile
 
 ## Project Structure
 
-This project follows the standard Go project layout:
+The project follows a modular, layered architecture inspired by the standard Go project layout:
 
-- `cmd/`: Entry points for the application.
-  - `api/`: The web API server.
-  - `scraper/`: The data scraping utility.
-- `internal/`: Private application and library code.
-  - `config/`: Configuration management.
-  - `constants/`: System-wide constants (e.g., institution types, URLs).
-  - `database/`: Database connection and initialization.
-  - `dto/`: Data Transfer Objects for API requests and responses.
-  - `handlers/`: HTTP request handlers.
-  - `model/`: GORM models.
-  - `repositories/`: Database access layer.
-  - `routes/`: API route definitions.
-  - `scraper/`: Scraping logic.
-  - `service/`: Business logic layer.
-  - `utils/`: Common utilities (e.g., standardized API responses).
-- `migrations/`: SQL migration files for database schema management.
+- `cmd/`: Application entry points.
+  - `api/`: Main API server.
+  - `scraper/`: Standalone scraping utility.
+- `internal/`: Private core logic.
+  - `config/`: Environment-based configuration management.
+  - `handlers/`: HTTP interface layer, handling request validation and response formatting.
+  - `service/`: Business logic layer, orchestrating repositories and external services.
+  - `repositories/`: Data access layer, interacting with PostgreSQL via GORM.
+  - `model/`: Database entity definitions.
+  - `schema/`: Explicit request/response models for Swagger documentation and API contracts.
+  - `middleware/`: Rate limiting, authentication, and logging logic.
+  - `scraper/`: Core scraping logic using `colly`.
+  - `utils/`: Reusable helpers for JWT, OAuth, and standardized responses.
+- `docs/`: Auto-generated Swagger documentation files.
 
-## Prerequisites
+## Environment
 
-- [Go](https://go.dev/doc/install) (v1.25.0 or later)
-- [PostgreSQL](https://www.postgresql.org/)
-- [golang-migrate](https://github.com/golang-migrate/migrate) (for running migrations)
-- [Air](https://github.com/cosmtrek/air) (optional, for live reloading)
+Required environment variables:
 
-## Installation & Setup
+```env
+PORT=8080
+AppEnv=development
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/nigerian_universities_dev?sslmode=disable
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/coolpythoncodes/nigerian-universities.git
-   cd nigerian-universities
-   ```
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_REDIRECT_URL=http://localhost:8080/api/v1/auth/google/callback
 
-2. **Configure Environment Variables:**
-   Create a `.env` file in the root directory (values are examples):
-   ```env
-   PORT=8080
-   AppEnv=development                 # production disables AutoMigrate
-   DATABASE_URL=postgres://postgres:postgres@localhost:5432/nigerian_universities_dev?sslmode=disable
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+GITHUB_REDIRECT_URL=http://localhost:8080/api/v1/auth/github/callback
 
-   GOOGLE_CLIENT_ID=...
-   GOOGLE_CLIENT_SECRET=...
-   GOOGLE_REDIRECT_URL=http://localhost:8080/api/v1/auth/google/callback
+JWT_SECRET=change-me
+JWT_EXPIRES_IN_HOURS=24
+FRONTEND_URL=http://localhost:3000
+```
 
-   GITHUB_CLIENT_ID=...
-   GITHUB_CLIENT_SECRET=...
-   GITHUB_REDIRECT_URL=http://localhost:8080/api/v1/auth/github/callback
+## API Documentation
 
-   JWT_SECRET=change-me
-   JWT_EXPIRES_IN_HOURS=24
-   FRONTEND_URL=http://localhost:3000
-   ```
+The API is fully documented using Swagger.
 
-3. **Run Database Migrations (prod / staging):**
-   ```bash
-   make migrate-up
-   ```
+- **Interactive UI:** Available at `/swagger/index.html` when the server is running.
+- **Specification:** The raw specification can be found in `docs/swagger.json` and `docs/swagger.yaml`.
 
-4. **(Dev only) AutoMigrate:**
-   When `AppEnv != "production"`, the API runs `db.AutoMigrate` for `Institution` and `User` on startup. Use a non-prod database for this (e.g., local Postgres).
+## Development Workflows
 
-5. **Scrape Initial Data:**
-   Before running the API, you need to populate the database with institution data:
-   ```bash
-   go run cmd/scraper/main.go
-   ```
+### 1. Database Management
 
-6. **Run the API Server:**
-   ```bash
-   # Using Make (with Air for hot-reload)
-   make dev
+- **Local Dev:** The API uses `db.AutoMigrate` when `AppEnv` is not `production`.
+- **Production/Staging:** Use formal migrations.
+  - Create: `make migrate-create name=description`
+  - Apply: `make migrate-up`
 
-   # Or directly
-   go run cmd/api/main.go
-   ```
+### 2. Scraping Data
 
-## Migrations & Atlas
-- SQL migrations live in `migrations/`.
-- Create a new migration: `make migrate-create name=add_users_table` (fills `migrations/*`).
-- Atlas config: `atlas.hcl` points to `DATABASE_URL` (target) and `ATLAS_DEV_URL` (scratch for diffs).
-- GitHub Actions workflow `.github/workflows/migrate-and-deploy.yml` runs `atlas migrate apply --env local` on pushes to `main` and can trigger Vercel via `VERCEL_DEPLOY_HOOK_URL`.
+To refresh or populate the database with institutional data, run the scraper:
 
-## Authentication
-- Google OAuth (direct):  
-  - `GET /api/v1/auth/google` → redirects to Google  
-  - `GET /api/v1/auth/google/callback?code=...` → returns `{ access_token, user }`
-- Google (Auth.js flow):  
-  - Frontend handles OAuth; call `POST /api/v1/auth/google/login` with `{ id, email, name, avatar_url }` to upsert user and get API JWT.
-- GitHub routes are wired (`/api/v1/auth/github`, `/api/v1/auth/github/callback`); implement callback or use an Auth.js-style POST endpoint mirroring the Google flow for GitHub.
+```bash
+go run cmd/scraper/main.go
+```
 
+The scraper uses URLs and constants defined in `internal/constants/institution.go`.
 
-## API Endpoints
+### 3. Run the API Server
 
-All API endpoints are prefixed with `/api/v1`.
+```bash
+# Using Make (with Air for hot-reload)
+make dev
 
-### Health Check
+# Or directly
+go run cmd/api/main.go
+```
+
+### 4. Authentication Model
+
+There are two auth mechanisms in the project.
+
+### 1. Bearer JWT
+
+Used for:
+
+- `/api/v1/api-keys/*`
+
+Header:
+
+```http
+Authorization: Bearer <jwt>
+```
+
+JWTs are returned by the auth endpoints after successful login.
+
+### 2. Product API Key
+
+Used for:
+
+- `/api/v1/institutions`
+
+Header:
+
+```http
+X-API-Key: <generated-api-key>
+```
+
+The API key is validated against the `product_keys` table through `ProductKeyMiddleware`.
+
+## Rate Limiting
+
+Current route-level throttling in `internal/routes/routes.go`:
+
+- global IP limiter on `/api/v1/*`: `5 req/sec`, burst `10`
+- bearer-auth key endpoints: `2 req/sec`, burst `5`
+
+## Endpoints
+
+### Health
+
 `GET /api/v1/health`
-- Returns the status of the API.
+
+Success response:
+
+```json
+{
+  "status": "ok"
+}
+```
+
+Failure response:
+
+```json
+{
+  "status": "db-unreachable",
+  "error": "failed to ping database"
+}
+```
+
+### Auth
+
+#### Google OAuth redirect
+
+`GET /api/v1/auth/google`
+
+Redirects the user to Google OAuth.
+
+#### Google OAuth callback
+
+`GET /api/v1/auth/google/callback?code=...&state=...`
+
+Returns a JWT and user payload on success.
+
+#### Google token login
+
+`POST /api/v1/auth/google/login`
+
+Request body:
+
+```json
+{
+  "id_token": "google-id-token"
+}
+```
+
+#### GitHub OAuth redirect
+
+`GET /api/v1/auth/github`
+
+Redirects the user to GitHub OAuth.
+
+#### GitHub OAuth callback
+
+`GET /api/v1/auth/github/callback?code=...&state=...`
+
+Returns a JWT and user payload on success.
+
+#### GitHub token login
+
+`POST /api/v1/auth/github/login`
+
+Request body:
+
+```json
+{
+  "access_token": "github-access-token"
+}
+```
+
+Typical auth success shape:
+
+```json
+{
+  "success": true,
+  "message": "Success",
+  "data": {
+    "access_token": "jwt-token",
+    "user": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "email": "john.doe@example.com",
+      "name": "John Doe",
+      "avatar_url": "https://example.com/avatar.png"
+    }
+  }
+}
+```
 
 ### Institutions
+
 `GET /api/v1/institutions`
-- Fetches a list of institutions with support for pagination, searching, and filtering.
 
-**Query Parameters:**
-- `page` (default: 1): The page number.
-- `limit` (default: 10, max: 100): Number of items per page.
-- `search`: Search institutions by name.
-- `type`: Filter by institution type. Valid types include:
-  - `federal-university`, `state-university`, `private-university`
-  - `federal-polytechnic`, `state-polytechnic`, `private-polytechnic`
-  - `federal-college-education`, `state-college-education`, `private-college-education`
+Required header:
 
-**Example Request:**
+```http
+X-API-Key: <product-api-key>
+```
+
+Query params:
+
+- `page`
+- `limit`
+- `search`
+- `type`
+
+Allowed `type` values:
+
+- `federal-university`
+- `state-university`
+- `private-university`
+- `federal-polytechnic`
+- `state-polytechnic`
+- `private-polytechnic`
+- `federal-college-education`
+- `state-college-of-education`
+- `private-college-of-education`
+
+Example:
+
 ```bash
-curl "http://localhost:8080/api/v1/institutions?type=federal-university&search=lagos"
+curl -H "X-API-Key: sk_live_..." \
+  "http://localhost:8080/api/v1/institutions?type=federal-university&search=lagos&page=1&limit=10"
 ```
 
 **Example Response:**
@@ -146,10 +279,67 @@ curl "http://localhost:8080/api/v1/institutions?type=federal-university&search=l
 }
 ```
 
-## Contributing
+### API Keys
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+These endpoints require Bearer auth.
 
-## License
+#### Generate key
 
-This project is licensed under the MIT License.
+`POST /api/v1/api-keys/generate`
+
+Header:
+
+```http
+Authorization: Bearer <jwt>
+```
+
+#### List keys
+
+`GET /api/v1/api-keys?page=1&limit=10`
+
+#### Revoke key
+
+`POST /api/v1/api-keys/{key_id}/revoke`
+
+## Swagger
+
+Swagger UI is served from:
+
+```text
+http://localhost:8080/swagger/index.html
+```
+
+### Regenerate docs
+
+Use this command:
+
+```bash
+swag init -g main.go -d cmd/api,internal/handlers,internal/routes,internal/schema,internal/constants --parseInternal
+```
+
+Why these directories are included:
+
+- `cmd/api`: general Swagger metadata
+- `internal/handlers`: auth, institutions, keys annotations
+- `internal/routes`: health endpoint annotations
+- `internal/schema`: Swagger-only request/response models
+- `internal/constants`: institution type resolution
+
+### Authorization in Swagger
+
+Swagger is configured with a global Bearer auth scheme for JWT-protected routes.
+
+Use the **Authorize** button for:
+
+- `/api/v1/api-keys/`*
+
+For institutions, Swagger still expects manual `X-API-Key` input because that endpoint uses product keys, not bearer tokens.
+
+## Notes
+
+- `institutions` is protected by product API keys, not JWT.
+- `api-keys` endpoints are protected by JWT, not `X-API-Key`.
+- health is public.
+- auth endpoints are public.
+- Swagger schemas for docs are intentionally separated into `internal/schema`.
+
