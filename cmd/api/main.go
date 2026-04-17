@@ -42,6 +42,7 @@ func main() {
 		AuthHandler:        authHandler,
 		InstitutionHandler: institutionHandler,
 		KeyHandler:         keyHandler,
+		KeyRepo:            keyRepo,
 	}
 
 	addr := fmt.Sprintf(":%s", cfg.Port)

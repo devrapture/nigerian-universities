@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/config"
+	"github.com/coolpythoncodes/nigerian-universities/internal/repositories"
 	"github.com/coolpythoncodes/nigerian-universities/internal/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -36,6 +37,26 @@ func AuthMiddleware(cfg *config.Config) gin.HandlerFunc {
 		}
 		c.Set("userID", claims.UserID)
 		c.Set("email", claims.Email)
+		c.Next()
+	}
+}
+
+func ProductKeyMiddleware(keyRepo repositories.KeyRepository) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		providedKey := c.GetHeader("X-API-Key")
+		if providedKey == "" {
+			utils.ErrorResponse(c, http.StatusUnauthorized, "INVALID_API_KEY", "Invalid or missing X-API-Key header")
+			c.Abort()
+			return
+		}
+		keyHash := utils.HashKey(providedKey)
+		key, err := keyRepo.GetActiveKeyByHash(c.Request.Context(), keyHash)
+		if err != nil {
+			utils.ErrorResponse(c, http.StatusUnauthorized, "INVALID_API_KEY", "Invalid or missing X-API-Key header")
+			c.Abort()
+			return
+		}
+		_ = keyRepo.UpdateLastUsedAt(c.Request.Context(), key.ID)
 		c.Next()
 	}
 }

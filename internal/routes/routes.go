@@ -6,6 +6,7 @@ import (
 	"github.com/coolpythoncodes/nigerian-universities/internal/config"
 	"github.com/coolpythoncodes/nigerian-universities/internal/handlers"
 	"github.com/coolpythoncodes/nigerian-universities/internal/middleware"
+	"github.com/coolpythoncodes/nigerian-universities/internal/repositories"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -14,6 +15,7 @@ type HandlerDependencies struct {
 	AuthHandler        *handlers.AuthHandler
 	InstitutionHandler *handlers.InstitutionHandler
 	KeyHandler         *handlers.KeyHandlers
+	KeyRepo            repositories.KeyRepository
 }
 
 func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engine {
@@ -56,6 +58,7 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 
 		// institution
 		institution := v1.Group("/institutions")
+		institution.Use(middleware.ProductKeyMiddleware(deps.KeyRepo))
 
 		institution.GET("", deps.InstitutionHandler.GetAllInstitutions)
 
@@ -70,5 +73,4 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 	}
 
 	return r
-
 }

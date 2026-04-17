@@ -18,6 +18,8 @@ type KeyRepository interface {
 	CreateKey(ctx context.Context, userID uuid.UUID, rawKey string) (*model.ProductKey, error)
 	GetAllKeys(ctx context.Context, userID uuid.UUID, queryDTO dto.ListInstitutionQuery) ([]model.ProductKey, int64, error)
 	RevokeKey(ctx context.Context, userID, keyID uuid.UUID) error
+	GetActiveKeyByHash(ctx context.Context, keyHash string) (*model.ProductKey, error)
+	UpdateLastUsedAt(ctx context.Context, keyID uuid.UUID) error
 }
 
 type keyRepository struct {
@@ -92,4 +94,18 @@ func (r *keyRepository) RevokeKey(ctx context.Context, userID, keyID uuid.UUID) 
 	}
 
 	return nil
+}
+
+func (r *keyRepository) GetActiveKeyByHash(ctx context.Context, keyHash string) (*model.ProductKey, error) {
+	var key model.ProductKey
+	if err := r.db.WithContext(ctx).Where("key_hash = ? AND is_active = true", keyHash).First(&key).Error; err != nil {
+		return nil, err
+	}
+
+	return &key, nil
+}
+
+func (r *keyRepository) UpdateLastUsedAt(ctx context.Context, keyID uuid.UUID) error {
+	now := time.Now().UTC()
+	return r.db.WithContext(ctx).Model(&model.ProductKey{}).Where("id = ?", keyID).Update("last_used_at", now).Error
 }
