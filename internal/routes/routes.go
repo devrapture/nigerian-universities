@@ -21,8 +21,8 @@ type HandlerDependencies struct {
 
 func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engine {
 	r := gin.Default()
-	ipStore := middleware.NewRateLimiterStore(rate.Limit(20), 40)
-	apiKeyStore := middleware.NewRateLimiterStore(rate.Limit(10), 20)
+	ipStore := middleware.NewRateLimiterStore(rate.Limit(5), 10)
+	apiKeyStore := middleware.NewRateLimiterStore(rate.Limit(2), 5)
 	v1 := r.Group("/api/v1")
 	v1.Use(middleware.IPRateLimiter(ipStore))
 

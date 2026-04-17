@@ -71,7 +71,6 @@ func (s *RateLimiterStore) get(key string) *rate.Limiter {
 	return entry.limiter
 }
 
-// Allows 20 req/s with a burst of 40 per IP
 func IPRateLimiter(store *RateLimiterStore) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ip := c.GetHeader("X-Forwarded-For")
@@ -81,8 +80,7 @@ func IPRateLimiter(store *RateLimiterStore) gin.HandlerFunc {
 
 		if !store.get(ip).Allow() {
 			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
-				"error":       "Too many requests from your IP",
-				"retry_after": "1s",
+				"error": "Too many requests from your IP",
 			})
 			return
 		}
@@ -98,8 +96,7 @@ func APIKeyRateLimiter(store *RateLimiterStore) gin.HandlerFunc {
 		key := fmt.Sprintf("user:%v", userID)
 		if !store.get(key).Allow() {
 			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
-				"error":       "Rate limit exceeded for your API key",
-				"retry_after": "1s",
+				"error": "Rate limit exceeded for your API key",
 			})
 			return
 		}
