@@ -1,14 +1,111 @@
 package middleware
 
 import (
+	"fmt"
+	"net"
 	"net/http"
 	"strings"
+	"sync"
+	"time"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/config"
 	"github.com/coolpythoncodes/nigerian-universities/internal/repositories"
 	"github.com/coolpythoncodes/nigerian-universities/internal/utils"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/time/rate"
 )
+
+type clientLimiter struct {
+	limiter  *rate.Limiter
+	lastSeen time.Time
+}
+
+type RateLimiterStore struct {
+	mu       sync.Mutex
+	limiters map[string]*clientLimiter
+	rate     rate.Limit // request per second
+	burst    int
+}
+
+func NewRateLimiterStore(r rate.Limit, burst int) *RateLimiterStore {
+	store := &RateLimiterStore{
+		limiters: make(map[string]*clientLimiter),
+		rate:     r,
+		burst:    burst,
+	}
+	// Background cleanup: remove entries not seen in 10 minutes
+	go store.cleanupLoop()
+	return store
+}
+
+func (s *RateLimiterStore) cleanupLoop() {
+	ticker := time.NewTicker(5 * time.Minute)
+
+	for range ticker.C {
+		s.mu.Lock()
+		cutoff := time.Now().Add(-10 * time.Minute)
+		for key, entry := range s.limiters {
+			if entry.lastSeen.Before(cutoff) {
+				delete(s.limiters, key)
+			}
+		}
+		s.mu.Unlock()
+	}
+}
+
+func (s *RateLimiterStore) get(key string) *rate.Limiter {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	entry, exists := s.limiters[key]
+
+	if !exists {
+		entry = &clientLimiter{
+			limiter: rate.NewLimiter(s.rate, s.burst),
+		}
+		s.limiters[key] = entry
+	}
+
+	entry.lastSeen = time.Now()
+
+	return entry.limiter
+}
+
+// Allows 20 req/s with a burst of 40 per IP
+func IPRateLimiter(store *RateLimiterStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ip := c.GetHeader("X-Forwarded-For")
+		if ip == "" {
+			ip, _, _ = net.SplitHostPort(c.Request.RemoteAddr)
+		}
+
+		if !store.get(ip).Allow() {
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
+				"error":       "Too many requests from your IP",
+				"retry_after": "1s",
+			})
+			return
+		}
+		c.Next()
+	}
+}
+
+// Rate limit for API Key requests
+func APIKeyRateLimiter(store *RateLimiterStore) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userID, _ := c.Get("user_id")
+
+		key := fmt.Sprintf("user:%v", userID)
+		if !store.get(key).Allow() {
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{
+				"error":       "Rate limit exceeded for your API key",
+				"retry_after": "1s",
+			})
+			return
+		}
+		c.Next()
+	}
+}
 
 func AuthMiddleware(cfg *config.Config) gin.HandlerFunc {
 	return func(c *gin.Context) {
