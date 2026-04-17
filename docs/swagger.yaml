@@ -726,3 +726,12 @@ securityDefinitions:
     name: Authorization
     type: apiKey
 swagger: "2.0"
+tags:
+- description: Authentication endpoints
+  name: Auth
+- description: API key management endpoints
+  name: Keys
+- description: Health check endpoints
+  name: Health
+- description: Institution listing endpoints
+  name: Institutions

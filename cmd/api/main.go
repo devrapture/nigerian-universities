@@ -30,12 +30,18 @@ import (
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
+
 // @tag.name Auth
 // @tag.description Authentication endpoints
-// @tag.name  Institutions
-// @tag.description Institution listing endpoints
+
 // @tag.name Keys
 // @tag.description API key management endpoints
+
+// @tag.name Health
+// @tag.description Health check endpoints
+
+// @tag.name Institutions
+// @tag.description Institution listing endpoints
 
 func main() {
 	cfg, err := config.Load()

@@ -1088,7 +1088,25 @@ const docTemplate = `{
             "name": "Authorization",
             "in": "header"
         }
-    }
+    },
+    "tags": [
+        {
+            "description": "Authentication endpoints",
+            "name": "Auth"
+        },
+        {
+            "description": "API key management endpoints",
+            "name": "Keys"
+        },
+        {
+            "description": "Health check endpoints",
+            "name": "Health"
+        },
+        {
+            "description": "Institution listing endpoints",
+            "name": "Institutions"
+        }
+    ]
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
