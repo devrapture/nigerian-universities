@@ -28,6 +28,7 @@ env "local" {
   url = getenv("DATABASE_URL")
   migration {
     dir              = "file://migrations"
+    baseline         = "202604180001"
     revisions_schema = "public"
   }
 }
