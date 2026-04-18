@@ -21,7 +21,10 @@ jobs:
         run: echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Install Atlas CLI
-        run: go install ariga.io/atlas/cmd/atlas@latest
+        run: go install ariga.io/atlas/cmd/atlas@v1.2.0
+
+      - name: Hash migrations
+        run: atlas migrate hash --dir "file://migrations"
 
       - name: Run migrations
         env:
