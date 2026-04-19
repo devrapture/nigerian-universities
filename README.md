@@ -1,3 +1,6 @@
+<img width="71" height="77" alt="image" src="https://github.com/user-attachments/assets/83804a75-30d7-4114-b647-9fa7d7af36f4" />
+
+
 # Nigerian Institutions API
 
 The Nigerian Institutions API provides a comprehensive and searchable database of educational institutions in Nigeria, including universities, polytechnics, and colleges of education. It consists of a high-performance Go API and a specialized scraper that aggregates data from official government sources (NUC, Federal Ministry of Education).
