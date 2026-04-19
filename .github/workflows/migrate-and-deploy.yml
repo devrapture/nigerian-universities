@@ -12,16 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.23.4'
-
-      - name: Add Go bin to PATH
-        run: echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-
       - name: Install Atlas CLI
-        run: go install ariga.io/atlas/cmd/atlas@v1.2.0
+        uses: ariga/setup-atlas@v0
+        with:
+          version: v1.2.0
 
       - name: Hash migrations
         run: atlas migrate hash --dir "file://migrations"

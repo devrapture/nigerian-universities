@@ -26,4 +26,9 @@ env "local" {
   src = "file://migrations"
   dev = getenv("ATLAS_DEV_URL")
   url = getenv("DATABASE_URL")
+  migration {
+    dir              = "file://migrations"
+    baseline         = "202604180001"
+    revisions_schema = "public"
+  }
 }
