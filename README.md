@@ -123,6 +123,19 @@ X-API-Key: <generated-api-key>
 ```
 
 The API key is validated against the `product_keys` table through `ProductKeyMiddleware`.
+## Quick Start: Querying Institutions
+
+For first-time API consumers, the authentication flow can be summarized as:
+
+1. Sign in using one of the supported OAuth providers (Google or GitHub) to receive a JWT.
+2. Use the JWT as a Bearer token to access the `/api/v1/api-keys/*` endpoints and generate a Product API Key.
+3. Send the generated Product API Key in the `X-API-Key` header when querying `/api/v1/institutions`.
+
+The complete flow is:
+
+`OAuth Login → JWT → Product API Key → Institutions API`
+
+This separates user authentication from product API access and provides a clear path for developers who want to consume institution data.
 
 ## Rate Limiting
 
