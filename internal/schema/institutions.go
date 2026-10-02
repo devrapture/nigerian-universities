@@ -82,11 +82,22 @@ type ChangeLogListResponse struct {
 }
 
 type ScrapeTriggerData struct {
-	Status string `json:"status" example:"started"`
+	Status string `json:"status" example:"completed"`
+	Count  int    `json:"count,omitempty" example:"120"`
 }
 
 type ScrapeTriggerResponse struct {
 	Success bool              `json:"success" example:"true"`
-	Message string            `json:"message" example:"scrape started"`
+	Message string            `json:"message" example:"scrape completed"`
 	Data    ScrapeTriggerData `json:"data"`
+}
+
+type ScrapeTimeoutError struct {
+	Code    string `json:"code" example:"TIMEOUT"`
+	Message string `json:"message" example:"scrape timed out"`
+}
+
+type ScrapeTimeoutResponse struct {
+	Success bool                `json:"success" example:"false"`
+	Error   *ScrapeTimeoutError `json:"error,omitempty"`
 }
