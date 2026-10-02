@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"crypto/subtle"
 	"fmt"
 	"net"
 	"net/http"
@@ -14,6 +15,26 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/time/rate"
 )
+
+func CronSecretMiddleware(secret string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if secret == "" {
+			utils.ErrorResponse(c, http.StatusServiceUnavailable, "CRON_NOT_CONFIGURED", "Cron trigger is not configured")
+			c.Abort()
+			return
+		}
+
+		authHeader := c.GetHeader("Authorization")
+		parts := strings.Fields(authHeader)
+		if len(parts) != 2 || !strings.EqualFold(parts[0], "Bearer") || subtle.ConstantTimeCompare([]byte(parts[1]), []byte(secret)) != 1 {
+			utils.ErrorResponse(c, http.StatusUnauthorized, "UNAUTHORIZED", "Invalid cron authorization")
+			c.Abort()
+			return
+		}
+
+		c.Next()
+	}
+}
 
 type clientLimiter struct {
 	limiter  *rate.Limiter

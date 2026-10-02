@@ -32,7 +32,7 @@ func ConnectDB(cfg *config.Config) (*gorm.DB, error) {
 			return nil, err
 		}
 	} else {
-		if err := db.AutoMigrate(&internalModel.Institution{}, &internalModel.User{}, &internalModel.ProductKey{}); err != nil {
+		if err := db.AutoMigrate(&internalModel.Institution{}, &internalModel.User{}, &internalModel.ProductKey{}, &internalModel.ChangeLog{}); err != nil {
 			return nil, err
 		}
 	}
@@ -60,7 +60,7 @@ func validateSchema(db *gorm.DB) error {
 	migrator := db.Migrator()
 
 	// Ensure all core tables exist in production; fail fast if any is missing.
-	if !migrator.HasTable(&internalModel.Institution{}) || !migrator.HasTable(&internalModel.User{}) || !migrator.HasTable(&internalModel.ProductKey{}) {
+	if !migrator.HasTable(&internalModel.Institution{}) || !migrator.HasTable(&internalModel.User{}) || !migrator.HasTable(&internalModel.ProductKey{}) || !migrator.HasTable(&internalModel.ChangeLog{}) {
 		return errors.New("required database tables are missing in production")
 	}
 

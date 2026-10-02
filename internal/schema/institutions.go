@@ -27,7 +27,7 @@ type InstitutionUnauthorizedError struct {
 }
 
 type InstitutionUnauthorizedResponse struct {
-	Success bool                         `json:"success" example:"false"`
+	Success bool                          `json:"success" example:"false"`
 	Error   *InstitutionUnauthorizedError `json:"error,omitempty"`
 }
 
@@ -56,4 +56,37 @@ type PaginationMeta struct {
 	PerPage int   `json:"per_page"`
 	Total   int64 `json:"total"`
 	Pages   int64 `json:"pages"`
+}
+
+type InstitutionFieldChange struct {
+	Field    string `json:"field" example:"website"`
+	OldValue string `json:"old_value" example:"https://old.example.edu.ng"`
+	NewValue string `json:"new_value" example:"https://new.example.edu.ng"`
+}
+
+type ChangeLogItem struct {
+	ID              string                   `json:"id"`
+	InstitutionID   string                   `json:"institution_id"`
+	InstitutionName string                   `json:"institution_name" example:"University of Lagos"`
+	InstitutionType string                   `json:"institution_type" example:"federal-university"`
+	ChangeType      string                   `json:"change_type" example:"updated"`
+	Changes         []InstitutionFieldChange `json:"changes"`
+	ChangedAt       time.Time                `json:"changed_at"`
+}
+
+type ChangeLogListResponse struct {
+	Success bool            `json:"success"`
+	Message string          `json:"message,omitempty"`
+	Data    []ChangeLogItem `json:"data"`
+	Meta    PaginationMeta  `json:"meta"`
+}
+
+type ScrapeTriggerData struct {
+	Status string `json:"status" example:"started"`
+}
+
+type ScrapeTriggerResponse struct {
+	Success bool              `json:"success" example:"true"`
+	Message string            `json:"message" example:"scrape started"`
+	Data    ScrapeTriggerData `json:"data"`
 }

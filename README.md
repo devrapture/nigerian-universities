@@ -53,6 +53,7 @@ GITHUB_REDIRECT_URL=http://localhost:8080/api/v1/auth/github/callback
 
 JWT_SECRET=change-me
 JWT_EXPIRES_IN_HOURS=24
+CRON_SECRET=replace-with-a-long-random-secret
 FRONTEND_URL=http://localhost:3000
 ```
 
@@ -81,6 +82,19 @@ go run cmd/scraper/main.go
 ```
 
 The scraper uses URLs and constants defined in `internal/constants/institution.go`.
+
+Production cron services can trigger the same scraper without holding the HTTP
+connection open:
+
+```bash
+curl -X POST http://localhost:8080/api/v1/cron/scrape \
+  -H "Authorization: Bearer $CRON_SECRET"
+```
+
+The endpoint returns `202 Accepted` immediately. Only one scrape runs at a time;
+additional triggers still receive a successful response with an
+`already_running` status. Completed scrapes record real data additions and field
+updates in the public `GET /api/v1/change-logs` endpoint.
 
 ### 3. Run the API Server
 
@@ -358,4 +372,3 @@ For institutions, Swagger still expects manual `X-API-Key` input because that en
 - health is public.
 - auth endpoints are public.
 - Swagger schemas for docs are intentionally separated into `internal/schema`.
-

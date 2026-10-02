@@ -15,6 +15,7 @@ type institutionService struct {
 type InstitutionService interface {
 	StoreScrapedInstitutions(ctx context.Context, institutions []model.Institution) error
 	GetAllInstitutions(ctx context.Context, queryDTO dto.ListInstitutionQuery) ([]model.Institution, int64, error)
+	GetChangeLogs(ctx context.Context, queryDTO dto.ListChangeLogQuery) ([]model.ChangeLog, int64, error)
 }
 
 func NewInstitutionService(repo repositories.InstitutionRepository) InstitutionService {
@@ -29,4 +30,8 @@ func (s *institutionService) StoreScrapedInstitutions(ctx context.Context, insti
 
 func (s *institutionService) GetAllInstitutions(ctx context.Context, queryDTO dto.ListInstitutionQuery) ([]model.Institution, int64, error) {
 	return s.repo.FindAll(ctx, queryDTO)
+}
+
+func (s *institutionService) GetChangeLogs(ctx context.Context, queryDTO dto.ListChangeLogQuery) ([]model.ChangeLog, int64, error) {
+	return s.repo.FindChangeLogs(ctx, queryDTO)
 }

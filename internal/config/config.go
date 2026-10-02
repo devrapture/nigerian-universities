@@ -16,6 +16,7 @@ type Config struct {
 	FrontendURL          string
 	JwtSecret            string
 	JwtExpires           int
+	CronSecret           string
 	GOOGLE_CLIENT_ID     string
 	GOOGLE_CLIENT_SECRET string
 	GITHUB_CLIENT_ID     string
@@ -54,6 +55,15 @@ func Load() (*Config, error) {
 		jwtSecret = "dev-secret-do-not-use-in-production"
 	}
 
+	cronSecret := getEnv("CRON_SECRET", "")
+	if cronSecret == "" {
+		if appEnv == "production" {
+			return nil, fmt.Errorf("CRON_SECRET must be set in production")
+		}
+		log.Println("WARNING: using insecure default CRON_SECRET for development")
+		cronSecret = "dev-cron-secret"
+	}
+
 	googleClientID := getEnv("GOOGLE_CLIENT_ID", "")
 	googleClientSecret := getEnv("GOOGLE_CLIENT_SECRET", "")
 
@@ -75,6 +85,7 @@ func Load() (*Config, error) {
 		FrontendURL:          getEnv("FRONTEND_URL", "http://localhost:3000"),
 		JwtSecret:            jwtSecret,
 		JwtExpires:           jwtHours,
+		CronSecret:           cronSecret,
 		GOOGLE_CLIENT_ID:     googleClientID,
 		GOOGLE_CLIENT_SECRET: googleClientSecret,
 		GITHUB_CLIENT_ID:     githubClientID,
