@@ -1,6 +1,7 @@
 package scraper
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strings"
@@ -9,6 +10,7 @@ import (
 	"github.com/coolpythoncodes/nigerian-universities/internal/constants"
 	"github.com/coolpythoncodes/nigerian-universities/internal/model"
 	"github.com/gocolly/colly"
+	"golang.org/x/sync/errgroup"
 )
 
 type InstitutionSource struct {
@@ -38,25 +40,70 @@ func NewInstitutionScrapper() *InstitutionScrapper {
 	return &InstitutionScrapper{}
 }
 
-func (s *InstitutionScrapper) ScrapeAllInstitution() ([]model.Institution, error) {
+func (s *InstitutionScrapper) ScrapeAllInstitution(ctx context.Context) ([]model.Institution, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+
+	sources := make([]InstitutionSource, 0, len(InstitutionRegistry))
+	for _, source := range InstitutionRegistry {
+		sources = append(sources, source)
+	}
+
+	out := make([][]model.Institution, len(sources))
+	g, ctx := errgroup.WithContext(ctx)
+	for i, source := range sources {
+		i, source := i, source
+		g.Go(func() error {
+			if err := ctx.Err(); err != nil {
+				return err
+			}
+			institutions, err := s.scrapeInstitution(ctx, source.URL, source.Type)
+			if err != nil {
+				return err
+			}
+			fmt.Println("scraped institutions", institutions)
+			out[i] = institutions
+			return nil
+		})
+	}
+	if err := g.Wait(); err != nil {
+		return nil, err
+	}
+
 	var allInstitutions []model.Institution
-	for _, institution := range InstitutionRegistry {
-		institutions, err := s.scrapeInstitution(institution.URL, institution.Type)
-		fmt.Println("scraped institutions", institutions)
-		if err != nil {
-			return nil, err
-		}
+	for _, institutions := range out {
 		allInstitutions = append(allInstitutions, institutions...)
 	}
 	fmt.Println("all institutions", allInstitutions)
 	return allInstitutions, nil
 }
 
-func (s *InstitutionScrapper) scrapeInstitution(url string, instituteType constants.InstitutionType) ([]model.Institution, error) {
-	// fmt.Println("Scraping", instituteType)
+func remainingTimeout(ctx context.Context) time.Duration {
+	deadline, ok := ctx.Deadline()
+	if !ok {
+		return 60 * time.Second
+	}
+	remaining := time.Until(deadline)
+	if remaining < time.Millisecond {
+		return time.Millisecond
+	}
+	return remaining
+}
+
+func (s *InstitutionScrapper) scrapeInstitution(ctx context.Context, url string, instituteType constants.InstitutionType) ([]model.Institution, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
 
 	// use a fresh slice per scrape to avoid cross-source accumulation
 	institutions := make([]model.Institution, 0, 64)
+
+	timeout := remainingTimeout(ctx)
+	headerTimeout := timeout
+	if headerTimeout > 20*time.Second {
+		headerTimeout = 20 * time.Second
+	}
 
 	collector := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"),
@@ -64,9 +111,9 @@ func (s *InstitutionScrapper) scrapeInstitution(url string, instituteType consta
 		colly.AllowURLRevisit(),
 	)
 
-	// education.gov.ng pages are slow; extend timeouts to reduce context deadline errors
-	collector.WithTransport(&http.Transport{ResponseHeaderTimeout: 20 * time.Second})
-	collector.SetRequestTimeout(60 * time.Second)
+	// education.gov.ng pages are slow; cap timeouts to the remaining request deadline
+	collector.WithTransport(&http.Transport{ResponseHeaderTimeout: headerTimeout})
+	collector.SetRequestTimeout(timeout)
 
 	// for nuc
 	collector.OnHTML("tbody tr", func(e *colly.HTMLElement) {
@@ -131,10 +178,20 @@ func (s *InstitutionScrapper) scrapeInstitution(url string, instituteType consta
 	// fmt.Println("institutions", institutions)
 
 	collector.OnRequest(func(r *colly.Request) {
+		if err := ctx.Err(); err != nil {
+			r.Abort()
+			return
+		}
 		fmt.Println("Visiting", r.URL.String())
 	})
 	if err := collector.Visit(url); err != nil {
-		return nil, fmt.Errorf("error visiting %s:%w", url, err)
+		if ctxErr := ctx.Err(); ctxErr != nil {
+			return nil, ctxErr
+		}
+		return nil, fmt.Errorf("error visiting %s: %w", url, err)
+	}
+	if err := ctx.Err(); err != nil {
+		return nil, err
 	}
 	return institutions, nil
 }

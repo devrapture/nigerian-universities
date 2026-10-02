@@ -26,7 +26,7 @@ func main() {
 	repo := repositories.NewInstitutionRepository(db)
 	s := scraper.NewInstitutionScrapper()
 	institutionService := service.NewInstitutionService(repo)
-	institutions, err := s.ScrapeAllInstitution()
+	institutions, err := s.ScrapeAllInstitution(context.Background())
 	if err != nil {
 		log.Fatalf("Failed to scrape institutions: %v", err)
 	}
