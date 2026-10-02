@@ -31,5 +31,8 @@ go.work.sum
 # .idea/
 # .vscode/
 
+# macOS
+.DS_Store
+
 /tmp/
 **/tmp/

@@ -8,3 +8,8 @@ type ListInstitutionQuery struct {
 	Type   constants.InstitutionType `form:"type" example:"federal-university"`
 	Search string                    `form:"search" example:"university of lagos"`
 }
+
+type ListChangeLogQuery struct {
+	Page  int `form:"page" default:"1" binding:"omitempty,min=1"`
+	Limit int `form:"limit" default:"20" binding:"omitempty,min=1,max=100"`
+}

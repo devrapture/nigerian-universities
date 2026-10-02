@@ -1,6 +1,9 @@
 package model
 
 import (
+	"database/sql/driver"
+	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/coolpythoncodes/nigerian-universities/internal/constants"
@@ -32,6 +35,51 @@ type Institution struct {
 	CreatedAt           time.Time                 `json:"created_at" example:"2021-01-01T00:00:00Z"`
 	UpdatedAt           time.Time                 `json:"updated_at" example:"2021-01-01T00:00:00Z"`
 	DeletedAt           gorm.DeletedAt            `json:"-" gorm:"index" example:"2021-01-01T00:00:00Z"`
+}
+
+type InstitutionFieldChange struct {
+	Field    string `json:"field"`
+	OldValue string `json:"old_value"`
+	NewValue string `json:"new_value"`
+}
+
+type InstitutionFieldChanges []InstitutionFieldChange
+
+func (changes InstitutionFieldChanges) Value() (driver.Value, error) {
+	encoded, err := json.Marshal(changes)
+	if err != nil {
+		return nil, err
+	}
+	return string(encoded), nil
+}
+
+func (changes *InstitutionFieldChanges) Scan(value interface{}) error {
+	if value == nil {
+		*changes = InstitutionFieldChanges{}
+		return nil
+	}
+
+	var raw []byte
+	switch value := value.(type) {
+	case []byte:
+		raw = value
+	case string:
+		raw = []byte(value)
+	default:
+		return fmt.Errorf("unsupported institution field changes value %T", value)
+	}
+
+	return json.Unmarshal(raw, changes)
+}
+
+type ChangeLog struct {
+	ID              uuid.UUID                 `json:"id" gorm:"type:uuid;primary_key"`
+	InstitutionID   uuid.UUID                 `json:"institution_id" gorm:"type:uuid;not null;index:idx_change_logs_institution_id"`
+	InstitutionName string                    `json:"institution_name" gorm:"type:text;not null"`
+	InstitutionType constants.InstitutionType `json:"institution_type" gorm:"type:text;not null"`
+	ChangeType      string                    `json:"change_type" gorm:"type:text;not null;check:change_logs_change_type_check,change_type IN ('created','updated')"`
+	Changes         InstitutionFieldChanges   `json:"changes" gorm:"type:jsonb;not null;default:'[]'"`
+	ChangedAt       time.Time                 `json:"changed_at" gorm:"not null;index:idx_change_logs_changed_at,sort:desc"`
 }
 
 type ProductKey struct {
@@ -67,6 +115,16 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 func (p *ProductKey) BeforeCreate(tx *gorm.DB) error {
 	if p.ID == uuid.Nil {
 		p.ID = uuid.New()
+	}
+	return nil
+}
+
+func (changeLog *ChangeLog) BeforeCreate(tx *gorm.DB) error {
+	if changeLog.ID == uuid.Nil {
+		changeLog.ID = uuid.New()
+	}
+	if changeLog.ChangedAt.IsZero() {
+		changeLog.ChangedAt = time.Now()
 	}
 	return nil
 }

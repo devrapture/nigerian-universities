@@ -10,6 +10,7 @@ import (
 	"github.com/coolpythoncodes/nigerian-universities/internal/handlers"
 	"github.com/coolpythoncodes/nigerian-universities/internal/repositories"
 	"github.com/coolpythoncodes/nigerian-universities/internal/routes"
+	"github.com/coolpythoncodes/nigerian-universities/internal/scraper"
 	"github.com/coolpythoncodes/nigerian-universities/internal/service"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -43,6 +44,12 @@ import (
 // @tag.name Institutions
 // @tag.description Institution listing endpoints
 
+// @tag.name Change Logs
+// @tag.description Dated institution data additions and updates
+
+// @tag.name Cron
+// @tag.description Protected background data refresh endpoints
+
 func main() {
 	cfg, err := config.Load()
 	if err != nil {
@@ -67,11 +74,13 @@ func main() {
 	// Handlers
 	authHandler := handlers.NewAuthHandler(userSvc)
 	institutionHandler := handlers.NewInstitutionHandler(institutionService)
+	scrapeHandler := handlers.NewScrapeHandler(scraper.NewInstitutionScrapper(), institutionService)
 	keyHandler := handlers.NewKeyHandler(keyService)
 
 	deps := routes.HandlerDependencies{
 		AuthHandler:        authHandler,
 		InstitutionHandler: institutionHandler,
+		ScrapeHandler:      scrapeHandler,
 		KeyHandler:         keyHandler,
 		KeyRepo:            keyRepo,
 	}

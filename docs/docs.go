@@ -453,6 +453,93 @@ const docTemplate = `{
                 }
             }
         },
+        "/change-logs": {
+            "get": {
+                "description": "Get dated institution additions and field updates detected by the scraper",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Change Logs"
+                ],
+                "summary": "Get institution change log",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Items per page",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ChangeLogListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/schema.InstitutionBadRequestResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/schema.InstitutionInternalServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/cron/scrape": {
+            "post": {
+                "description": "Starts an institution scrape in the background. Overlapping triggers are accepted but do not start duplicate runs.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cron"
+                ],
+                "summary": "Trigger an institution scrape",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer CRON_SECRET",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ScrapeTriggerResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/schema.InstitutionUnauthorizedResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "description": "Returns API health status and verifies database connectivity",
@@ -706,6 +793,58 @@ const docTemplate = `{
                 }
             }
         },
+        "schema.ChangeLogItem": {
+            "type": "object",
+            "properties": {
+                "change_type": {
+                    "type": "string",
+                    "example": "updated"
+                },
+                "changed_at": {
+                    "type": "string"
+                },
+                "changes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.InstitutionFieldChange"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "institution_id": {
+                    "type": "string"
+                },
+                "institution_name": {
+                    "type": "string",
+                    "example": "University of Lagos"
+                },
+                "institution_type": {
+                    "type": "string",
+                    "example": "federal-university"
+                }
+            }
+        },
+        "schema.ChangeLogListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.ChangeLogItem"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "meta": {
+                    "$ref": "#/definitions/schema.PaginationMeta"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
         "schema.GeneratedKey": {
             "type": "object",
             "properties": {
@@ -751,6 +890,23 @@ const docTemplate = `{
                 "success": {
                     "type": "boolean",
                     "example": false
+                }
+            }
+        },
+        "schema.InstitutionFieldChange": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "type": "string",
+                    "example": "website"
+                },
+                "new_value": {
+                    "type": "string",
+                    "example": "https://new.example.edu.ng"
+                },
+                "old_value": {
+                    "type": "string",
+                    "example": "https://old.example.edu.ng"
                 }
             }
         },
@@ -1080,6 +1236,31 @@ const docTemplate = `{
                     "type": "integer"
                 }
             }
+        },
+        "schema.ScrapeTriggerData": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "started"
+                }
+            }
+        },
+        "schema.ScrapeTriggerResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/schema.ScrapeTriggerData"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "scrape started"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
         }
     },
     "securityDefinitions": {
@@ -1105,6 +1286,14 @@ const docTemplate = `{
         {
             "description": "Institution listing endpoints",
             "name": "Institutions"
+        },
+        {
+            "description": "Dated institution data additions and updates",
+            "name": "Change Logs"
+        },
+        {
+            "description": "Protected background data refresh endpoints",
+            "name": "Cron"
         }
     ]
 }`
