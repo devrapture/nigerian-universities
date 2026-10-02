@@ -15,6 +15,7 @@ import (
 type HandlerDependencies struct {
 	AuthHandler        *handlers.AuthHandler
 	InstitutionHandler *handlers.InstitutionHandler
+	ScrapeHandler      *handlers.ScrapeHandler
 	KeyHandler         *handlers.KeyHandlers
 	KeyRepo            repositories.KeyRepository
 }
@@ -37,6 +38,8 @@ func Setup(db *gorm.DB, cfg *config.Config, deps HandlerDependencies) *gin.Engin
 
 	{
 		v1.GET("/health", healthHandler(db))
+		v1.GET("/change-logs", deps.InstitutionHandler.GetChangeLogs)
+		v1.POST("/cron/scrape", middleware.CronSecretMiddleware(cfg.CronSecret), deps.ScrapeHandler.Trigger)
 
 		// auth
 		auth := v1.Group("/auth")

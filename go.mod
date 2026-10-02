@@ -7,6 +7,7 @@ require (
 	github.com/jackc/pgx/v5 v5.9.1
 	golang.org/x/oauth2 v0.36.0
 	google.golang.org/grpc v1.80.0
+	gorm.io/driver/sqlite v1.6.0
 	gorm.io/gorm v1.31.1
 )
 
@@ -88,7 +89,6 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260414002931-afd174a4e478 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.6.0 // indirect
-	gorm.io/driver/sqlite v1.6.0 // indirect
 	gorm.io/driver/sqlserver v1.6.3 // indirect
 )
 

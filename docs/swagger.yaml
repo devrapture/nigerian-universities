@@ -94,6 +94,41 @@ definitions:
         example: John Doe
         type: string
     type: object
+  schema.ChangeLogItem:
+    properties:
+      change_type:
+        example: updated
+        type: string
+      changed_at:
+        type: string
+      changes:
+        items:
+          $ref: '#/definitions/schema.InstitutionFieldChange'
+        type: array
+      id:
+        type: string
+      institution_id:
+        type: string
+      institution_name:
+        example: University of Lagos
+        type: string
+      institution_type:
+        example: federal-university
+        type: string
+    type: object
+  schema.ChangeLogListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.ChangeLogItem'
+        type: array
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/schema.PaginationMeta'
+      success:
+        type: boolean
+    type: object
   schema.GeneratedKey:
     properties:
       created_at:
@@ -126,6 +161,18 @@ definitions:
       success:
         example: false
         type: boolean
+    type: object
+  schema.InstitutionFieldChange:
+    properties:
+      field:
+        example: website
+        type: string
+      new_value:
+        example: https://new.example.edu.ng
+        type: string
+      old_value:
+        example: https://old.example.edu.ng
+        type: string
     type: object
   schema.InstitutionInternalServerError:
     properties:
@@ -349,6 +396,23 @@ definitions:
         type: integer
       total:
         type: integer
+    type: object
+  schema.ScrapeTriggerData:
+    properties:
+      status:
+        example: started
+        type: string
+    type: object
+  schema.ScrapeTriggerResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.ScrapeTriggerData'
+      message:
+        example: scrape started
+        type: string
+      success:
+        example: true
+        type: boolean
     type: object
 host: localhost:8080
 info:
@@ -642,6 +706,65 @@ paths:
       summary: Login with Google token
       tags:
       - Auth
+  /change-logs:
+    get:
+      consumes:
+      - application/json
+      description: Get dated institution additions and field updates detected by the
+        scraper
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.ChangeLogListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/schema.InstitutionBadRequestResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.InstitutionInternalServerErrorResponse'
+      summary: Get institution change log
+      tags:
+      - Change Logs
+  /cron/scrape:
+    post:
+      consumes:
+      - application/json
+      description: Starts an institution scrape in the background. Overlapping triggers
+        are accepted but do not start duplicate runs.
+      parameters:
+      - description: Bearer CRON_SECRET
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            $ref: '#/definitions/schema.ScrapeTriggerResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/schema.InstitutionUnauthorizedResponse'
+      summary: Trigger an institution scrape
+      tags:
+      - Cron
   /health:
     get:
       consumes:
@@ -735,3 +858,7 @@ tags:
   name: Health
 - description: Institution listing endpoints
   name: Institutions
+- description: Dated institution data additions and updates
+  name: Change Logs
+- description: Protected background data refresh endpoints
+  name: Cron

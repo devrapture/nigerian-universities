@@ -62,6 +62,70 @@ func (h *InstitutionHandler) GetAllInstitutions(c *gin.Context) {
 
 }
 
+// GetChangeLogs returns the institution data changes detected by completed scrapes.
+// @Summary Get institution change log
+// @Description Get dated institution additions and field updates detected by the scraper
+// @Tags Change Logs
+// @Accept json
+// @Produce json
+// @Param page query int false "Page number"
+// @Param limit query int false "Items per page"
+// @Success 200 {object} schema.ChangeLogListResponse
+// @Failure 400 {object} schema.InstitutionBadRequestResponse
+// @Failure 500 {object} schema.InstitutionInternalServerErrorResponse
+// @Router /change-logs [get]
+func (h *InstitutionHandler) GetChangeLogs(c *gin.Context) {
+	queryDTO, err := parseChangeLogQuery(c)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusBadRequest, "BAD_REQUEST", err.Error())
+		return
+	}
+
+	changeLogs, total, err := h.institutionService.GetChangeLogs(c.Request.Context(), queryDTO)
+	if err != nil {
+		utils.ErrorResponse(c, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "An unexpected error occurred")
+		return
+	}
+
+	meta := &utils.PaginationMeta{
+		Page:    queryDTO.Page,
+		PerPage: queryDTO.Limit,
+		Total:   total,
+		Pages:   int64(math.Ceil(float64(total) / float64(queryDTO.Limit))),
+	}
+	utils.SuccessResponse(c, http.StatusOK, "fetched institution change log", changeLogs, meta)
+}
+
+func parseChangeLogQuery(c *gin.Context) (dto.ListChangeLogQuery, error) {
+	const maxLimit = 100
+	q := dto.ListChangeLogQuery{}
+
+	pageStr := c.DefaultQuery("page", "1")
+	page, err := strconv.Atoi(pageStr)
+	if err != nil {
+		return q, friendlyNumErr("page", pageStr)
+	}
+	if page < 1 {
+		return q, fmt.Errorf("query parameter 'page' must be at least 1, got '%d'", page)
+	}
+	q.Page = page
+
+	limitStr := c.DefaultQuery("limit", "20")
+	limit, err := strconv.Atoi(limitStr)
+	if err != nil {
+		return q, friendlyNumErr("limit", limitStr)
+	}
+	if limit < 1 {
+		return q, fmt.Errorf("query parameter 'limit' must be at least 1, got '%d'", limit)
+	}
+	if limit > maxLimit {
+		return q, fmt.Errorf("query parameter 'limit' must be <= %d", maxLimit)
+	}
+	q.Limit = limit
+
+	return q, nil
+}
+
 // parseListQuery manually parses query params to give clearer error messages than the default binder.
 func parseListQuery(c *gin.Context) (dto.ListInstitutionQuery, error) {
 	const maxLimit = 100
