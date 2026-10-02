@@ -83,18 +83,23 @@ go run cmd/scraper/main.go
 
 The scraper uses URLs and constants defined in `internal/constants/institution.go`.
 
-Production cron services can trigger the same scraper without holding the HTTP
-connection open:
+Production cron services (for example cron-job.org) can trigger the same scraper.
+The request stays open until the scrape finishes or hits the 24s server timeout
+(slightly under cron-job.org's 25s client timeout):
 
 ```bash
 curl -X POST http://localhost:8080/api/v1/cron/scrape \
   -H "Authorization: Bearer $CRON_SECRET"
 ```
 
-The endpoint returns `202 Accepted` immediately. Only one scrape runs at a time;
-additional triggers still receive a successful response with an
-`already_running` status. Completed scrapes record real data additions and field
-updates in the public `GET /api/v1/change-logs` endpoint.
+A completed scrape returns `200` with `status: completed`. Only one scrape runs
+at a time; overlapping triggers receive `202` with `already_running`. A scrape
+that exceeds 24s returns `504` with code `TIMEOUT` and does not write partial
+results. Completed scrapes record real data additions and field updates in the
+public `GET /api/v1/change-logs` endpoint.
+
+The hosting function must allow at least 25s (`maxDuration` on Vercel Pro is
+60s; Hobby defaults to 10s).
 
 ### 3. Run the API Server
 

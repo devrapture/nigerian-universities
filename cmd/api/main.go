@@ -48,7 +48,7 @@ import (
 // @tag.description Dated institution data additions and updates
 
 // @tag.name Cron
-// @tag.description Protected background data refresh endpoints
+// @tag.description Protected data refresh endpoints
 
 func main() {
 	cfg, err := config.Load()

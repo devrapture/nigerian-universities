@@ -504,7 +504,7 @@ const docTemplate = `{
         },
         "/cron/scrape": {
             "post": {
-                "description": "Starts an institution scrape in the background. Overlapping triggers are accepted but do not start duplicate runs.",
+                "description": "Runs an institution scrape inside the request with a 24s timeout (cron-job.org's client timeout is 25s). Overlapping triggers are accepted but do not start duplicate runs.",
                 "consumes": [
                     "application/json"
                 ],
@@ -525,6 +525,12 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ScrapeTriggerResponse"
+                        }
+                    },
                     "202": {
                         "description": "Accepted",
                         "schema": {
@@ -535,6 +541,18 @@ const docTemplate = `{
                         "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/schema.InstitutionUnauthorizedResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/schema.InstitutionInternalServerErrorResponse"
+                        }
+                    },
+                    "504": {
+                        "description": "Gateway Timeout",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ScrapeTimeoutResponse"
                         }
                     }
                 }
@@ -1237,12 +1255,41 @@ const docTemplate = `{
                 }
             }
         },
+        "schema.ScrapeTimeoutError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "TIMEOUT"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "scrape timed out"
+                }
+            }
+        },
+        "schema.ScrapeTimeoutResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/schema.ScrapeTimeoutError"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
         "schema.ScrapeTriggerData": {
             "type": "object",
             "properties": {
+                "count": {
+                    "type": "integer",
+                    "example": 120
+                },
                 "status": {
                     "type": "string",
-                    "example": "started"
+                    "example": "completed"
                 }
             }
         },
@@ -1254,7 +1301,7 @@ const docTemplate = `{
                 },
                 "message": {
                     "type": "string",
-                    "example": "scrape started"
+                    "example": "scrape completed"
                 },
                 "success": {
                     "type": "boolean",
@@ -1292,7 +1339,7 @@ const docTemplate = `{
             "name": "Change Logs"
         },
         {
-            "description": "Protected background data refresh endpoints",
+            "description": "Protected data refresh endpoints",
             "name": "Cron"
         }
     ]

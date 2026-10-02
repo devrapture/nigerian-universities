@@ -397,10 +397,30 @@ definitions:
       total:
         type: integer
     type: object
+  schema.ScrapeTimeoutError:
+    properties:
+      code:
+        example: TIMEOUT
+        type: string
+      message:
+        example: scrape timed out
+        type: string
+    type: object
+  schema.ScrapeTimeoutResponse:
+    properties:
+      error:
+        $ref: '#/definitions/schema.ScrapeTimeoutError'
+      success:
+        example: false
+        type: boolean
+    type: object
   schema.ScrapeTriggerData:
     properties:
+      count:
+        example: 120
+        type: integer
       status:
-        example: started
+        example: completed
         type: string
     type: object
   schema.ScrapeTriggerResponse:
@@ -408,7 +428,7 @@ definitions:
       data:
         $ref: '#/definitions/schema.ScrapeTriggerData'
       message:
-        example: scrape started
+        example: scrape completed
         type: string
       success:
         example: true
@@ -743,8 +763,9 @@ paths:
     post:
       consumes:
       - application/json
-      description: Starts an institution scrape in the background. Overlapping triggers
-        are accepted but do not start duplicate runs.
+      description: Runs an institution scrape inside the request with a 24s timeout
+        (cron-job.org's client timeout is 25s). Overlapping triggers are accepted
+        but do not start duplicate runs.
       parameters:
       - description: Bearer CRON_SECRET
         in: header
@@ -754,6 +775,10 @@ paths:
       produces:
       - application/json
       responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.ScrapeTriggerResponse'
         "202":
           description: Accepted
           schema:
@@ -762,6 +787,14 @@ paths:
           description: Unauthorized
           schema:
             $ref: '#/definitions/schema.InstitutionUnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/schema.InstitutionInternalServerErrorResponse'
+        "504":
+          description: Gateway Timeout
+          schema:
+            $ref: '#/definitions/schema.ScrapeTimeoutResponse'
       summary: Trigger an institution scrape
       tags:
       - Cron
@@ -860,5 +893,5 @@ tags:
   name: Institutions
 - description: Dated institution data additions and updates
   name: Change Logs
-- description: Protected background data refresh endpoints
+- description: Protected data refresh endpoints
   name: Cron
